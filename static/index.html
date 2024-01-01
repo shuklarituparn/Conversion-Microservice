@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Awesome FFMPEG Service</title>
+    <script type="text/javascript">
+        function handleSubmit() {
+            var action = document.querySelector('select[name="videoAction"]').value;
+            switch(action) {
+                case "Convert":
+                    window.location.href = '/convert';
+                    break;
+                case "Cut":
+                    window.location.href = '/cut';
+                    break;
+                case "Watermark":
+                    window.location.href = '/watermark';
+                    break;
+                case "GIF":
+                    window.location.href = '/gif';
+                    break;
+                default:
+                    alert('Please select an action');
+                    return false;
+            }
+            return false;
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url("background/bg.png") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            border: 2px solid #000;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 400px;
+            height: 300px;
+            margin: 0;
+
+        }
+        h2{
+            font-size: 20px;
+        }
+
+        form {
+            margin-top: 15px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Welcome to the Awesome FFMPEG Service</h2>
+    <p> This service let's you use FFMPEG library in your browser</p>
+    <label>Choose the option that you want to use</label>
+    <form onsubmit="return handleSubmit()">
+        <label>
+            <select name="videoAction">
+                <option value="">Select an action</option>
+                <option value="Convert">Convert to mp4</option>
+                <option value="Cut">Cut video from timestamp</option>
+                <option value="Watermark">Add Watermark</option>
+                <option value="GIF">Cut for GIF</option>
+            </select>
+        </label>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+</body>
+</html>
