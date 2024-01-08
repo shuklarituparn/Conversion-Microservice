@@ -51,7 +51,7 @@ func main() {
 
 	fmt.Println("Connected to MongoDB!\n")
 
-	// Provide the name of the database and collection you want to use.
+	// Provide the name of the database_file and collection you want to use.
 	// If they don't already exist, the driver and Atlas will create them
 	// automatically when you first write data.
 	var dbName = "myDatabase"
