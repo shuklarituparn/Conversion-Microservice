@@ -1,0 +1,12 @@
+&{POST /upload HTTP/1.1 1 1
+map[Accept:[text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7] Accept-Encoding:[gzip, deflate, br] Accept-Language:[en-US,en;q=0.9]
+Cache-Control:[max-age=0] Connection:[keep-alive] Content-Length:[889243]
+Content-Type:[multipart/form-data; boundary=----WebKitFormBoundary0Pk9SZ1kV8l5bvxv]
+Cookie:[username-localhost-8888="2|1:0|10:1702499486|23:username-localhost-8888|200:eyJ1c2VybmFtZSI6ICJkMDEzY2E2NTgxODU0NTIyYTM5OTNhODY2OGQ1MzUzNCIsICJuYW1lIjogIkFub255bW91cyBDaGFsZGVuZSIsICJkaXNwbGF5X25hbWUiOiAiQW5vbnltb3VzIENoYWxkZW5lIiwgImluaXRpYWxzIjogIkFDIiwgImNvbG9yIjogbnVsbH0=|ca9ad83fe95a49f7d377a3fc649038a38c3ce344ea8814c4a880895323aec2fe"; _xsrf=2|9187d297|522d6e9511129bd6021046acd8b5cad9|1702499486;
+grafana_session=d31d10cf8c551353f3db5379d48136ec; grafana_session_expiry=1703695188] Origin:[http://localhost:8085]
+Referer:[http://localhost:8085/convert/] Sec-Ch-Ua:["Not_A Brand";v="8", "Chromium";v="120"] Sec-Ch-Ua-Mobile:[?0]
+Sec-Ch-Ua-Platform:["Linux"] Sec-Fetch-Dest:[document] Sec-Fetch-Mode:[navigate]
+Sec-Fetch-Site:[same-origin] Sec-Fetch-User:[?1] Upgrade-Insecure-Requests:[1] User-Agent:[Mozilla/5.0
+(X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
+Safari/537.36]] 0xc00021e000 <nil> 889243 [] false localhost:8085 map[] map[] <nil> map[]
+[::1]:45502 /upload <nil> <nil> <nil> 0xc000220000}
