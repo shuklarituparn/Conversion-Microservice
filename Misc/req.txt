@@ -10,3 +10,28 @@ Sec-Fetch-Site:[same-origin] Sec-Fetch-User:[?1] Upgrade-Insecure-Requests:[1] U
 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
 Safari/537.36]] 0xc00021e000 <nil> 889243 [] false localhost:8085 map[] map[] <nil> map[]
 [::1]:45502 /upload <nil> <nil> <nil> 0xc000220000}
+
+
+
+Request Line: POST /upload HTTP/1.1
+
+Method: POST - This is a method used to submit data to be processed to a specified resource. In this case, it's typically used for uploading files or submitting forms.
+Path: /upload - This is the URL path on the server where the request is being sent.
+HTTP Version: HTTP/1.1 - This indicates the version of the HTTP protocol used for this request.
+Headers: These provide additional information about the request:
+
+Accept, Accept-Encoding, Accept-Language - These headers tell the server what content types, encodings, and languages the client can handle.
+Cache-Control: max-age=0 - Instructs the server not to use cached content.
+Connection: keep-alive - Indicates that the client wants to keep the connection open for further requests.
+Content-Length: 889243 - Specifies the size of the data in the request body, in bytes.
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary0Pk9SZ1kV8l5bvxv - Indicates that the body of the request contains form data, with the specified boundary used to distinguish different parts of the form data.
+Cookie - Contains cookies that the client sends to the server. This includes session identifiers and other relevant data.
+Origin, Referer - Indicate the origin of the request and the referring page.
+Sec-* headers - Security-related headers with information about the client's browser and platform.
+User-Agent - Provides information about the client's browser and operating system.
+Body:
+
+The body of a POST request contains the data to be sent to the server. In this case, the Content-Type header indicates that the data is form data (often used for file uploads). The actual data is not shown in your text, but it would be encoded as multipart/form-data.
+Additional Metadata:
+
+The rest of the text seems to include server-specific information like local addresses, ports, and internal memory references (e.g., 0xc00021e000), which are relevant for the server processing this request.
