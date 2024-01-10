@@ -1,15 +1,14 @@
-package main
+package ID
 
 import (
 	"fmt"
 	"github.com/google/uuid"
 )
 
-func main() {
+func ReturnID() string {
 	u, err := uuid.NewRandom()
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(u.String()) //more clearer and better to use, however everyrtime we use fmt.println we use the string method
-
+	return u.String()
 }

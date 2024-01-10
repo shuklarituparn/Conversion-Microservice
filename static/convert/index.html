@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Conversion</title>
@@ -48,13 +48,14 @@
     <h2>Welcome to the Conversion Service</h2>
     <p> This service let's you convert a video using FFMPEG from your browser!</p>
     <label>Choose the file that you want to convert to MP4 format</label>
-    <form action="http://localhost:8085" method="post" enctype="multipart/form-data">
+    <form action="/upload" method="post" enctype="multipart/form-data">
         <div>
             <label>Upload File</label>
-            <input type="file" id="File" accept="video/*" name="Myfile">
+            <input type="file" id="File"  name="Myfile">
         </div>
         <div>
-            <button>Submit</button>
+            <button type="submit">Submit</button>
+
         </div>
 
     </form>

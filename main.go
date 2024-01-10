@@ -1,40 +1,28 @@
-//package main
-//
-//import (
-//	"fmt"
-//	"log"
-//	"net/http"
-//)
-//
-//// downloadFileFunc isn't used in this snippet, but you can define its logic
-//// and add a route for it if needed.
-//func downloadFileFunc(w http.ResponseWriter, r *http.Request) {
-//	fmt.Println("Download File Function called")
-//}
-//
-//// handlerFunc checks for the specific query parameter and responds accordingly.
-//func handlerFunc(w http.ResponseWriter, r *http.Request) {
-//	if r.URL.Query().Get("videoaction") == "convert" {
-//
-//		fmt.Fprintf(w, "Conversion page")
-//	} else {
-//		// If the specific query is not present, you can redirect to the home page or handle differently
-//		fmt.Fprintf(w, "Hello, you're at the home page")
-//	}
-//}
-//
-//func main() {
-//
-//	fs := http.FileServer(http.Dir("static"))
-//	http.Handle("/static/", http.StripPrefix("/static/", fs))
-//
-//	http.HandleFunc("/", handlerFunc)
-//
-//	fmt.Println("Server is starting on port 8085...")
-//	if err := http.ListenAndServe(":8085", nil); err != nil {
-//		log.Fatal(err)
-//	}
-//}
+package main
+
+import (
+	"fmt"
+	"github.com/shuklarituparn/Conversion-Microservice/handlers"
+	"log"
+	"net/http"
+)
+
+func uploadEndPoint(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "YES IT HITS")
+}
+
+func main() {
+
+	http.Handle("/", http.FileServer(http.Dir("static")))
+	//http.HandleFunc("/", handlers.WelcomeHandler("index.html", "static"))
+	http.HandleFunc("/videoAction", handlers.RedirectHandler)
+	http.HandleFunc("/upload", uploadEndPoint) //let's put a func
+
+	fmt.Println("Server is starting on port 8085...")
+	if err := http.ListenAndServe(":8085", nil); err != nil {
+		log.Fatal(err)
+	}
+}
 
 //TO CHECK THE OS.EXEC COMMANDS
 
@@ -54,4 +42,55 @@
 //
 //}
 
+//package main
+//
+//import (
+//	"html/template"
+//	"net/http"
+//)
+//
+//var templates = template.Must(template.ParseGlob("templates/*.html"))
+//
+//func main() {
+//	http.HandleFunc("/", )
+//	http.HandleFunc("/login", loginHandler)
+//
+//	fs := http.FileServer(http.Dir("static"))
+//	http.Handle("/static/", http.StripPrefix("/static/", fs))
+//
+//	http.ListenAndServe(":8080", nil)
+//}
+//
+//func homeHandler(w http.ResponseWriter, r *http.Request) {
+//	if !isLoggedIn(r) {
+//		http.Redirect(w, r, "/login", http.StatusSeeOther)
+//		return
+//	}
+//
+//	// Serve home page for logged-in users
+//}
+//
+//func loginHandler(w http.ResponseWriter, r *http.Request) {
+//	switch r.Method {
+//	case "GET":
+//		renderTemplate(w, "login.html", nil)
+//	case "POST":
+//		// Process login form
+//		// Authenticate user
+//		// Redirect to home page if successful
+//	}
+//}
+//
+//func isLoggedIn(r *http.Request) bool {
+//	// Implement logic to check if the user is logged in
+//	return false
+//}
+//
+//func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
+//	err := templates.ExecuteTemplate(w, tmpl, data)
+//	if err != nil {
+//		http.Error(w, err.Error(), http.StatusInternalServerError)
+//	}
+//}
 
+//localhost:8085/?videoaction=convert gives URL query  map[videoAction:[Convert]]
