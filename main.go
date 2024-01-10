@@ -7,16 +7,11 @@ import (
 	"net/http"
 )
 
-func uploadEndPoint(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "YES IT HITS")
-}
-
 func main() {
 
 	http.Handle("/", http.FileServer(http.Dir("static")))
-	//http.HandleFunc("/", handlers.WelcomeHandler("index.html", "static"))
 	http.HandleFunc("/videoAction", handlers.RedirectHandler)
-	http.HandleFunc("/upload", uploadEndPoint) //let's put a func
+	http.HandleFunc("/upload", handlers.UploadHandler)
 
 	fmt.Println("Server is starting on port 8085...")
 	if err := http.ListenAndServe(":8085", nil); err != nil {
