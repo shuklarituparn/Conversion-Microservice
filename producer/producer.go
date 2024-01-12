@@ -1,4 +1,4 @@
-package main
+package producer
 
 import (
 	"fmt"
@@ -41,3 +41,5 @@ func main() {
 	// Wait for message deliveries
 	p.Flush(15 * 1000)
 }
+
+//So basically in Kafka we create a topic, and then we post the message on the topic, and the consumer subscribe to topics
