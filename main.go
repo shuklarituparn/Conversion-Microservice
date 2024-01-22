@@ -68,7 +68,7 @@ func main() {
 //func loginHandler(w http.ResponseWriter, r *http.Request) {
 //	switch r.Method {
 //	case "GET":
-//		renderTemplate(w, "login.html", nil)
+//		renderTemplate(w, "index.html", nil)
 //	case "POST":
 //		// Process login form
 //		// Authenticate user
