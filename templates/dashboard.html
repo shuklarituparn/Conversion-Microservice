@@ -1,0 +1,63 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Awesome FFMPEG Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url("static/images/bg.jpg") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0; /* Resets default margin */
+            padding: 0; /* Resets default padding */
+        }
+        .container {
+            border: 2px solid #000;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 400px;
+            height: 300px;
+            margin: 0;
+
+        }
+        h2{
+            font-size: 20px;
+        }
+        p{
+            font-size: 10px;
+        }
+        form {
+            margin-top: 15px;
+        }
+        input[type="file"] {
+            margin-bottom: 15px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Welcome to the Awesome FFMEG Service</h2>
+    <p> This service let's you use FFMPEG library in your browser</p>
+    <form id="fileUploadForm" action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file"><br>
+        <input type="submit" value="Upload File">
+    </form>
+</div>
+</body>
+</html>
+
+
