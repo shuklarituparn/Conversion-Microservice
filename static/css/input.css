@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: VK-Sans;
+    src: local('VK-Sans'), url("../fonts/font.ttf") format("truetype");
+}

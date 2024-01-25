@@ -18,6 +18,10 @@ func main() {
 	protected.Use(handlers.AuthMiddleware())
 	{
 		protected.GET("/dashboard", handlers.Dashboard)
+		protected.GET("/convert", handlers.Dashboard)
+		protected.GET("/cut", handlers.Dashboard)
+		protected.GET("/watermark", handlers.Dashboard)
+		protected.GET("/extract", handlers.Dashboard)
 		// Add more protected routes here
 		// protected.GET("/profile", handlers.Profile)
 		// protected.GET("/settings", handlers.Settings)

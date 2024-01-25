@@ -1,63 +1,69 @@
 
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Awesome FFMPEG Service</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: url("../static/images/background.jpg") no-repeat center center fixed;
-            background-size: cover;
-            margin: 0; /* Resets default margin */
-            padding: 0; /* Resets default padding */
-        }
-        .container {
-            border: 2px solid #000;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: 400px;
-            height: 300px;
-            margin: 0;
-
-        }
-        h2{
-            font-size: 20px;
-        }
-        p{
-            font-size: 10px;
-        }
-        form {
-            margin-top: 15px;
-        }
-        input[type="file"] {
-            margin-bottom: 15px;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="../static/css/output.css" rel="stylesheet">
+    <link rel="icon" href="/static/favicon/favicon.ico" type="image/x-icon">
 </head>
-<body>
-<div class="container">
-    <h2>Welcome to the Awesome FFMEG Service</h2>
-    <p> This service let's you use FFMPEG library in your browser</p>
-    <form id="fileUploadForm" action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file"><br>
-        <input type="submit" value="Upload File">
-    </form>
+<body class="m-0">
+<div class=" h-screen w-full bg-cover bg-no-repeat" style="background-image: url('static/images/background.png');">
+
+    <nav class=" bg-gray-800 bg-opacity-30 rounded-3xl shadow-lg py-2 text-white h-22">
+        <div class="max-w-7xl  mx-auto px-10 ">
+           <div class="flex items-center justify-between flex-grow">
+               <div>
+                   <a href="/dashboard">
+                       <img class="absolute left-20 top-0 py-2 mt-1 mb-1 rounded-xl size-14 " src="../static/assets/VK.svg">
+                   </a>
+               </div>
+
+                    <div> <a href="/convert" class=" mt-1 mb-1  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 VK-Sans text-white bg-gray-800 bg-opacity-20  border border-gray-200 rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                       Convert
+
+                        </a>
+                    </div>
+                   <div> <a href="/cut" class=" mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                      Cut
+                   </a></div>
+
+
+               <div>
+                   <a href="/watermark" class=" mt-1 mb-1 VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200   rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                      Watermark
+                   </a>
+               </div>
+               <div>
+                   <a href="/extract" class="mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                       Extract
+                   </a>
+               </div>
+
+               <div class="group  inline-block absolute right-20">
+                   <button class="block h-11 w-11 rounded-full overflow-hidden border-2 border-gray-600   focus:border-white">
+                       <img class="h-full w-full object-cover" src="{{.userpicture}}">
+                   </button>
+
+                   <div class="absolute right-0 mt-2 w-36 opacity-0 group-hover:opacity-100 btransition-opacity duration-300 bg-gray-800 bg-opacity-40 border border-gray-200 bg-gradient-to-r from-blue-600 to-purple-500 rounded-3xl shadow-xl">
+                       <a href="/signout" class="ml-3 block px-6 py-2 VK-Sans pointer-events-none group-hover:pointer-events-auto">Sign Out</a>
+                   </div>
+               </div>
+
+
+
+           </div>
+
+
+
+
+
+
+        </div>
+    </nav>
+<!--      с-->
 </div>
+
 </body>
 </html>
-
-
