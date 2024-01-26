@@ -8,7 +8,7 @@ import (
 
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if !isUserAuthenticated(c) {
+		if !IsUserAuthenticated(c) {
 			c.Redirect(http.StatusFound, "/login")
 			c.Abort()
 			return
@@ -17,7 +17,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	}
 }
 
-func isUserAuthenticated(c *gin.Context) bool {
+func IsUserAuthenticated(c *gin.Context) bool {
 	session, err := user_sessions.Store.Get(c.Request, "Logged_Session")
 	if err != nil {
 

@@ -22,14 +22,11 @@ func main() {
 		protected.GET("/cut", handlers.Dashboard)
 		protected.GET("/watermark", handlers.Dashboard)
 		protected.GET("/extract", handlers.Dashboard)
-		// Add more protected routes here
-		// protected.GET("/profile", handlers.Profile)
-		// protected.GET("/settings", handlers.Settings)
+		protected.GET("/profile", handlers.Dashboard)
+		protected.GET("/signout", handlers.Dashboard)
 	}
 
 	router.Run(":8085")
 }
 
 //TODO: Where to use the database to store User data and sessions?
-
-//localhost:8085/?videoaction=convert gives URL query  map[videoAction:[Convert]]

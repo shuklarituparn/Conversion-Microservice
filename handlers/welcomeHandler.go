@@ -7,8 +7,10 @@ import (
 
 func WelcomeHandler(c *gin.Context) {
 
-	c.HTML(http.StatusOK, "login.html", gin.H{})
+	if !IsUserAuthenticated(c) {
+		c.HTML(http.StatusOK, "login.html", gin.H{})
+	} else {
+		c.Redirect(http.StatusFound, "/dashboard")
+	}
 
 }
-
-//TODO: To make a good welcome page and then add the login link there
