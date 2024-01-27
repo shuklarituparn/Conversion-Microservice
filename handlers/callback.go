@@ -49,6 +49,7 @@ func Callback(c *gin.Context) {
 		Response []struct {
 			UserId    int    `json:"id"`
 			UserPhoto string `json:"photo_max_orig"`
+			UserName  string `json:"first_name"`
 		} `json:"response"`
 	}{}
 
@@ -66,9 +67,12 @@ func Callback(c *gin.Context) {
 	if len(result.Response) > 0 {
 		userId := result.Response[0].UserId
 		userPic := result.Response[0].UserPhoto
+		userName := result.Response[0].UserName
 		session.Values["authenticated"] = true
 		session.Values["UserId"] = userId
 		session.Values["userPhoto"] = userPic
+		session.Values["userName"] = userName
+
 	} else {
 		log.Println("Error getting user data")
 

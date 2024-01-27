@@ -4,6 +4,7 @@ import (
 	"github.com/gorilla/sessions"
 	"github.com/joho/godotenv"
 	"log"
+	"net/http"
 	"os"
 )
 
@@ -21,4 +22,11 @@ func init() {
 		log.Fatal("SESSION_SECRET environment variable not set")
 	}
 	Store = sessions.NewCookieStore([]byte(sessionSecret))
+	Store.Options = &sessions.Options{
+		Path:     "/",
+		MaxAge:   3600 * 8,
+		HttpOnly: false,
+		Secure:   false,
+		SameSite: http.SameSiteLaxMode,
+	}
 }

@@ -1,0 +1,22 @@
+package handlers
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/shuklarituparn/Conversion-Microservice/user_sessions"
+	"log"
+	"net/http"
+)
+
+func Watermark(c *gin.Context) {
+	session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+	userName, ok := session.Values["userName"].(string)
+	if !ok {
+		log.Println("Error finding userID from the sessions")
+	}
+	c.HTML(http.StatusOK, "watermark.html", gin.H{
+		"userName": userName,
+	})
+}

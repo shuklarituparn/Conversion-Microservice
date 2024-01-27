@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,43 +6,17 @@
     <title>Dashboard</title>
     <link href="../static/css/output.css" rel="stylesheet">
     <link rel="icon" href="/static/favicon/favicon.ico" type="image/x-icon">
-
     <script>
-        // document.addEventListener('DOMContentLoaded', () => {
-        //     const button = document.querySelector('.group button');
-        //     const dropdown = document.getElementById('dropdown');
-        //     const overlay = document.getElementById('overlay');
-        //
-        //     button.addEventListener('click', function() {
-        //         dropdown.classList.toggle('opacity-0');
-        //         overlay.classList.toggle('hidden');
-        //         button.classList.toggle('border-white');
-        //         button.classList.toggle('border-gray-600');
-        //     });
-        //
-        //     overlay.addEventListener('click', function() {
-        //         dropdown.classList.add('opacity-0');
-        //         overlay.classList.add('hidden');
-        //         button.classList.remove('border-white');
-        //         button.classList.add('border-gray-600');
-        //     });
-        // });
-
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("DOM fully loaded and parsed");
-
             const button = document.querySelector('.group button');
             const dropdown = document.getElementById('dropdown');
             const overlay = document.getElementById('overlay');
-
-            console.log(button, dropdown, overlay); // Check if elements are correctly selected
 
             button.addEventListener('click', function() {
                 console.log("Button clicked");
                 dropdown.classList.toggle('opacity-0');
                 overlay.classList.toggle('hidden');
             });
-
             overlay.addEventListener('click', function() {
                 console.log("Overlay clicked");
                 dropdown.classList.add('opacity-0');
@@ -51,58 +24,74 @@
             });
 
         });
-
-
     </script>
-
 </head>
 <body class="m-0">
-<div class="h-screen w-screen bg-cover bg-no-repeat " style="background-image: url('static/images/background.png');">
-<!--    Navbar-->
-    <nav class="relative container mx-auto bg-gray-800 bg-opacity-40 rounded-3xl shadow-2xl p-2">
-           <div class="flex justify-between items-center">
+<div class="h-screen w-screen bg-cover bg-no-repeat" style="background-image: url('../static/images/background.png');">
 
-               <div class="lg:visible">
-                   <a href="/dashboard">
-                       <img class=" p-2 size-14 " src="../static/assets/VK.svg">
-                   </a>
-               </div>
-           <div class="hidden lg:flex space-x-20">
-                    <a href="/convert" class=" mt-1 mb-1  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 VK-Sans text-white bg-gray-800 bg-opacity-20  border border-gray-200 rounded-full text-md px-10 py-2 text-center inline-flex items-center">
-                        Convert
-                    </a>
+    <nav class="relative container mx-auto p-2 bg-gray-800 bg-opacity-40 rounded-3xl shadow-2xl">
+        <div class="flex justify-between items-center flex-wrap">
 
-                    <a href="/cut" class=" mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center inline-flex items-center">
-                        Cut
-                    </a>
+            <div class="flex-1 min-w-0">
+                <a href="/dashboard">
+                    <img class="p-2 size-14" src="../static/assets/VK.svg">
+                </a>
+            </div>
+
+            <div class="flex-1 min-w-0 text-center lg:hidden">
+                <p class="text-white text-xl text-extrabold VK-Sans">
+                    Video Conversion Service
+                </p>
+            </div>
+
+            <div class="flex-grow lg:flex space-x-14 justify-center hidden">
+                <a href="/convert" class=" mt-1 mb-1  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 VK-Sans text-white bg-gray-800 bg-opacity-20  border border-gray-200 rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Convert
+                </a>
+
+                <a href="/cut" class=" mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Cut
+                </a>
 
 
-                    <a href="/watermark" class=" mt-1 mb-1 VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200   rounded-full text-md px-10 py-2 text-center inline-flex items-center">
-                        Watermark
-                    </a>
+                <a href="/watermark" class=" mt-1 mb-1 VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200   rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Watermark
+                </a>
 
 
-                    <a href="/extract" class="mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center inline-flex items-center">
-                        Extract
-                    </a>
+                <a href="/extract" class="mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Extract
+                </a>
+
+            </div>
+
+            <div class="flex-1 min-w-0 text-right">
+                <div class="group p-2 inline-block">
+                    <button class="block h-11 w-11 z-10 rounded-full overflow-hidden border-2 border-gray-200 focus:border-white">
+                        <img class="h-full w-full object-cover" src="{{.userpicture}}">
+                    </button>
+                    <button id="overlay" class="hidden fixed z-10 inset-0 bg-gray-800 bg-opacity-20 backdrop-blur-sm"></button>
+                    <div id="dropdown" class="absolute mt-1 right-0 opacity-0 z-10 transition-opacity duration-300 bg-gray-800 bg-opacity-40 border border-gray-200 rounded-3xl shadow-2xl">
+                        <p class="block md:hidden px-6 py-2 text-center transition-opacity duration-300 text-white bg-gradient-to-r from-blue-600 to-purple-500 VK-Sans rounded-t-3xl shadow-2xl">Привет, Аади!</p>
+                        <a href="/convert" class="block md:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Convert</a>
+                        <a href="/cut" class="block md:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Cut</a>
+                        <a href="/watermark" class="block md:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Watermark</a>
+                        <a href="/extract" class="block md:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Extract</a>
+                        <a href="/profile" class="block px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 lg:rounded-t-3xl shadow-2xl">Profile</a>
+                        <a href="/signout" class="block px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 rounded-b-3xl shadow-2xl">Sign Out</a>
+                    </div>
+
+
+
                 </div>
+            </div>
 
-               <div class="group hidden lg:block">
-                   <button class="block h-11 w-11 z-10 rounded-full overflow-hidden border-2 border-gray-600 focus:border-white">
-                       <img class="h-full w-full object-cover" src="{{.userpicture}}">
-                   </button>
-                   <button id="overlay" class="hidden fixed z-10 inset-0 bg-gray-800 bg-opacity-20 backdrop-blur-sm"></button>
-                   <div id="dropdown" class="absolute mt-1 right-0 opacity-0 z-10 transition-opacity duration-300 bg-gray-800 bg-opacity-40 border border-gray-200 rounded-3xl shadow-2xl">
-                       <a href="/profile" class="block px-6 py-2 text-center transition-opacity duration-300 hover:text-white VK-Sans pointer-events-none pointer-events-auto bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 rounded-t-3xl shadow-2xl">Profile</a>
-                       <a href="/signout" class="block px-6 py-2 text-center transition-opacity duration-300 hover:text-white VK-Sans pointer-events-none group-hover:pointer-events-auto bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 rounded-b-3xl shadow-2xl">Sign Out</a>
+        </div>
 
-                   </div>
 
-               </div>
-           </div>
     </nav>
 
-</div>
 
+</div>
 </body>
 </html>
