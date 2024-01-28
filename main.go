@@ -3,9 +3,17 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/shuklarituparn/Conversion-Microservice/handlers"
+	"io"
+	"os"
 )
 
 func main() {
+
+	gin.DisableConsoleColor()
+
+	f, _ := os.Create("gin.log")
+	gin.DefaultWriter = io.MultiWriter(f)
+
 	router := gin.Default()
 
 	router.LoadHTMLGlob("templates/*")
@@ -14,7 +22,7 @@ func main() {
 	router.GET("/", handlers.WelcomeHandler)
 	router.GET("/login", handlers.Login)
 	router.GET("/callback", handlers.Callback)
-
+	router.NoRoute(handlers.NoRouteHandler)
 	protected := router.Group("/")
 
 	protected.Use(handlers.AuthMiddleware())

@@ -17,7 +17,13 @@ func Dashboard(c *gin.Context) {
 	if !ok {
 		log.Println("Error finding userID from the sessions")
 	}
+	userName, ok := session.Values["userName"].(string)
+	log.Println(userName)
+	if !ok {
+		log.Println("Error finding userID from the sessions")
+	}
 	c.HTML(http.StatusOK, "dashboard.html", gin.H{
 		"userpicture": userPic,
+		"userName":    userName,
 	})
 }

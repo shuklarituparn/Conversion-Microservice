@@ -16,7 +16,13 @@ func Profile(c *gin.Context) {
 	if !ok {
 		log.Println("Error finding userID from the sessions")
 	}
+	userPicture, ok := session.Values["userPhoto"].(string)
+	if !ok {
+		log.Println("Error finding userID from the sessions")
+	}
+
 	c.HTML(http.StatusOK, "profile.html", gin.H{
-		"userName": userName,
+		"userName":    userName,
+		"userpicture": userPicture,
 	})
 }

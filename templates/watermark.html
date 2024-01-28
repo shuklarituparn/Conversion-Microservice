@@ -3,45 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Dashboard</title>
     <link href="../static/css/output.css" rel="stylesheet">
     <link rel="icon" href="/static/favicon/favicon.ico" type="image/x-icon">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.querySelector('.group button');
+            const dropdown = document.getElementById('dropdown');
+            const overlay = document.getElementById('overlay');
+
+            button.addEventListener('click', function() {
+                console.log("Button clicked");
+                dropdown.classList.toggle('opacity-0');
+                overlay.classList.toggle('hidden');
+            });
+            overlay.addEventListener('click', function() {
+                console.log("Overlay clicked");
+                dropdown.classList.add('opacity-0');
+                overlay.classList.add('hidden');
+            });
+
+        });
+    </script>
 
 </head>
 <body>
-<div class="flex h-screen w-screen items-center justify-center  bg-gray-900 bg-cover bg-no-repeat" style="background-image: url('../static/images/background.png');">
-    <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-4  sm:px-10 sm:mb-8 sm:py-10 md:px-24 md:py-24 shadow-2xl backdrop-blur-md">
-        <div class="text-white VK-Sans">
-            <div class="mb-4 sm:mb-8 flex flex-col items-center">
-                <img src="../static/assets/persik4.webp" class="w-24 sm:w-32 md:w-40" alt="" />
-                <h1 class="mb-2 text-xl sm:text-2xl md:text-3xl text-center py-4 sm:py-6 md:py-9 VK-Sans">Watermark Page</h1>
-                <ul class="mb-2 ml-2 VK-Sans text-center">
-                    <li class="text-xs sm:text-sm indent-2">Очень рад видеть тебя здесь, {{.userName}}</li>
-                </ul>
+<div class="h-screen w-screen bg-gray-900 bg-cover bg-no-repeat" style="background-image: url('../static/images/background.png');">
+    <nav class="absolute container mx-auto p-2 bg-gray-800 bg-opacity-40 rounded-3xl shadow-2xl left-0 right-0">
+        <div class="flex justify-between items-center flex-wrap">
 
-                <ul class="mt-2 ml-2 VK-Sans text-center">
-                    <li class="text-xs sm:text-sm indent-2">Эта веб-страница находится на этапе разработки</li>
-                </ul>
-
-                <ul class="mt-2 mb-2 VK-Sans py-2 text-center">
-                    <li class="text-xs sm:text-sm indent-2"> Нажми на кнопку, чтобы перейти на главную страницу</li>
-                </ul>
-
-                <a href="/dashboard" class="mt-4 sm:mt-8 VK-Sans text-white bg-gray-800 text-center bg-opacity-40 hover:bg-blue-700 border border-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 font-sans rounded-full text-sm sm:text-md px-5 sm:px-10 py-2 text-center inline-flex items-center">
-
-                    Вам туда
-                    <svg class="h-6 w-8 sm:h-8 sm:w-10 ml-2"  xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
-                        <path d="M77 1L93 16L77 31" stroke="white"/>
-                        <path d="M93 16L0 16" stroke="white"/> ></svg>
-
+            <div class="flex-1 min-w-0">
+                <a href="/dashboard">
+                    <img class="p-2 size-14" src="../static/assets/VK.svg">
                 </a>
+            </div>
+
+            <div class="flex-1 min-w-0 text-center lg:hidden">
+                <p class="text-white text-xl text-extrabold VK-Sans">
+                    Video Conversion Service
+                </p>
+            </div>
+
+            <div class="flex-grow lg:flex space-x-14 justify-center hidden">
+                <a href="/convert" class=" mt-1 mb-1  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 VK-Sans text-white bg-gray-800 bg-opacity-20  border border-gray-200 rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Convert
+                </a>
+
+                <a href="/cut" class=" mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Cut
+                </a>
+
+
+                <a href="/watermark" class=" mt-1 mb-1 VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200   rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Watermark
+                </a>
+
+
+                <a href="/extract" class="mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Extract
+                </a>
+
+            </div>
+
+            <div class="flex-1 min-w-0 text-right">
+                <div class="group p-2 inline-block">
+                    <button class="block h-11 w-11 z-10 rounded-full overflow-hidden border-2 border-gray-200 focus:border-white">
+                        <img class="h-full w-full object-cover" src="{{.userpicture}}">
+                    </button>
+                    <button id="overlay" class="hidden fixed z-10 inset-0 bg-gray-800 bg-opacity-20 backdrop-blur-sm"></button>
+                    <div id="dropdown" class="absolute mt-1 right-0 opacity-0 z-10 transition-opacity duration-300 bg-gray-800 bg-opacity-40 border border-gray-200 rounded-3xl shadow-2xl">
+                        <p class="block lg:hidden px-6 py-2 text-center transition-opacity duration-300 text-white bg-gradient-to-r from-blue-600 to-purple-500 VK-Sans rounded-t-3xl shadow-2xl">Привет, {{.userName}}!</p>
+                        <a href="/convert" class="block lg:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Convert</a>
+                        <a href="/cut" class="block lg:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Cut</a>
+                        <a href="/watermark" class="block lg:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Watermark</a>
+                        <a href="/extract" class="block lg:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Extract</a>
+                        <a href="/profile" class="block px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 lg:rounded-t-3xl shadow-2xl">Profile</a>
+                        <a href="/signout" class="block px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 rounded-b-3xl shadow-2xl">Sign Out</a>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </nav>
+    <div class="flex justify-center items-center h-full w-full">
+        <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-4  sm:px-10 sm:mb-8 sm:py-10 md:px-20 md:py-20 shadow-2xl backdrop-blur-md">
+            <div class="text-white VK-Sans">
+                <div class="mb-4 sm:mb-8 flex flex-col items-center">
+                    <img src="../static/assets/persik2.webp" class="w-24 sm:w-32 md:w-40" alt="" />
+                    <h1 class="mb-2 text-xl sm:text-2xl md:text-3xl text-center py-4 sm:py-6 md:py-9 VK-Sans">Watermark Page</h1>
+                    <ul class="mb-2 ml-2 VK-Sans text-center">
+                        <li class="text-xs sm:text-sm indent-2">Очень рад видеть тебя здесь, {{.userName}}</li>
+                    </ul>
+
+                    <ul class="mt-2 ml-2 VK-Sans text-center">
+                        <li class="text-xs sm:text-sm indent-2">Эта веб-страница находится на этапе разработки</li>
+                    </ul>
+
+                    <ul class="mt-2 mb-2 VK-Sans py-2 text-center">
+                        <li class="text-xs sm:text-sm indent-2"> Нажми на кнопку, чтобы перейти на главную страницу</li>
+                    </ul>
+
+                    <a href="/dashboard" class="mt-4 sm:mt-8 VK-Sans text-white bg-gray-800 text-center bg-opacity-40 hover:bg-blue-700 border border-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 font-sans rounded-full text-sm sm:text-md px-5 sm:px-10 py-2 text-center inline-flex items-center">
+
+                        Вам туда
+                        <svg class="h-6 w-8 sm:h-8 sm:w-10 ml-2"  xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
+                            <path d="M77 1L93 16L77 31" stroke="white"/>
+                            <path d="M93 16L0 16" stroke="white"/> ></svg>
+
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</body>
-
-</div>
 
 </body>
+
 </html>
