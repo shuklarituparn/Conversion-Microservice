@@ -62,3 +62,4 @@ func main() {
 }
 
 //TODO: SO CAN BASICALLY GENERATE DIFFERENT TEMPLATES FOR DIFFERENT USE AND THEN USE KAFKA TO SEND TO USER
+//TODO: Theme is where the general template is defined
