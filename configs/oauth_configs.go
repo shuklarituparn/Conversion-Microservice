@@ -20,7 +20,7 @@ func init() {
 		ClientID:     os.Getenv("VK_CLIENT_ID"),
 		ClientSecret: os.Getenv("VK_CLIENT_SECRET"),
 		RedirectURL:  os.Getenv("REDIRECT_URL"),
-		Scopes:       []string{"email", "offline"},
+		Scopes:       []string{"email"},
 		Endpoint:     vk.Endpoint,
 	}
 }

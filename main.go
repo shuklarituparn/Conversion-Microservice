@@ -29,9 +29,10 @@ func main() {
 	{
 		protected.GET("/dashboard", handlers.Dashboard)
 		protected.GET("/convert", handlers.Convert)
+		protected.POST("/convert", handlers.ConvertUpload)
 		protected.GET("/cut", handlers.Cut)
 		protected.GET("/watermark", handlers.Watermark)
-		protected.GET("/extract", handlers.Extract)
+		protected.GET("/screenshot", handlers.Screenshot)
 		protected.GET("/profile", handlers.Profile)
 		protected.GET("/signout", handlers.Signout)
 	}

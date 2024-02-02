@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func Extract(c *gin.Context) {
+func Screenshot(c *gin.Context) {
 	session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
@@ -20,7 +20,7 @@ func Extract(c *gin.Context) {
 	if !ok {
 		log.Println("Error finding userID from the sessions")
 	}
-	c.HTML(http.StatusOK, "extract.html", gin.H{
+	c.HTML(http.StatusOK, "screenshot.html", gin.H{
 		"userName":    userName,
 		"userpicture": userPicture,
 	})
