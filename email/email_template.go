@@ -13,7 +13,7 @@ func main() {
 		// Theme: new(Default)
 		Product: hermes.Product{
 			// Appears in header & footer of e-mails
-			Name: "Video_conversion_service",
+			Name: "Video conversion service",
 			Link: "https://knowing-gannet-actively.ngrok-free.app/",
 			// Optional product logo
 			Logo: "https://iili.io/J09GHml.md.jpg",
@@ -28,7 +28,7 @@ func main() {
 			},
 			Actions: []hermes.Action{
 				{
-					Instructions: "To get started with Video_Conversion_Service, please click here:",
+					Instructions: "To get started with Video Conversion Service, please click here:",
 					Button: hermes.Button{
 						Color: "#22BC66", // Optional action button color
 						Text:  "Confirm your account",
