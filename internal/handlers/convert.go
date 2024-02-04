@@ -10,6 +10,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
 )
 
 func Convert(c *gin.Context) {
@@ -67,10 +69,8 @@ func ConvertUpload(c *gin.Context) {
 		}
 		defer file.Close()
 
-		// Get the filename from the header
 		filename := sanitizeFilename(fileHeader.Filename)
 
-		// Create a new file with a sanitized filename
 		newFilePath := filepath.Join(uploadDir, filename)
 		newFile, err := os.Create(newFilePath)
 		if err != nil {
@@ -78,9 +78,13 @@ func ConvertUpload(c *gin.Context) {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to create file"})
 			return
 		}
-		defer newFile.Close()
+		defer func(newFile *os.File) {
+			err := newFile.Close()
+			if err != nil {
 
-		// Copy the uploaded file contents into the new file
+			}
+		}(newFile)
+
 		_, err = io.Copy(newFile, file)
 		if err != nil {
 			fmt.Println("Error copying uploaded file contents:", err)
@@ -89,7 +93,6 @@ func ConvertUpload(c *gin.Context) {
 		}
 	}
 
-	// Process other form data
 	outputFormat := form.Value["output_format"]
 	if len(outputFormat) == 0 {
 		fmt.Println("No output format provided")
@@ -98,12 +101,19 @@ func ConvertUpload(c *gin.Context) {
 	}
 	fmt.Println("Output format:", outputFormat[0])
 
-	// Respond with a success message
+	topic := "uploads"
+	p, _ := producer.NewKafkaProducer()
+	err = p.ProduceMessage(topic, "New Upload done")
+	if err != nil {
+		log.Println("Error producing message:", err)
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to produce message"})
+		return
+	}
+	defer p.Close()
 	c.HTML(http.StatusOK, "convert_success.html", gin.H{})
 }
 
 func sanitizeFilename(filename string) string {
-	// Remove any path information and replace non-alphanumeric characters with underscores
 	sanitizedFilename := filepath.Base(filename)
 	sanitizedFilename = strings.Map(func(r rune) rune {
 		if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') {

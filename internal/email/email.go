@@ -1,15 +1,17 @@
-package main
+package email
 
 import (
 	"crypto/tls"
 	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/ID"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/consumer"
 	gomail "gopkg.in/mail.v2"
+	"log"
 	"os"
 )
 
-func main() {
+func SendMail() {
 	m := gomail.NewMessage()
 
 	err := godotenv.Load("../.env")
@@ -50,5 +52,31 @@ func main() {
 		panic(err)
 	}
 
-	return
+}
+func ConsumeEmail() {
+
+	c, err := consumer.NewConsumer("localhost:9092", "email", []string{"upload"})
+	if err != nil {
+		log.Println("Error creating consumer:", err)
+		return
+	}
+	defer c.Close()
+
+	for {
+
+		msg, err := c.ReadMessage(-1)
+		if err != nil {
+			log.Println("Error reading message:", err)
+			continue
+		}
+
+		log.Printf("Received message on %s: %s\n", msg.TopicPartition, string(msg.Value))
+
+		SendMail()
+
+		_, commitErr := c.CommitMessage(msg)
+		if commitErr != nil {
+			log.Printf("Failed to commit offset: %v", commitErr)
+		}
+	}
 }

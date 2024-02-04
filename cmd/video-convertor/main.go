@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/email"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/handlers"
 
 	"io"
@@ -39,6 +40,7 @@ func main() {
 		protected.GET("/profile", handlers.Profile)
 		protected.GET("/signout", handlers.Signout)
 	}
+	email.ConsumeEmail()
 
 	router.Run(":8085")
 }

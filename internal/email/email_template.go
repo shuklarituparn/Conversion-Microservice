@@ -1,11 +1,11 @@
-package main
+package email
 
 import (
 	"github.com/matcornic/hermes/v2"
 	"os"
 )
 
-func main() {
+func EmailTempGenerator() {
 	// Configure hermes by setting a theme and your product info
 	h := hermes.Hermes{
 		// Optional Theme
