@@ -3,7 +3,7 @@ package handlers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/shuklarituparn/Conversion-Microservice/user_sessions"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"io"
 	"log"
 	"net/http"

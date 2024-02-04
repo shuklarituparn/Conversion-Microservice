@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	"github.com/shuklarituparn/Conversion-Microservice/configs"
-	"github.com/shuklarituparn/Conversion-Microservice/user_sessions"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"io"
 	"log"
 	"net/http"
