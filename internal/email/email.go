@@ -4,7 +4,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/joho/godotenv"
-	"github.com/shuklarituparn/Conversion-Microservice/ID"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/ID"
 	gomail "gopkg.in/mail.v2"
 	"os"
 )

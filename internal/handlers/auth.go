@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/shuklarituparn/Conversion-Microservice/user_sessions"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"net/http"
 )
 

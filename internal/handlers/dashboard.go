@@ -3,7 +3,7 @@ package handlers
 import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/gorilla/sessions"
-	"github.com/shuklarituparn/Conversion-Microservice/user_sessions"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"log"
 	"net/http"
 )

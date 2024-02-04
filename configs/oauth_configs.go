@@ -11,7 +11,7 @@ import (
 var conf *oauth2.Config
 
 func init() {
-	err := godotenv.Load()
+	err := godotenv.Load("../../.env")
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}

@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/shuklarituparn/Conversion-Microservice/ID"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/ID"
 	"io"
 	"net/http"
 	"os"
