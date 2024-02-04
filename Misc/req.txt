@@ -1,0 +1,71 @@
+&{POST /upload HTTP/1.1 1 1
+map[Accept:[text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7] Accept-Encoding:[gzip, deflate, br] Accept-Language:[en-US,en;q=0.9]
+Cache-Control:[max-age=0] Connection:[keep-alive] Content-Length:[889243]
+Content-Type:[multipart/form-data; boundary=----WebKitFormBoundary0Pk9SZ1kV8l5bvxv]
+Cookie:[username-localhost-8888="2|1:0|10:1702499486|23:username-localhost-8888|200:eyJ1c2VybmFtZSI6ICJkMDEzY2E2NTgxODU0NTIyYTM5OTNhODY2OGQ1MzUzNCIsICJuYW1lIjogIkFub255bW91cyBDaGFsZGVuZSIsICJkaXNwbGF5X25hbWUiOiAiQW5vbnltb3VzIENoYWxkZW5lIiwgImluaXRpYWxzIjogIkFDIiwgImNvbG9yIjogbnVsbH0=|ca9ad83fe95a49f7d377a3fc649038a38c3ce344ea8814c4a880895323aec2fe"; _xsrf=2|9187d297|522d6e9511129bd6021046acd8b5cad9|1702499486;
+grafana_session=d31d10cf8c551353f3db5379d48136ec; grafana_session_expiry=1703695188] Origin:[http://localhost:8085]
+Referer:[http://localhost:8085/convert/] Sec-Ch-Ua:["Not_A Brand";v="8", "Chromium";v="120"] Sec-Ch-Ua-Mobile:[?0]
+Sec-Ch-Ua-Platform:["Linux"] Sec-Fetch-Dest:[document] Sec-Fetch-Mode:[navigate]
+Sec-Fetch-Site:[same-origin] Sec-Fetch-User:[?1] Upgrade-Insecure-Requests:[1] User-Agent:[Mozilla/5.0
+(X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
+Safari/537.36]] 0xc00021e000 <nil> 889243 [] false localhost:8085 map[] map[] <nil> map[]
+[::1]:45502 /upload <nil> <nil> <nil> 0xc000220000}
+
+
+
+Request Line: POST /upload HTTP/1.1
+
+Method: POST - This is a method used to submit data to be processed to a specified resource. In this case, it's
+ typically used for uploading files or submitting forms.
+Path: /upload - This is the URL path on the server where the request is being sent.
+HTTP Version: HTTP/1.1 - This indicates the version of the HTTP protocol used for this request.
+Headers: These provide additional information about the request:
+
+Accept, Accept-Encoding, Accept-Language - These headers tell the server what content types, encodings, and languages
+ the client can handle.
+Cache-Control: max-age=0 - Instructs the server not to use cached content.
+Connection: keep-alive - Indicates that the client wants to keep the connection open for further requests.
+Content-Length: 889243 - Specifies the size of the data in the request body, in bytes.
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary0Pk9SZ1kV8l5bvxv - Indicates that the body of the
+request contains form data, with the specified boundary used to distinguish different parts of the form data.
+Cookie - Contains cookies that the client sends to the server. This includes session identifiers and other relevant data.
+Origin, Referer - Indicate the origin of the request and the referring page.
+Sec-* headers - Security-related headers with information about the client's browser and platform.
+User-Agent - Provides information about the client's browser and operating system.
+Body:
+
+The body of a POST request contains the data to be sent to the server. In this case, the Content-Type header
+indicates that the data is form data (often used for file uploads). The actual data is not shown in your text,
+ but it would be encoded as multipart/form-data.
+Additional Metadata:
+
+The rest of the text seems to include server-specific information like local addresses, ports, and internal memory
+references (e.g., 0xc00021e000), which are relevant for the server processing this request.
+
+
+
+The mention of Grafana in the POST request is likely due to a cookie related to a Grafana session. Grafana is a
+ popular open-source platform used for monitoring, visualization, and analytics, often dealing with time-series
+ data like metrics from databases and application monitoring tools.
+
+The specific part in your provided request is:
+
+grafana_session=d31d10cf8c551353f3db5379d48136ec; grafana_session_expiry=1703695188
+This indicates that the client (the browser or user making the request) has previously interacted with a Grafana
+ service, and as a result, has received a Grafana-specific session cookie. Here's what this means:
+
+Grafana Session Cookie: The grafana_session cookie is used by Grafana to maintain session information for the user.
+This cookie is a unique identifier that Grafana uses to recognize the user in subsequent requests, maintaining their
+session state.
+
+Session Expiry: The grafana_session_expiry part likely represents when the session is set to expire. This is a typical
+ security measure to ensure that sessions are not valid indefinitely.
+
+When the client makes a new HTTP request (like your POST request to /upload), the browser automatically includes all
+cookies relevant to the domain being accessed. This includes cookies set by different applications running on the same
+domain or subdomain. So, if the client had previously used Grafana on the same domain or a related subdomain,
+the Grafana cookies would be included in subsequent requests to the same domain.
+
+It's important to note that the presence of the Grafana cookie in this request doesn't necessarily mean that the POST
+request is related to Grafana. It could simply be that the client has Grafana cookies stored, and they are being sent
+along with the request due to the way web browsers handle cookies.
