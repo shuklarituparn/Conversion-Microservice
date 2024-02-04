@@ -2,7 +2,9 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/shuklarituparn/Conversion-Microservice/handlers"
+
 	"io"
 	"os"
 )
@@ -18,6 +20,7 @@ func main() {
 
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/static", "./static")
+	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	router.GET("/", handlers.WelcomeHandler)
 	router.GET("/login", handlers.Login)
