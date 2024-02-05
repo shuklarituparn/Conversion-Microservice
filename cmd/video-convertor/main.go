@@ -18,7 +18,7 @@ func main() {
 	gin.DefaultWriter = io.MultiWriter(f)
 
 	router := gin.Default()
-
+	go email.ConsumeEmail()
 	router.LoadHTMLGlob("../../templates/*")
 	router.Static("/static", "../../static")
 	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
@@ -40,7 +40,9 @@ func main() {
 		protected.GET("/profile", handlers.Profile)
 		protected.GET("/signout", handlers.Signout)
 	}
-	email.ConsumeEmail()
 
-	router.Run(":8085")
+	err := router.Run(":8085")
+	if err != nil {
+		return
+	}
 }
