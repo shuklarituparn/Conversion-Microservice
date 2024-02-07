@@ -18,7 +18,9 @@ func main() {
 	gin.DefaultWriter = io.MultiWriter(f)
 
 	router := gin.Default()
-	go email.ConsumeEmail()
+	go func() {
+		email.ConsumeEmail()
+	}()
 	router.LoadHTMLGlob("../../templates/*")
 	router.Static("/static", "../../static")
 	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
