@@ -12,7 +12,7 @@ var state = ID.ReturnID()
 
 func Login(c *gin.Context) {
 
-	conf := configs.Config()
+	conf := configs.OauthConfig()
 	url := conf.AuthCodeURL(state)
 	c.Redirect(http.StatusFound, url)
 

@@ -2,16 +2,16 @@ package handlers
 
 import (
 	"fmt"
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/gin-gonic/gin"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"io"
 	"log"
+	"mime/multipart"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
 )
 
 func Convert(c *gin.Context) {
@@ -42,7 +42,7 @@ func ConvertUpload(c *gin.Context) {
 		return
 	}
 
-	uploadDir := "./uploads"
+	uploadDir := "../../uploads"
 	err = os.MkdirAll(uploadDir, os.ModePerm)
 	if err != nil {
 		fmt.Println("Error creating upload directory:", err)
@@ -67,7 +67,12 @@ func ConvertUpload(c *gin.Context) {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to open file"})
 			return
 		}
-		defer file.Close()
+		defer func(file multipart.File) {
+			err := file.Close()
+			if err != nil {
+
+			}
+		}(file)
 
 		filename := sanitizeFilename(fileHeader.Filename)
 
@@ -100,16 +105,7 @@ func ConvertUpload(c *gin.Context) {
 		return
 	}
 	fmt.Println("Output format:", outputFormat[0])
-
-	topic := "uploads"
-	p, _ := producer.NewKafkaProducer()
-	err = p.ProduceMessage(topic, "New Upload done")
-	if err != nil {
-		log.Println("Error producing message:", err)
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to produce message"})
-		return
-	}
-	defer p.Close()
+	produceMessage(outputFormat[0])
 	c.HTML(http.StatusOK, "convert_success.html", gin.H{})
 }
 
@@ -123,3 +119,27 @@ func sanitizeFilename(filename string) string {
 	}, sanitizedFilename)
 	return sanitizedFilename
 }
+
+func produceMessage(outputFormat string) {
+	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "localhost:9092"})
+	if err != nil {
+		log.Printf("Failed to create Kafka producer: %s\n", err)
+		return
+	}
+	defer p.Close()
+
+	topic := "email"
+	message := fmt.Sprintf("Conversion completed for output format: %s", outputFormat)
+	err = p.Produce(&kafka.Message{
+		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
+		Value:          []byte(message),
+	}, nil)
+	if err != nil {
+		log.Printf("Failed to produce message to Kafka: %s\n", err)
+		return
+	}
+	p.Flush(15 * 1000) //it is printing late as I am waiting for the message delivery
+	log.Printf("Produced message: %s\n", message)
+}
+
+//TODO:ADD USER_ID TO FILE FOR EASIER HANDLING

@@ -3,6 +3,7 @@ package email
 import (
 	"github.com/matcornic/hermes/v2"
 	"os"
+	"path/filepath"
 )
 
 func EmailTempGenerator() {
@@ -55,7 +56,9 @@ func EmailTempGenerator() {
 	}
 
 	// Optionally, preview the generated HTML e-mail by writing it to a local file
-	err = os.WriteFile("preview.html", []byte(emailBody), 0644)
+	currentWorkDir, _ := os.Getwd()
+	finalFilePath := filepath.Join(currentWorkDir, "templates")
+	err = os.WriteFile(finalFilePath+"/"+"email.html", []byte(emailBody), 0644)
 	if err != nil {
 		panic(err) // Tip: Handle error with something else than a panic ;)
 	}

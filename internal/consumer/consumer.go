@@ -1,4 +1,3 @@
-// consumer/consumer.go
 package consumer
 
 import (
@@ -10,23 +9,13 @@ var (
 	kafkaConsumer *kafka.Consumer
 )
 
-func NewConsumer(bootstrapServers string, groupID string, topics []string) (*kafka.Consumer, error) {
+func NewConsumer(bootstrapServers string, groupID string) (*kafka.Consumer, error) {
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers":  bootstrapServers,
-		"group.id":           groupID,
-		"auto.offset.reset":  "earliest",
-		"enable.auto.commit": false,
+		"bootstrap.servers": bootstrapServers,
+		"group.id":          groupID,
+		"auto.offset.reset": "earliest",
 	})
 	if err != nil {
-		return nil, err
-	}
-
-	err = c.SubscribeTopics(topics, nil)
-	if err != nil {
-		err := c.Close()
-		if err != nil {
-			return nil, err
-		}
 		return nil, err
 	}
 

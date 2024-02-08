@@ -5,7 +5,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/email"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/handlers"
-
+	"github.com/shuklarituparn/Conversion-Microservice/middlewares"
 	"io"
 	"os"
 )
@@ -13,11 +13,12 @@ import (
 func main() {
 
 	gin.DisableConsoleColor()
-
 	f, _ := os.Create("gin.log")
+
 	gin.DefaultWriter = io.MultiWriter(f)
 
 	router := gin.Default()
+	router.Use(middlewares.TracingMiddleware())
 	go func() {
 		email.ConsumeEmail()
 	}()
@@ -31,7 +32,7 @@ func main() {
 	router.NoRoute(handlers.NoRouteHandler)
 	protected := router.Group("/")
 
-	protected.Use(handlers.AuthMiddleware())
+	protected.Use(middlewares.AuthMiddleware())
 	{
 		protected.GET("/dashboard", handlers.Dashboard)
 		protected.GET("/convert", handlers.Convert)

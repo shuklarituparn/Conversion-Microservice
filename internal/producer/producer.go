@@ -1,56 +1,38 @@
 package producer
 
 import (
+	"fmt"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
 var (
-	kafkaProducer *KafkaProducer
+	producer *kafka.Producer
 )
 
-type KafkaProducer struct {
-	producer *kafka.Producer
-}
-
-func NewKafkaProducer() (*KafkaProducer, error) {
-	if kafkaProducer != nil {
-		return kafkaProducer, nil
-	}
-
-	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "localhost:9092"})
+func NewProducer(bootstrapServers string) (*kafka.Producer, error) {
+	p, err := kafka.NewProducer(&kafka.ConfigMap{
+		"bootstrap.servers": bootstrapServers,
+	})
 	if err != nil {
+		fmt.Println("Error creating Kafka producer", err)
 		return nil, err
-	}
 
-	kafkaProducer = &KafkaProducer{
-		producer: p,
 	}
+	fmt.Printf("Created producer %v\n", p)
 
-	return kafkaProducer, nil
+	producer = p
+	return producer, nil
 }
 
-func (p *KafkaProducer) Close() {
-	p.producer.Close()
-}
-
-func (p *KafkaProducer) ProduceMessage(topic string, message string) error {
-	deliveryChan := make(chan kafka.Event)
-	defer close(deliveryChan)
-
-	err := p.producer.Produce(&kafka.Message{
+func ProduceNewMessage(p *kafka.Producer, topic string, value string) error {
+	err := p.Produce(&kafka.Message{
 		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
-		Value:          []byte(message),
-	}, deliveryChan)
+		Value:          []byte(value),
+	}, nil)
 
 	if err != nil {
+		fmt.Println("error producing message", err)
 		return err
-	}
-
-	e := <-deliveryChan
-	m := e.(*kafka.Message)
-
-	if m.TopicPartition.Error != nil {
-		return m.TopicPartition.Error
 	}
 
 	return nil

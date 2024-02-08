@@ -25,6 +25,6 @@ func init() {
 	}
 }
 
-func Config() *oauth2.Config {
+func OauthConfig() *oauth2.Config {
 	return conf
 }

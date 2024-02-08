@@ -1,0 +1,2 @@
+{"level":"info","time":"2024-02-07T19:59:45.111+0300","msg":"request","method":"POST","path":"/convert","status":200,"duration":16.043887432}
+{"level":"info","time":"2024-02-07T19:59:48.775+0300","msg":"request","method":"GET","path":"/convert","status":200,"duration":0.00059197}
