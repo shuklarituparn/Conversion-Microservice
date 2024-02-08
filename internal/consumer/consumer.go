@@ -1,32 +1,31 @@
-package main
+package consumer
 
 import (
-	"fmt"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"log"
 )
 
-func main() {
+var (
+	kafkaConsumer *kafka.Consumer
+)
+
+func NewConsumer(bootstrapServers string, groupID string) (*kafka.Consumer, error) {
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": "localhost:9092",
-		"group.id":          "myGroup",
+		"bootstrap.servers": bootstrapServers,
+		"group.id":          groupID,
 		"auto.offset.reset": "earliest",
 	})
-
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	c.SubscribeTopics([]string{"your_topic"}, nil)
+	kafkaConsumer = c
+	return kafkaConsumer, nil
+}
 
-	for {
-		msg, err := c.ReadMessage(-1)
-		if err == nil {
-			fmt.Printf("Received message: %s\n", string(msg.Value))
-		} else {
-			// The client will automatically try to recover from all errors.
-			fmt.Printf("Consumer error: %v (%v)\n", err, msg)
-		}
+func Close(c *kafka.Consumer) {
+	err := c.Close()
+	if err != nil {
+		log.Println(err)
 	}
-
-	c.Close()
 }

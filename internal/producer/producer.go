@@ -1,45 +1,39 @@
-package main
+package producer
 
 import (
 	"fmt"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
-func main() {
-	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "localhost:9092"})
+var (
+	producer *kafka.Producer
+)
+
+func NewProducer(bootstrapServers string) (*kafka.Producer, error) {
+	p, err := kafka.NewProducer(&kafka.ConfigMap{
+		"bootstrap.servers": bootstrapServers,
+	})
 	if err != nil {
-		panic(err)
+		fmt.Println("Error creating Kafka producer", err)
+		return nil, err
+
 	}
-	defer p.Close()
+	fmt.Printf("Created producer %v\n", p)
 
-	// Delivery report handler for produced messages
-	go func() {
-		for e := range p.Events() {
-			switch ev := e.(type) {
-			case *kafka.Message:
-				if ev.TopicPartition.Error != nil {
-					fmt.Printf("Delivery failed: %v\n", ev.TopicPartition.Error)
-				} else {
-					fmt.Printf("Delivered message to %v\n", ev.TopicPartition)
-				}
-			}
-		}
-	}()
-
-	// Produce a message to a topic
-	topic := "your_topic"
-	for _, word := range []string{"Greetings", "from", "Golang!"} {
-		err := p.Produce(&kafka.Message{
-			TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
-			Value:          []byte(word),
-		}, nil)
-		if err != nil {
-			return
-		}
-	}
-
-	// Wait for message deliveries
-	p.Flush(15 * 1000)
+	producer = p
+	return producer, nil
 }
 
-//So basically in Kafka we create a topic, and then we post the message on the topic, and the consumer subscribe to topics
+func ProduceNewMessage(p *kafka.Producer, topic string, value string) error {
+	err := p.Produce(&kafka.Message{
+		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
+		Value:          []byte(value),
+	}, nil)
+
+	if err != nil {
+		fmt.Println("error producing message", err)
+		return err
+	}
+
+	return nil
+}

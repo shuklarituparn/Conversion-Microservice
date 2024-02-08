@@ -1,11 +1,12 @@
-package main
+package email
 
 import (
 	"github.com/matcornic/hermes/v2"
 	"os"
+	"path/filepath"
 )
 
-func main() {
+func EmailTempGenerator() {
 	// Configure hermes by setting a theme and your product info
 	h := hermes.Hermes{
 		// Optional Theme
@@ -55,7 +56,9 @@ func main() {
 	}
 
 	// Optionally, preview the generated HTML e-mail by writing it to a local file
-	err = os.WriteFile("preview.html", []byte(emailBody), 0644)
+	currentWorkDir, _ := os.Getwd()
+	finalFilePath := filepath.Join(currentWorkDir, "templates")
+	err = os.WriteFile(finalFilePath+"/"+"email.html", []byte(emailBody), 0644)
 	if err != nil {
 		panic(err) // Tip: Handle error with something else than a panic ;)
 	}

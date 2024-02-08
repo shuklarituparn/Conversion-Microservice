@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	conf = configs.Config()
+	conf = configs.OauthConfig()
 )
 
 func Callback(c *gin.Context) {
