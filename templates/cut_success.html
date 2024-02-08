@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sucess</title>
+    <link href="../static/css/output.css" rel="stylesheet">
+    <link rel="icon" href="/static/favicon/favicon.ico" type="image/x-icon">
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                window.location.href = '/cut';
+            }, 2500);
+        };
+    </script>
+
+</head>
+<body>
+<div class="flex h-screen w-screen items-center justify-center  bg-gray-900 bg-cover bg-no-repeat" style="background-image: url('../static/images/background.png');">
+    <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-4  sm:px-10 sm:mb-8 sm:py-10 md:px-24 md:py-24 shadow-2xl backdrop-blur-md">
+        <div class="text-white  VK-Sans">
+            <div class="mb-4 sm:mb-8 flex flex-col items-center">
+                <img src="../static/assets/ok-persik.webp" class="w-28 sm:w-32 md:w-40" alt="" />
+
+                <ul class="mb-2 ml-2 VK-Sans text-center text-xl">
+                    <li class="sm:text-sm md:text-2xl  mt-8"> Файл успешно загрузил</li>
+                </ul>
+                <ul class="mb-2 ml-2 VK-Sans text-center text-xl">
+                    <li class="sm:text-sm md:text-2xl  mt-8">Вы можете загрузить его позже в личном кабинете!</li>
+                </ul>
+                <ul class="mt-2 mb-2 VK-Sans py-2 text-center">
+                    <li class=" sm:text-sm  md:text-md indent-2">перенаправляю тебя обратно </li>
+                </ul>
+                <a  class="mt-4 sm:mt-8 VK-Sans text-white bg-gray-800 text-center bg-opacity-40  border border-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 font-sans rounded-full text-sm sm:text-md px-5 sm:px-10 py-2 text-center inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:10px;background:none;display:block;"
+                         width="20px" height="20px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" r="30" stroke="#0077ff" stroke-width="10" fill="none"></circle>
+                        <circle cx="50" cy="50" r="30" stroke="#ffffff" stroke-width="8" stroke-linecap="round" fill="none">
+                            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;180 50 50;720 50 50" keyTimes="0;0.5;1"></animateTransform>
+                            <animate attributeName="stroke-dasharray" repeatCount="indefinite" dur="1s" values="18.84955592153876 169.64600329384882;94.2477796076938 94.24777960769377;18.84955592153876 169.64600329384882" keyTimes="0;0.5;1"></animate>
+                        </circle>
+                    </svg>
+
+                    Идет перенаправление
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

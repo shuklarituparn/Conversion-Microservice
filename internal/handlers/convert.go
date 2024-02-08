@@ -143,3 +143,19 @@ func produceMessage(outputFormat string) {
 }
 
 //TODO:ADD USER_ID TO FILE FOR EASIER HANDLING
+
+//TODO: FIND THE USE FOR GRPC
+
+/*
+Create the table in DB with userID from VK, that will make everyuser different since they are using VK
+
+UserId
+UserName
+UserPic (the URL string for the image we get from VK)
+...
+
+
+Basically the first table will contain the field we get from the VK
+
+Second table will store the File details for the given users
+*/
