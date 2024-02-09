@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cut</title>
+    <title>Screenshot Edit</title>
     <link href="../static/css/output.css" rel="stylesheet">
     <link rel="icon" href="/static/favicon/favicon.ico" type="image/x-icon">
     <script>
@@ -11,6 +11,11 @@
             const button = document.querySelector('.group button');
             const dropdown = document.getElementById('dropdown');
             const overlay = document.getElementById('overlay');
+            const start_time=document.getElementById('start_time');
+            const end_time=document.getElementById('end_time');
+            const video_time_error=document.getElementById('time_error');
+            const video_duration= document.getElementById('Video')
+            const form= document.getElementById("video_form")
 
             button.addEventListener('click', function() {
                 console.log("Button clicked");
@@ -23,35 +28,36 @@
                 overlay.classList.add('hidden');
             });
 
-            const fileInput = document.getElementById('dropzone-file');
-            const errorMessage = document.getElementById('error-message');
+            start_time.addEventListener('change', function () {
+                var start = start_time.value;
+                if (!start.match(/^\d{2}:\d{2}(:\d{2})?$/)) {
 
-            fileInput.addEventListener('change', function() {
-                const file = this.files[0];
-                if (file && file.type === 'video/mp4') {
-                    errorMessage.classList.add('hidden');
-                } else {
-                    errorMessage.classList.remove('hidden');
-                    this.value = '';
+                    video_time_error.classList.remove('hidden');
+
+                }else {
+                    video_time_error.textContent=""
+                    var startSeconds = parseInt(start.split(':')[0]) * 60 + parseInt(start.split(':')[1]);
+                    var videoDurationSeconds = video_duration.duration;
+
+                    if (startSeconds > videoDurationSeconds) {
+                        video_time_error.classList.remove('hidden');
+                        video_time_error.textContent = "Время не может превышать продолжительность видео";
+                    } else {
+
+                        video_time_error.classList.add('hidden');
+                    }
                 }
             });
 
-            document.getElementById('dropzone-file').addEventListener('change', function() {
-                var fileNameDisplay = document.getElementById('file-name');
-                if (this.files.length > 0) {
-                    // Display the file name if a file is selected
-                    fileNameDisplay.textContent = this.files[0].name;
-                } else {
-                    // Reset the text if no file is selected
-                    fileNameDisplay.textContent = 'No file chosen';
-                }
-            });
+
+
+
+
 
         });
 
 
     </script>
-
 
 </head>
 <body>
@@ -120,30 +126,34 @@
     <div class="flex justify-center items-center h-full w-full">
         <div class="mt-3 rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-4 sm:px-10 sm:mb-8 sm:py-10 md:px-20 md:py-20 shadow-2xl backdrop-blur-md">
             <div class="text-white text-center VK-Sans">
-                <h1 class="mb-2 text-xl sm:text-2xl md:text-3xl mb-8">Вырезать видео</h1>
+                <h1 class="mb-2 text-xl sm:text-2xl md:text-3xl mb-8">Скриншоты видео</h1>
+                <h1 class="mb-2 text-sm sm:text-sm md:text-sm ">Пожалуйста, введите время в формате ММ:СС, чтобы сделать скриншот</h1>
                 <div class="mb-4 sm:mb-8 flex flex-col sm:flex-row items-center justify-between">
                     <div class="flex flex-col items-center justify-end mb-4 sm:mb-0">
-                        <form action="/cut_edit" method="post" enctype="multipart/form-data" class="flex flex-col items-center justify-center w-full">
-                            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-600 bg-gray-800 bg-opacity-20 border-dashed rounded-lg cursor-pointer">
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                    <svg class="w-8 h-8 mb-4 text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                    </svg>
-                                    <p class="mb-2 text-sm text-white bg-opacity-40 px-4"><span class="font-semibold ml-4">Нажми или перетащи сюда</span>, чтобы загрузить</p>
-                                    <p class="text-xs ">MP4 (не более. 20MB)</p>
-                                </div>
-                                <input id="dropzone-file" type="file" name="file" class="hidden" />
-                                <p id="file-name" class="text-sm  mt-2">Файл не выбран</p>
-                            </label>
+                        <form id="video_form" action="/cut" method="post" enctype="multipart/form-data" class="flex flex-col items-center justify-center w-full">
+                            <div class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-600 bg-gray-800 bg-opacity-20 border-dashed rounded-lg cursor-pointer">
+                                <video id="Video" controls class="w-full h-full aspect-video">
+                                    <source src="../uploads/ad.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
 
 
                             <div id="error-message" class="hidden text-red-500 text-sm">Пожалуйста, выберите формат файла MP4</div>
 
 
+                                <input type="text" id="start_time" class="mt-4 rounded-3xl bg-gray-800 bg-opacity-30 border border-gray-200 text-white text-center p-2" placeholder="Время">
 
-                            <button type="submit" class="mt-8 border border-gray-300 bg-gray-800 bg-opacity-20 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                                Вырезать
+
+
+
+                            <p id="time_error" class="mt-2 text-red-500 hidden">Введите время в правильном формате!</p>
+
+                            <button type="submit" class="mt-8 border border-gray-300 bg-gray-800 bg-opacity-20 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full">
+                                Дальше!
                             </button>
+
+
                         </form>
 
                     </div>

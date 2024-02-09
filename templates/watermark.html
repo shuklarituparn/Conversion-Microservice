@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Watermark</title>
     <link href="../static/css/output.css" rel="stylesheet">
     <link rel="icon" href="/static/favicon/favicon.ico" type="image/x-icon">
     <script>
@@ -23,8 +23,52 @@
                 overlay.classList.add('hidden');
             });
 
+            const fileInput = document.getElementById('dropzone-file');
+            const errorMessage = document.getElementById('error-message');
+            const watermarkFile= document.getElementById('file_watermark');
+            const watermarkFileError=document.getElementById('watermark_file');
+
+            fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file && file.type === 'video/mp4') {
+                    errorMessage.classList.add('hidden');
+                } else {
+                    errorMessage.classList.remove('hidden');
+                    this.value = '';
+                }
+            });
+
+            fileInput.addEventListener('change', function() {
+                var fileNameDisplay = document.getElementById('file-name');
+                if (this.files.length > 0) {
+                    // Display the file name if a file is selected
+                    fileNameDisplay.textContent = this.files[0].name;
+                } else {
+                    // Reset the text if no file is selected
+                    fileNameDisplay.textContent = 'No file chosen';
+                }
+            });
+
+            document.getElementById('file_watermark').addEventListener('change', function () {
+                const watermark_files = this.files; // Changed 'this.file' to 'this.files'
+
+
+                if (watermark_files && (watermark_files[0].type === "image/jpeg" || watermark_files[0].type === "image/png")) {
+                    watermarkFileError.textContent = watermark_files[0].name;
+                } else {
+                    // Reset error message if file type is invalid
+                    watermarkFileError.classList.add('text-red-500')
+                    watermarkFileError.textContent = "Пожалуйста, выберите формат файла JPEG/MP4";
+
+                }
+            });
+
+
         });
+
+
     </script>
+
 
 </head>
 <body>
@@ -91,31 +135,40 @@
 
     </nav>
     <div class="flex justify-center items-center h-full w-full">
-        <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-4  sm:px-10 sm:mb-8 sm:py-10 md:px-20 md:py-20 shadow-2xl backdrop-blur-md">
-            <div class="text-white VK-Sans">
-                <div class="mb-4 sm:mb-8 flex flex-col items-center">
-                    <img src="../static/assets/persik2.webp" class="w-24 sm:w-32 md:w-40" alt="" />
-                    <h1 class="mb-2 text-xl sm:text-2xl md:text-3xl text-center py-4 sm:py-6 md:py-9 VK-Sans">Watermark Page</h1>
-                    <ul class="mb-2 ml-2 VK-Sans text-center">
-                        <li class="text-xs sm:text-sm indent-2">Очень рад видеть тебя здесь, {{.userName}}</li>
-                    </ul>
+        <div class="mt-3 rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-4 sm:px-10 sm:mb-8 sm:py-10 md:px-20 md:py-20 shadow-2xl backdrop-blur-md">
+            <div class="text-white text-center items-center VK-Sans">
+                <h1 class="mb-2 text-xl sm:text-2xl md:text-3xl mb-8">Водяной знак</h1>
+                <h1 class="mb-2 mt-2 text-sm text-center m-4">Загружите видео и файл который вы хотите использовать</h1>
+                <div class="sm:m-8 sm:mb-8 flex flex-col sm:flex-row items-center justify-between">
+                    <div class="flex flex-col items-center justify-end mb-4 sm:mb-0">
+                        <form action="/cut" method="post" enctype="multipart/form-data" class="flex flex-col items-center justify-center w-full">
+                            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-600 bg-gray-800 bg-opacity-20 border-dashed rounded-lg cursor-pointer">
+                                <div class="flex flex-col items-center  pt-5 pb-6">
+                                    <svg class="w-8 h-8 mb-4 text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                    </svg>
+                                    <p class="mb-2 text-sm text-white bg-opacity-40 px-4"><span class="font-semibold ml-4">Нажми или перетащи сюда</span>, чтобы загрузить</p>
+                                    <p class="text-xs ">MP4 (не более. 20MB)</p>
+                                </div>
+                                <input id="dropzone-file" type="file" name="file" class="hidden" />
+                                <p id="file-name" class="text-sm  mt-2">Файл не выбран</p>
+                            </label>
+                            <div id="error-message" class="hidden text-red-500 text-sm">Пожалуйста, выберите формат файла MP4</div>
+                            <label class="mt-4 rounded-3xl bg-gray-800 bg-opacity-30 border border-gray-200 text-white text-center p-2">
+                                <p class="px-4 ">Фото в формат jpg/png</p>
+                                <input type="file" id="file_watermark" class="hidden">
+                            </label>
+                            <p id="watermark_file" class="text-sm  mt-2">Файл не выбран</p>
 
-                    <ul class="mt-2 ml-2 VK-Sans text-center">
-                        <li class="text-xs sm:text-sm indent-2">Эта веб-страница находится на этапе разработки</li>
-                    </ul>
 
-                    <ul class="mt-2 mb-2 VK-Sans py-2 text-center">
-                        <li class="text-xs sm:text-sm indent-2"> Нажми на кнопку, чтобы перейти на главную страницу</li>
-                    </ul>
 
-                    <a href="/dashboard" class="mt-4 sm:mt-8 VK-Sans text-white bg-gray-800 text-center bg-opacity-40 hover:bg-blue-700 border border-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 font-sans rounded-full text-sm sm:text-md px-5 sm:px-10 py-2 text-center inline-flex items-center">
+                            <button type="submit" class="mt-8 border border-gray-300 bg-gray-800 bg-opacity-20 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                                 Готов!
+                            </button>
+                        </form>
 
-                        Вам туда
-                        <svg class="h-6 w-8 sm:h-8 sm:w-10 ml-2"  xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
-                            <path d="M77 1L93 16L77 31" stroke="white"/>
-                            <path d="M93 16L0 16" stroke="white"/> ></svg>
+                    </div>
 
-                    </a>
                 </div>
             </div>
         </div>
