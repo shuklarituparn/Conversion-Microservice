@@ -590,16 +590,36 @@ video {
   inset: 0px;
 }
 
+.-left-6 {
+  left: -1.5rem;
+}
+
+.-top-10 {
+  top: -2.5rem;
+}
+
 .left-0 {
   left: 0px;
+}
+
+.left-20 {
+  left: 5rem;
 }
 
 .right-0 {
   right: 0px;
 }
 
+.top-0 {
+  top: 0px;
+}
+
 .z-10 {
   z-index: 10;
+}
+
+.m-4 {
+  margin: 1rem;
 }
 
 .mx-auto {
@@ -679,17 +699,14 @@ video {
   aspect-ratio: 16 / 9;
 }
 
-.aspect-auto {
-  aspect-ratio: auto;
-}
-
-.aspect-\[4\/3\] {
-  aspect-ratio: 4/3;
-}
-
 .size-14 {
   width: 3.5rem;
   height: 3.5rem;
+}
+
+.size-28 {
+  width: 7rem;
+  height: 7rem;
 }
 
 .h-11 {
@@ -758,6 +775,10 @@ video {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.flex-row {
+  flex-direction: row;
 }
 
 .flex-col {
@@ -857,6 +878,10 @@ video {
   --tw-bg-opacity: 0.2;
 }
 
+.bg-opacity-30 {
+  --tw-bg-opacity: 0.3;
+}
+
 .bg-opacity-40 {
   --tw-bg-opacity: 0.4;
 }
@@ -894,6 +919,10 @@ video {
           background-clip: text;
 }
 
+.bg-center {
+  background-position: center;
+}
+
 .bg-no-repeat {
   background-repeat: no-repeat;
 }
@@ -925,6 +954,11 @@ video {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .py-2 {
@@ -1092,6 +1126,10 @@ video {
 }
 
 @media (min-width: 640px) {
+  .sm\:m-8 {
+    margin: 2rem;
+  }
+
   .sm\:mb-0 {
     margin-bottom: 0px;
   }
@@ -1135,6 +1173,11 @@ video {
     padding-bottom: 2.5rem;
   }
 
+  .sm\:py-14 {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
   .sm\:py-6 {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
@@ -1152,6 +1195,22 @@ video {
 }
 
 @media (min-width: 768px) {
+  .md\:-left-12 {
+    left: -3rem;
+  }
+
+  .md\:-top-14 {
+    top: -3.5rem;
+  }
+
+  .md\:h-36 {
+    height: 9rem;
+  }
+
+  .md\:w-36 {
+    width: 9rem;
+  }
+
   .md\:w-40 {
     width: 10rem;
   }
@@ -1164,6 +1223,16 @@ video {
     text-wrap: wrap;
   }
 
+  .md\:px-10 {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  .md\:px-14 {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+
   .md\:px-20 {
     padding-left: 5rem;
     padding-right: 5rem;
@@ -1172,6 +1241,11 @@ video {
   .md\:px-24 {
     padding-left: 6rem;
     padding-right: 6rem;
+  }
+
+  .md\:py-10 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
   }
 
   .md\:py-20 {
@@ -1197,6 +1271,11 @@ video {
   .md\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
+  }
+
+  .md\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }
 
