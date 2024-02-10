@@ -35,11 +35,11 @@
                     video_time_error.classList.remove('hidden');
 
                 }else {
-                    video_time_error.textContent=""
                     var startSeconds = parseInt(start.split(':')[0]) * 60 + parseInt(start.split(':')[1]);
                     var videoDurationSeconds = video_duration.duration;
 
                     if (startSeconds > videoDurationSeconds) {
+                        video_time_error.textContent=""
                         video_time_error.classList.remove('hidden');
                         video_time_error.textContent = "Время не может превышать продолжительность видео";
                     } else {
@@ -150,7 +150,7 @@
                             <p id="time_error" class="mt-2 text-red-500 hidden">Введите время в правильном формате!</p>
 
                             <button type="submit" class="mt-8 border border-gray-300 bg-gray-800 bg-opacity-20 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full">
-                                Дальше!
+                                Дальше
                             </button>
 
 
