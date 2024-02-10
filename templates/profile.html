@@ -26,8 +26,10 @@
         });
     </script>
 
+
+
 </head>
-<body>
+<body >
 <div class="h-screen w-screen bg-gray-900 bg-cover bg-no-repeat" style="background-image: url('../static/images/background.png');">
     <nav class="absolute container mx-auto p-2 bg-gray-800 bg-opacity-40 rounded-3xl shadow-2xl left-0 right-0">
         <div class="flex justify-between items-center flex-wrap">
@@ -92,24 +94,106 @@
 
     </nav>
 
-    <div class="flex h-full w-full justify-center items-center">
+    <div class="hidden lg:flex h-full w-full justify-center items-center">
         <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-10 py-10 sm:px-10 sm:mb-8 sm:py-14 md:px-20 md:py-20 shadow-2xl backdrop-blur-md">
 
             <div class="absolute -left-6 -top-10 md:-left-12 md:-top-14 size-28 md:w-36 md:h-36">
                 <div class="bg-cover bg-center w-full h-full rounded-full" style="background-image: url('../static/images/-eJL2o-rCUc.jpg');"></div>
             </div>
-            <div class="absolute left-20 top-0">
-                <h1 class="VK-Sans text-center  ml-4 mt-8 text-sm text-white text-xl  md:text-3xl mb-8">Доброе пожаловать <span class=" font-extrabold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text VK-Sans text-transparent">Ритупарн!</span></h1>
+            <div class="relative left-26 top-0 mb-8">
+                <h1 class="VK-Sans text-center mt-8 text-sm text-white text-xl md:text-3xl mb-8">Добро пожаловать <span class=" font-extrabold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text VK-Sans text-transparent">Ритупарн!</span></h1>
             </div>
 
-            <div class="flex flex-col  justify-between">
-                <svg height="310" width="300" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="0" y1="0" x2="0" y2="300" style="stroke:#0077ff;stroke-width:2px" />
-                </svg>
+            <div class="flex flex-row py-8 items-center justify-center">
+                <div class="flex flex-col space-y-14">
+                    <div class="flex flex-row space-x-14 items-center justify-center">
+                        <p class="text-center text-xl text-white VK-Sans">Добавь E-Mail</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
+                            <path d="M77 1L93 16L77 31" stroke="white"/>
+                            <path d="M93 16L0 16" stroke="white"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex flex-row  items-center justify-center">
+                        <p class="text-center text-xl text-white VK-Sans mr-4">История Использования</p>
+                        <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
+                            <path d="M77 1L93 16L77 31" stroke="white"/>
+                            <path d="M93 16L0 16" stroke="white"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex flex-row space-x-14 items-center justify-center">
+                        <p class="text-center text-xl text-white VK-Sans">Удалить Аккаунт</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
+                            <path d="M77 1L93 16L77 31" stroke="white"/>
+                            <path d="M93 16L0 16" stroke="white"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex flex-row space-x-14 items-center justify-center">
+                        <p class="text-center text-xl text-white VK-Sans">Выйти </p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
+                            <path d="M77 1L93 16L77 31" stroke="white"/>
+                            <path d="M93 16L0 16" stroke="white"/>
+                        </svg>
+                    </div>
+
+
+                </div>
+
+                <div class="flex flex-col ml-8 space-y-10">
+                    <a href="/profile/email" class=" mt-1 mb-1  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 VK-Sans text-white bg-gray-800 bg-opacity-20  border border-gray-200 rounded-full text-md px-10 py-2 text-center  items-center">Email
+                    </a>
+
+                    <a href="/profile/files" class=" mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center items-center">
+                        File History
+                    </a>
+
+
+                    <a href="/profile/delete" class=" mt-1 mb-1 VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:bg-red-500 border border-gray-200   rounded-full text-md px-10 py-2 text-center  items-center">
+                        Delete Account
+                    </a>
+
+
+                    <a href="/signout" class="mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20  bg-gradient-to-r  hover:bg-red-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center items-center">
+                        Signout
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
+
+
+
+    <div class="lg:hidden flex h-full w-full flex-col justify-center items-center">
+        <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-8 sm:px-10 sm:py-10 md:px-16 md:py-16 shadow-2xl backdrop-blur-md">
+
+            <div class="relative">
+                <div class="bg-cover bg-center w-36 h-36 md:w-48 md:h-48 rounded-full mx-auto mb-4" style="background-image: url('../static/images/-eJL2o-rCUc.jpg');"></div>
+                <h1 class="text-center mt-4 text-sm text-white text-xl md:text-3xl mb-4">Добро пожаловать <span class="font-extrabold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">Ритупарн!</span></h1>
+            </div>
+
+            <div class="flex flex-col space-y-4">
+                <a href="/profile/email" class="bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full text-md px-6 py-2 text-center">
+                    Email
+                </a>
+
+                <a href="/profile/name" class="bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full text-md px-6 py-2 text-center">
+                    File History
+                </a>
+
+                <a href="/profile/delete" class="bg-gradient-to-r hover:bg-red-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full text-md px-6 py-2 text-center">
+                    Delete Account
+                </a>
+
+                <a href="/signout" class="bg-gradient-to-r hover:bg-red-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full text-md px-6 py-2 text-center">
+                    Signout
+                </a>
+            </div>
+        </div>
+
+    </div>
 
 
 </div>
