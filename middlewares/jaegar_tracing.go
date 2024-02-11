@@ -23,12 +23,6 @@ func init() {
 	if err != nil {
 		log.Fatalf("Failed to create Jaeger tracer: %v", err)
 	}
-	defer func(closer io.Closer) {
-		err := closer.Close()
-		if err != nil {
-
-		}
-	}(Closer)
 	opentracing.SetGlobalTracer(Tracer)
 }
 

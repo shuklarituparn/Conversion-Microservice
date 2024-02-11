@@ -14,18 +14,27 @@
             const start_time=document.getElementById('start_time');
             const end_time=document.getElementById('end_time');
             const video_time_error=document.getElementById('time_error');
-            const video_duration= document.getElementById('Video')
-            const form= document.getElementById("video_form")
+            const video_duration= document.getElementById('Video');
+            const form= document.getElementById("video_form");
 
             button.addEventListener('click', function() {
                 console.log("Button clicked");
                 dropdown.classList.toggle('opacity-0');
                 overlay.classList.toggle('hidden');
+                if (overlay.classList.contains('hidden')) {
+                    overlay.style.pointerEvents = 'none';
+                    dropdown.style.pointerEvents = 'none';
+                } else {
+                    overlay.style.pointerEvents = 'auto';
+                    dropdown.style.pointerEvents = 'auto';
+                }
             });
             overlay.addEventListener('click', function() {
                 console.log("Overlay clicked");
                 dropdown.classList.add('opacity-0');
                 overlay.classList.add('hidden');
+                overlay.style.pointerEvents = 'none';
+                dropdown.style.pointerEvents = 'none';
             });
 
             start_time.addEventListener('change', function () {
