@@ -89,6 +89,24 @@
             <div class="relative">
                 <div class="bg-cover bg-center w-36 h-36 md:w-48 md:h-48 rounded-full mx-auto mb-4" style="background-image: url('../static/images/-eJL2o-rCUc.jpg');"></div>
             </div>
+
+            <div class="absolute  top-2 md:-right-20 md:top-2 size-16 md:w-36 md:h-36">
+
+                <a href="/profile">
+
+                    <svg width="50px" height="50px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                        <g fill="none" fill-rule="evenodd" stroke="#aaaaaa" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)">
+                            <circle cx="8.5" cy="8.5" r="8"/>
+                            <g transform="matrix(0 1 -1 0 17 0)">
+                                <path d="m5.5 11.5 6-6"/>
+                                <path d="m5.5 5.5 6 6"/>
+                            </g>
+                        </g>
+                    </svg>
+
+                </a>
+
+            </div>
             <h1 class="text-center mt-4 text-sm text-white text-xl md:text-3xl mb-4">Ваши Файли </h1>
 
             <div class="flex flex-row justify-center space-x-8">
@@ -124,6 +142,25 @@
 
     <div class="mg:hidden flex h-full w-full justify-center items-center">
         <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-6 sm:px-10 sm:py-8  shadow-2xl backdrop-blur-md">
+
+            <div class="absolute  top-2 md:-right-20  md:top-2 size-16 md:w-36 md:h-36">
+
+                <a href="/profile">
+
+                    <svg width="45px" height="45px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                        <g fill="none" fill-rule="evenodd" stroke="#aaaaaa" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)">
+                            <circle cx="8.5" cy="8.5" r="8"/>
+                            <g transform="matrix(0 1 -1 0 17 0)">
+                                <path d="m5.5 11.5 6-6"/>
+                                <path d="m5.5 5.5 6 6"/>
+                            </g>
+                        </g>
+                    </svg>
+
+                </a>
+
+            </div>
+
             <div class="relative">
                 <h1 class="text-center mt-4 text-sm text-white text-xl md:text-3xl mb-4">Ваши Файли </h1>
                 <h1 class="text-center mt-2 text-sm text-white  mb-4">Для получения файли по почте надо сохранить Email </h1>
@@ -133,7 +170,7 @@
             <div class="flex flex-col ">
 
                 <ul class="text-white VK-Sans mt-2">
-                    <span class="mr-4">File 1</span>
+                    <span class="mr-4">{{.FileName}}</span>
                     <li>
 
                         <a href="/sendFileViaEmail?file=file1.mp4" class="inline-block mt-2 bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full px-4 py-2">Отправь почтой</a>

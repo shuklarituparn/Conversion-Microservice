@@ -1729,6 +1729,10 @@ video {
     top: 0.5rem;
   }
 
+  .md\:right-20 {
+    right: 5rem;
+  }
+
   .md\:size-32 {
     width: 8rem;
     height: 8rem;
