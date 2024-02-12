@@ -55,10 +55,13 @@ func main() {
 		protected.GET("/convert", handlers.Convert)
 		protected.POST("/convert", handlers.ConvertUpload)
 		protected.GET("/cut", handlers.Cut)
+		protected.POST("/cut_edit", handlers.CutEditPage)
 		protected.GET("/watermark", handlers.Watermark)
 		protected.GET("/screenshot", handlers.Screenshot)
 		protected.GET("/profile", handlers.Profile)
 		protected.GET("/deleteConf", handlers.AccountDeleteConf)
+		protected.GET("/profile/email", handlers.EmailHandler)
+		protected.GET("/profile/files", handlers.FileHistory)
 		protected.GET("/signout", handlers.Signout)
 	}
 

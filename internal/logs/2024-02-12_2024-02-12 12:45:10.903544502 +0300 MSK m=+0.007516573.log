@@ -1,0 +1,78 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (19): 
+	- 404.html
+	- convert_success.html
+	- cut.html
+	- file_history.html
+	- signout.html
+	- 
+	- dashboard.html
+	- profile.html
+	- screenshot.html
+	- watermark_success.html
+	- cut_success.html
+	- login.html
+	- screenshot_success.html
+	- watermark.html
+	- email.html
+	- cut_edit.html
+	- delete_conf.html
+	- screenshot_edit.html
+	- convert.html
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /metrics                  --> main.main.WrapH.func4 (4 handlers)
+[GIN-debug] GET    /                         --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.WelcomeHandler (4 handlers)
+[GIN-debug] GET    /login                    --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Login (4 handlers)
+[GIN-debug] GET    /callback                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Callback (4 handlers)
+[GIN-debug] GET    /dashboard                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Dashboard (5 handlers)
+[GIN-debug] GET    /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Convert (5 handlers)
+[GIN-debug] POST   /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.ConvertUpload (5 handlers)
+[GIN-debug] GET    /cut                      --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Cut (5 handlers)
+[GIN-debug] GET    /watermark                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Watermark (5 handlers)
+[GIN-debug] GET    /screenshot               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Screenshot (5 handlers)
+[GIN-debug] GET    /profile                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Profile (5 handlers)
+[GIN-debug] GET    /deleteConf               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.AccountDeleteConf (5 handlers)
+[GIN-debug] GET    /signout                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Signout (5 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8085
+[GIN] 2024/02/12 - 12:45:17 | 302 |      76.384µs |    93.175.28.68 | GET      "/dashboard"
+[GIN] 2024/02/12 - 12:45:18 | 302 |      91.652µs |    93.175.28.68 | GET      "/login"
+[GIN] 2024/02/12 - 12:45:43 | 302 |  363.049094ms |    93.175.28.68 | GET      "/callback?code=bccad6e230f3a45271&state=00ebd442-f103-4532-8578-9c8e4b7da7ce"
+[GIN] 2024/02/12 - 12:45:43 | 200 |     849.123µs |    93.175.28.68 | GET      "/dashboard"
+[GIN] 2024/02/12 - 12:45:43 | 200 |    3.051626ms |    93.175.28.68 | GET      "/static/css/output.css"
+[GIN] 2024/02/12 - 12:45:43 | 304 |     384.371µs |    93.175.28.68 | GET      "/static/assets/VK.svg"
+[GIN] 2024/02/12 - 12:45:44 | 200 |   10.548089ms |    93.175.28.68 | GET      "/static/images/background.png"
+[GIN] 2024/02/12 - 12:45:46 | 200 |    1.335285ms |    93.175.28.68 | GET      "/convert"
+[GIN] 2024/02/12 - 12:46:31 | 200 |    1.055851ms |    93.175.28.68 | GET      "/dashboard"
+[GIN] 2024/02/12 - 12:46:35 | 200 |    1.563814ms |    93.175.28.68 | GET      "/profile"
+[GIN] 2024/02/12 - 12:46:35 | 200 |   10.533592ms |    93.175.28.68 | GET      "/static/images/-eJL2o-rCUc.jpg"
+[GIN] 2024/02/12 - 12:46:46 | 200 |    4.059907ms |    93.175.28.68 | GET      "/signout"
+[GIN] 2024/02/12 - 12:46:49 | 200 |    3.362108ms |    93.175.28.68 | GET      "/"
+[GIN] 2024/02/12 - 12:46:51 | 302 |     132.097µs |    93.175.28.68 | GET      "/login"
+[GIN] 2024/02/12 - 12:46:54 | 302 |  123.167253ms |    93.175.28.68 | GET      "/callback?code=ef06f00f4696d8c0ea&state=00ebd442-f103-4532-8578-9c8e4b7da7ce"
+[GIN] 2024/02/12 - 12:46:54 | 200 |     1.15161ms |    93.175.28.68 | GET      "/dashboard"
+[GIN] 2024/02/12 - 12:47:23 | 200 |    1.116154ms |    93.175.28.68 | GET      "/convert"
+[GIN] 2024/02/12 - 12:48:48 | 200 |     980.419µs |    93.175.28.68 | GET      "/profile"
+[GIN] 2024/02/12 - 12:48:50 | 200 |     985.619µs |    93.175.28.68 | GET      "/convert"
+[GIN] 2024/02/12 - 12:49:09 | 200 |  3.423392411s |    93.175.28.68 | POST     "/convert"
+[GIN] 2024/02/12 - 12:49:09 | 200 |    1.285823ms |    93.175.28.68 | GET      "/static/assets/ok-persik.webp"
+[GIN] 2024/02/12 - 12:49:15 | 200 |    1.067603ms |    93.175.28.68 | GET      "/convert"
+[GIN] 2024/02/12 - 12:51:59 | 200 |   11.447086ms |  89.113.147.165 | GET      "/screenshot"
+[GIN] 2024/02/12 - 12:51:59 | 304 |     206.988µs |  89.113.147.165 | GET      "/static/favicon/favicon.ico"
+[GIN] 2024/02/12 - 12:52:03 | 200 |    1.031486ms |  89.113.147.165 | GET      "/profile"
+[GIN] 2024/02/12 - 12:52:06 | 302 |     885.341µs |  89.113.147.165 | GET      "/deleteConf"
+[GIN] 2024/02/12 - 12:52:06 | 200 |    1.216512ms |  89.113.147.165 | GET      "/static/assets/persik_scared.webp"
+[GIN] 2024/02/12 - 12:52:10 | 200 |       848.8µs |  89.113.147.165 | GET      "/profile"
+[GIN] 2024/02/12 - 12:52:15 | 404 |    1.034009ms |  89.113.147.165 | GET      "/profile/files"
+[GIN] 2024/02/12 - 12:52:16 | 200 |    9.819303ms |  89.113.147.165 | GET      "/static/assets/diggycrying.webp"
+[GIN] 2024/02/12 - 12:52:18 | 200 |    1.369978ms |  89.113.147.165 | GET      "/dashboard"
+[GIN] 2024/02/12 - 12:52:22 | 200 |    1.174464ms |  89.113.147.165 | GET      "/profile"
+[GIN] 2024/02/12 - 12:52:23 | 404 |     1.10733ms |  89.113.147.165 | GET      "/profile/email"

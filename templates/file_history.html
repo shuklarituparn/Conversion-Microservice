@@ -86,104 +86,82 @@
 
     <div class="hidden lg:flex h-full w-full justify-center items-center">
         <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-10 py-10 sm:px-10 sm:mb-8 sm:py-14 md:px-20 md:py-20 shadow-2xl backdrop-blur-md">
-
-            <div class="absolute -left-6 -top-10 md:-left-12 md:-top-14 size-28 md:w-36 md:h-36">
-                <div class="bg-cover bg-center w-full h-full rounded-full" style="background-image: url({{.userpicture}});"></div>
-            </div>
-            <div class="relative left-26 top-0 mb-8">
-                <h1 class="VK-Sans text-center mt-8 text-sm text-white text-xl md:text-3xl mb-8">Добро пожаловать <span class=" font-extrabold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text VK-Sans text-transparent">{{.userName}}!</span></h1>
-            </div>
-
-            <div class="flex flex-row py-8 items-center justify-center">
-                <div class="flex flex-col space-y-14">
-                    <div class="flex flex-row space-x-14 items-center justify-center">
-                        <p class="text-center text-xl text-white VK-Sans">Добавь E-Mail</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
-                            <path d="M77 1L93 16L77 31" stroke="white"/>
-                            <path d="M93 16L0 16" stroke="white"/>
-                        </svg>
-                    </div>
-
-                    <div class="flex flex-row  items-center justify-center">
-                        <p class="text-center text-xl text-white VK-Sans mr-4">История Использования</p>
-                        <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
-                            <path d="M77 1L93 16L77 31" stroke="white"/>
-                            <path d="M93 16L0 16" stroke="white"/>
-                        </svg>
-                    </div>
-
-                    <div class="flex flex-row space-x-14 items-center justify-center">
-                        <p class="text-center text-xl text-white VK-Sans">Удалить Аккаунт</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
-                            <path d="M77 1L93 16L77 31" stroke="white"/>
-                            <path d="M93 16L0 16" stroke="white"/>
-                        </svg>
-                    </div>
-
-                    <div class="flex flex-row space-x-14 items-center justify-center">
-                        <p class="text-center text-xl text-white VK-Sans">Выйти из аккаунта </p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
-                            <path d="M77 1L93 16L77 31" stroke="white"/>
-                            <path d="M93 16L0 16" stroke="white"/>
-                        </svg>
-                    </div>
-
-
-                </div>
-
-                <div class="flex flex-col ml-8 space-y-10">
-                    <a href="/profile/email" class=" mt-1 mb-1  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 VK-Sans text-white bg-gray-800 bg-opacity-20  border border-gray-200 rounded-full text-md px-10 py-2 text-center  items-center">Email
-                    </a>
-
-                    <a href="/profile/files" class=" mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center items-center">
-                        File History
-                    </a>
-
-
-                    <a href="/deleteConf" class=" mt-1 mb-1 VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:bg-red-500 border border-gray-200   rounded-full text-md px-10 py-2 text-center  items-center">
-                        Delete Account
-                    </a>
-
-
-                    <a href="/signout" class="mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20  bg-gradient-to-r  hover:bg-red-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center items-center">
-                        Signout
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <div class="lg:hidden flex h-full w-full flex-col justify-center items-center">
-        <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-8 sm:px-10 sm:py-10 md:px-16 md:py-16 shadow-2xl backdrop-blur-md">
-
             <div class="relative">
-                <div class="bg-cover bg-center w-36 h-36 md:w-48 md:h-48 rounded-full mx-auto mb-4" style="background-image: url({{.userpicture}});"></div>
-                <h1 class="text-center mt-4 text-sm text-white text-xl md:text-3xl mb-4">Добро пожаловать <span class="font-extrabold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">{{.userName}}!</span></h1>
+                <div class="bg-cover bg-center w-36 h-36 md:w-48 md:h-48 rounded-full mx-auto mb-4" style="background-image: url('../static/images/-eJL2o-rCUc.jpg');"></div>
+            </div>
+            <h1 class="text-center mt-4 text-sm text-white text-xl md:text-3xl mb-4">Ваши Файли </h1>
+
+            <div class="flex flex-row justify-center space-x-8">
+                <!-- Replace this comment with the below code -->
+                {{ range $index, $file := .Files }}
+                <div class="flex flex-col items-center justify-center">
+                    <ul class="text-white VK-Sans mt-2">
+                        <span class="mr-4">{{$file.Name}}</span>
+                    </ul>
+                    <ul class="text-white VK-Sans mt-2">
+                        <li>
+                            <a href="{{$file.DownloadLink}}" class="inline-block mt-2 bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full px-4 py-2">Отправь почтой</a>
+                        </li>
+                    </ul>
+                    <ul class="text-white VK-Sans mt-2">
+                        <li>
+                            <a href="{{$file.DownloadLink}}" class="inline-block mt-2 bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full px-4 py-2">Скачать</a>
+                        </li>
+                    </ul>
+                    <ul class="text-white VK-Sans mt-2">
+                        <li>
+                            <a href="{{$file.DeleteLink}}" class="inline-block mt-2 bg-gradient-to-r hover:bg-red-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full px-4 py-2">Удалить</a>
+                        </li>
+                    </ul>
+                </div>
+                {{ end }}
             </div>
 
-            <div class="flex flex-col space-y-4">
-                <a href="/profile/email" class="bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full text-md px-6 py-2 text-center">
-                    Email
-                </a>
+        </div>
+    </div>
 
-                <a href="/profile/files" class="bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full text-md px-6 py-2 text-center">
-                    File History
-                </a>
 
-                <a href="/deleteConf" class="bg-gradient-to-r hover:bg-red-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full text-md px-6 py-2 text-center">
-                    Delete Account
-                </a>
 
-                <a href="/signout" class="bg-gradient-to-r hover:bg-red-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full text-md px-6 py-2 text-center">
-                    Signout
-                </a>
+    <div class="mg:hidden flex h-full w-full justify-center items-center">
+        <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-6 sm:px-10 sm:py-8  shadow-2xl backdrop-blur-md">
+            <div class="relative">
+                <h1 class="text-center mt-4 text-sm text-white text-xl md:text-3xl mb-4">Ваши Файли </h1>
+                <h1 class="text-center mt-2 text-sm text-white  mb-4">Для получения файли по почте надо сохранить Email </h1>
             </div>
+            {{ range $index, $file := .Files }}
+            <div class="flex flex-row ">
+            <div class="flex flex-col ">
+
+                <ul class="text-white VK-Sans mt-2">
+                    <span class="mr-4">File 1</span>
+                    <li>
+
+                        <a href="/sendFileViaEmail?file=file1.mp4" class="inline-block mt-2 bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full px-4 py-2">Отправь почтой</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+                <ul class="text-white VK-Sans mt-4">
+                    <li>
+                        <a href="/sendFileViaEmail?file=file1.mp4" class=" ml-8 mt-6 inline-block bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full px-6 py-2">Скачать</a>
+                    </li>
+
+                </ul>
+
+            </div>
+            {{ end }}
+
+
+
+            <a href="/profile" class="flex flex-col mt-6 bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full px-6 py-2 text-center">Аккаунт</a>
+
         </div>
 
+
     </div>
+
 
 
 </div>

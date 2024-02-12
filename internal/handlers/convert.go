@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/gin-gonic/gin"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"io"
 	"log"
@@ -52,6 +52,8 @@ func ConvertUpload(c *gin.Context) {
 
 	form := c.Request.MultipartForm
 
+	var filename string
+
 	fileHeaders := form.File["file"]
 	if len(fileHeaders) == 0 {
 
@@ -59,7 +61,7 @@ func ConvertUpload(c *gin.Context) {
 		return
 	}
 
-	for _, fileHeader := range fileHeaders {
+	for _, fileHeader := range fileHeaders { //Why are we looping over it?
 
 		file, err := fileHeader.Open()
 		if err != nil {
@@ -73,8 +75,9 @@ func ConvertUpload(c *gin.Context) {
 
 			}
 		}(file)
+		session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
 
-		filename := sanitizeFilename(fileHeader.Filename)
+		filename = fmt.Sprintf("%s_%s.%s", session.Values["userName"].(string), sanitizeFilename(fileHeader.Filename), form.Value["output_format"][0])
 
 		newFilePath := filepath.Join(uploadDir, filename)
 		newFile, err := os.Create(newFilePath)
@@ -105,7 +108,9 @@ func ConvertUpload(c *gin.Context) {
 		return
 	}
 	fmt.Println("Output format:", outputFormat[0])
-	produceMessage(outputFormat[0])
+	p, err := producer.NewProducer("localhost:9092")
+	producer.ProduceNewMessage(p, "email", filename)
+	//produceMessage(outputFormat[0])
 	c.HTML(http.StatusOK, "convert_success.html", gin.H{})
 }
 
@@ -118,28 +123,6 @@ func sanitizeFilename(filename string) string {
 		return '_'
 	}, sanitizedFilename)
 	return sanitizedFilename
-}
-
-func produceMessage(outputFormat string) {
-	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "localhost:9092"})
-	if err != nil {
-		log.Printf("Failed to create Kafka producer: %s\n", err)
-		return
-	}
-	defer p.Close()
-
-	topic := "email"
-	message := fmt.Sprintf("Conversion completed for output format: %s", outputFormat)
-	err = p.Produce(&kafka.Message{
-		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
-		Value:          []byte(message),
-	}, nil)
-	if err != nil {
-		log.Printf("Failed to produce message to Kafka: %s\n", err)
-		return
-	}
-	p.Flush(15 * 1000) //it is printing late as I am waiting for the message delivery
-	log.Printf("Produced message: %s\n", message)
 }
 
 //TODO:ADD USER_ID TO FILE FOR EASIER HANDLING
