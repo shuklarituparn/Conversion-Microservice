@@ -59,9 +59,10 @@ func main() {
 		protected.GET("/watermark", handlers.Watermark)
 		protected.GET("/screenshot", handlers.Screenshot)
 		protected.GET("/profile", handlers.Profile)
-		protected.GET("/deleteConf", handlers.AccountDeleteConf)
 		protected.GET("/profile/email", handlers.EmailHandler)
+		protected.POST("/profile/email", handlers.EmailUpdateHandler)
 		protected.GET("/profile/files", handlers.FileHistory)
+		protected.GET("/deleteConf", handlers.AccountDeleteConf)
 		protected.GET("/signout", handlers.Signout)
 	}
 

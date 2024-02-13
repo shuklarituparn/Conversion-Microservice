@@ -26,3 +26,7 @@ func EmailHandler(c *gin.Context) {
 		"userpicture": userPicture,
 	})
 }
+
+func EmailUpdateHandler(c *gin.Context) {
+	
+}

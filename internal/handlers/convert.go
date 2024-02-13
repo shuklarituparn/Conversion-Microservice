@@ -109,8 +109,11 @@ func ConvertUpload(c *gin.Context) {
 	}
 	fmt.Println("Output format:", outputFormat[0])
 	p, err := producer.NewProducer("localhost:9092")
-	producer.ProduceNewMessage(p, "email", filename)
-	//produceMessage(outputFormat[0])
+	err = producer.ProduceNewMessage(p, "email", filename)
+	if err != nil {
+		return
+	}
+
 	c.HTML(http.StatusOK, "convert_success.html", gin.H{})
 }
 

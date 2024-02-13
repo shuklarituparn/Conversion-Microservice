@@ -1,21 +1,76 @@
 package email
 
 import (
+	"fmt"
 	"github.com/matcornic/hermes/v2"
 	"os"
 	"path/filepath"
 )
 
-func EmailTempGenerator() {
-	// Configure hermes by setting a theme and your product info
+func WelcomeTempGenerator(userName string, userID int) {
+
 	h := hermes.Hermes{
-		// Optional Theme
+
 		Theme: &hermes.Default{},
 		Product: hermes.Product{
-			// Appears in header & footer of e-mails
-			Name: "Video conversion service",
-			Link: "https://knowing-gannet-actively.ngrok-free.app/",
-			// Optional product logo
+
+			Name:      "Сервис конвертации видео",
+			Link:      "https://knowing-gannet-actively.ngrok-free.app/",
+			Logo:      "https://iili.io/J0hcSs4.png",
+			Copyright: "© 2024 Сервис конвертации видео. Все права защищены",
+		},
+	}
+
+	email := hermes.Email{
+		Body: hermes.Body{
+			Name: userName,
+			Intros: []string{
+				"Добро пожаловать в сервис конвертации видео, мы очень рады, что вы с нами.",
+			},
+			Actions: []hermes.Action{
+				{
+					Instructions: "Чтобы начать пользоваться нашим сервисом, пожалуйста, нажмите здесь:",
+					Button: hermes.Button{
+						Color: "#0077FF",
+						Text:  "Подтвердите свой адрес электронной почты",
+						Link:  "https://knowing-gannet-actively.ngrok-free.app/",
+					},
+				},
+			},
+			Outros: []string{
+				"Need help, or have questions? Just reply to this email, we'd love to help.",
+			},
+		},
+	}
+
+	emailBody, err := h.GenerateHTML(email)
+	if err != nil {
+		panic(err) // Tip: Handle error with something else than a panic ;)
+	}
+
+	_, err = h.GeneratePlainText(email)
+	if err != nil {
+		panic(err) // Tip: Handle error with something else than a panic ;)
+	}
+
+	currentWorkDir, _ := os.Getwd()
+	finalFilePath := filepath.Join(currentWorkDir, "templates")
+	filename := fmt.Sprintf("%d_w.html", userID)
+	err = os.WriteFile(finalFilePath+"/"+filename, []byte(emailBody), 0644)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func TempGenerator(userName string, userID int) {
+
+	h := hermes.Hermes{
+
+		Theme: &hermes.Default{},
+		Product: hermes.Product{
+
+			Name:      "Video conversion service",
+			Link:      "https://knowing-gannet-actively.ngrok-free.app/",
 			Logo:      "https://iili.io/J0hcSs4.png",
 			Copyright: "Copyright © 2024 Video Conversion Service. All rights reserved",
 		},
@@ -23,7 +78,7 @@ func EmailTempGenerator() {
 
 	email := hermes.Email{
 		Body: hermes.Body{
-			Name: "Rituparn Shukla",
+			Name: userName,
 			Intros: []string{
 				"Welcome to Video Conversion Service! We're very excited to have you on board.",
 			},
@@ -31,7 +86,7 @@ func EmailTempGenerator() {
 				{
 					Instructions: "To get started with Video Conversion Service, please click here:",
 					Button: hermes.Button{
-						Color: "#22BC66", // Optional action button color
+						Color: "#0077FF",
 						Text:  "Confirm your account",
 						Link:  "https://knowing-gannet-actively.ngrok-free.app/",
 					},
@@ -43,26 +98,21 @@ func EmailTempGenerator() {
 		},
 	}
 
-	// Generate an HTML email with the provided contents (for modern clients)
 	emailBody, err := h.GenerateHTML(email)
 	if err != nil {
 		panic(err) // Tip: Handle error with something else than a panic ;)
 	}
 
-	// Generate the plaintext version of the e-mail (for clients that do not support xHTML)
 	_, err = h.GeneratePlainText(email)
 	if err != nil {
 		panic(err) // Tip: Handle error with something else than a panic ;)
 	}
 
-	// Optionally, preview the generated HTML e-mail by writing it to a local file
 	currentWorkDir, _ := os.Getwd()
 	finalFilePath := filepath.Join(currentWorkDir, "templates")
-	err = os.WriteFile(finalFilePath+"/"+"email.html", []byte(emailBody), 0644)
+	filename := fmt.Sprintf("%d_w.html", userID)
+	err = os.WriteFile(finalFilePath+"/"+filename, []byte(emailBody), 0644)
 	if err != nil {
-		panic(err) // Tip: Handle error with something else than a panic ;)
+		panic(err)
 	}
 }
-
-//TODO: SO CAN BASICALLY GENERATE DIFFERENT TEMPLATES FOR DIFFERENT USE AND THEN USE KAFKA TO SEND TO USER
-//TODO: Theme is where the general template is defined
