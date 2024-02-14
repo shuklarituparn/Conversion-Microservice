@@ -26,4 +26,5 @@ func Dashboard(c *gin.Context) {
 		"userpicture": userPic,
 		"userName":    userName,
 	})
+
 }
