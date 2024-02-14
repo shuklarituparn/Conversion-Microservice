@@ -17,8 +17,8 @@ type User struct {
 }
 
 type Video struct {
-	ID         uint `gorm:"primaryKey"`
-	UserID     uint
+	ID         uint64 `gorm:"primaryKey"`
+	UserID     uint64
 	Title      string `gorm:"not null"`
 	FilePath   string `gorm:"not null"`
 	MongoDBOID string

@@ -1,28 +1,64 @@
-package main
+package user_database
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"log"
+	"os"
 )
 
-func main() {
-	// Define the connection string
-	dsn := "host=localhost port=5432 user=rituparn password=rituparn28 dbname=video_conversion sslmode=disable"
+var Database *gorm.DB
 
-	// Open a connection to the database
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		fmt.Println("Error opening connection:", err)
-		return
+func init() {
+	errorLoadingenv := godotenv.Load("../../.env")
+	if errorLoadingenv != nil {
+		log.Fatalf("Error loading the env variables")
 	}
 
-	// Check if the database exists
-	var count int64
-	db.Raw("SELECT COUNT(*) FROM pg_database WHERE datname = ?", "video_conversion").Scan(&count)
-	if count == 0 {
-		fmt.Println("Database 'my_database' does not exist.")
-	} else {
-		fmt.Println("Database 'my_database' exists.")
+	password := os.Getenv("POSTGRES_PASSWORD")
+	database := os.Getenv("DB_NAME")
+	host := os.Getenv("POSTGRES_HOST")
+	username := os.Getenv("POSTGRES_USERNAME")
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=Asia/Shanghai", host, username, password, database)
+	db, _ := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err := db.AutoMigrate(&models.User{}, &models.Video{}); err != nil {
+		log.Fatalf("Error performing migration: %v", err)
 	}
+
+	Database = db
+
+}
+
+func ReturnDbInstance() *gorm.DB {
+	return Database
+}
+
+func UserWithID(db *gorm.DB, UserID uint64) (bool, error) {
+	var user models.User
+
+	result := db.First(&user, UserID)
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return false, nil
+		}
+		return false, result.Error
+	}
+	return true, nil
+}
+
+func EmailExits(db *gorm.DB, UserId uint64) (bool, error) {
+	var user models.User
+
+	result := db.Select("id, email").Where("id=? AND email<>''", UserId).First(&user)
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return false, nil
+		}
+		return false, result.Error
+	}
+	return true, nil
+
 }

@@ -9,18 +9,19 @@ import (
 )
 
 func Dashboard(c *gin.Context) {
+
 	session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 	}
 	userPic, ok := session.Values["userPhoto"].(string)
 	if !ok {
-		log.Println("Error finding userID from the sessions")
+		log.Println("Error finding userPic from the sessions")
 	}
 	userName, ok := session.Values["userName"].(string)
 	log.Println(userName)
 	if !ok {
-		log.Println("Error finding userID from the sessions")
+		log.Println("Error finding userName from the sessions")
 	}
 	c.HTML(http.StatusOK, "dashboard.html", gin.H{
 		"userpicture": userPic,

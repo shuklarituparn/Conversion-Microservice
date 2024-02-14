@@ -41,10 +41,6 @@ func Callback(c *gin.Context) {
 		}
 	}(resp.Body)
 
-	//body, err := io.ReadAll(resp.Body)
-	//userdata := string(body)
-	//c.String(http.StatusFound, userdata)
-
 	result := struct {
 		Response []struct {
 			UserId    int    `json:"id"`

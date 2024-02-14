@@ -28,5 +28,5 @@ func EmailHandler(c *gin.Context) {
 }
 
 func EmailUpdateHandler(c *gin.Context) {
-	
+	//TODO: NEED TO HANDLE THE POST REQUEST, ADD PUB/SUB LOGIC AND SEND THE TEXT FOR VERIFY
 }

@@ -4,26 +4,27 @@
  - using env:	export GIN_MODE=release
  - using code:	gin.SetMode(gin.ReleaseMode)
 
-[GIN-debug] Loaded HTML Templates (19): 
-	- screenshot_edit.html
-	- convert.html
-	- convert_success.html
-	- cut.html
-	- cut_edit.html
-	- email.html
-	- 
-	- file_history.html
-	- login.html
-	- profile.html
-	- screenshot_success.html
-	- watermark.html
-	- signout.html
-	- watermark_success.html
-	- 404.html
+[GIN-debug] Loaded HTML Templates (20): 
 	- cut_success.html
 	- dashboard.html
 	- delete_conf.html
+	- email_redirect.html
+	- login.html
+	- cut_edit.html
+	- file_history.html
+	- screenshot_edit.html
+	- screenshot_success.html
+	- convert_success.html
+	- email.html
+	- signout.html
+	- watermark.html
+	- watermark_success.html
+	- cut.html
+	- 404.html
+	- convert.html
+	- profile.html
 	- screenshot.html
+	- 
 
 [GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
 [GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
@@ -47,34 +48,14 @@
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8085
-[GIN] 2024/02/14 - 12:32:56 | 302 |     120.127µs | 188.166.148.127 | GET      "/login"
-[GIN] 2024/02/14 - 12:33:02 | 302 |  616.667424ms | 188.166.148.127 | GET      "/callback?code=f323ccd2579d8f0801&state=e1049f73-6412-48d4-b725-19dba4596acd"
-[GIN] 2024/02/14 - 12:33:02 | 200 |    1.605663ms | 188.166.148.127 | GET      "/dashboard"
-[GIN] 2024/02/14 - 12:33:02 | 304 |     126.228µs | 188.166.148.127 | GET      "/static/assets/VK.svg"
-[GIN] 2024/02/14 - 12:33:02 | 200 |    4.596492ms | 188.166.148.127 | GET      "/static/css/output.css"
-[GIN] 2024/02/14 - 12:33:02 | 304 |     161.104µs | 188.166.148.127 | GET      "/static/assets/video-player.png"
-[GIN] 2024/02/14 - 12:33:03 | 200 |     727.304µs | 188.166.148.127 | GET      "/static/fonts/font.ttf"
-[GIN] 2024/02/14 - 12:33:03 | 200 |    2.939994ms | 188.166.148.127 | GET      "/static/images/background.png"
-[GIN] 2024/02/14 - 12:33:08 | 200 |    1.457443ms | 188.166.148.127 | GET      "/convert"
-[GIN] 2024/02/14 - 12:33:11 | 200 |    1.853982ms | 188.166.148.127 | GET      "/convert"
-[GIN] 2024/02/14 - 12:33:13 | 200 |    1.241084ms | 188.166.148.127 | GET      "/cut"
-[GIN] 2024/02/14 - 12:33:18 | 200 |    1.198303ms | 188.166.148.127 | GET      "/watermark"
-[GIN] 2024/02/14 - 12:33:28 | 200 |    1.802755ms | 188.166.148.127 | GET      "/dashboard"
-[GIN] 2024/02/14 - 12:33:45 | 200 |     1.76803ms | 188.166.148.127 | GET      "/convert"
-[GIN] 2024/02/14 - 12:33:46 | 200 |    1.103304ms | 188.166.148.127 | GET      "/cut"
-[GIN] 2024/02/14 - 12:33:48 | 200 |    1.155693ms | 188.166.148.127 | GET      "/dashboard"
-[GIN] 2024/02/14 - 12:33:59 | 200 |    1.678471ms | 188.166.148.127 | GET      "/profile"
-[GIN] 2024/02/14 - 12:34:07 | 302 |    1.081002ms | 188.166.148.127 | GET      "/profile/email"
-[GIN] 2024/02/14 - 12:34:07 | 200 |    1.607757ms | 188.166.148.127 | GET      "/static/assets/persik2.webp"
-[GIN] 2024/02/14 - 12:34:15 | 200 |    1.594012ms | 188.166.148.127 | GET      "/profile"
-[GIN] 2024/02/14 - 12:34:21 | 302 |     883.519µs | 188.166.148.127 | GET      "/deleteConf"
-[GIN] 2024/02/14 - 12:34:22 | 200 |    1.498801ms | 188.166.148.127 | GET      "/static/assets/persik_scared.webp"
-[GIN] 2024/02/14 - 12:34:24 | 200 |    1.420534ms | 188.166.148.127 | GET      "/profile"
-[GIN] 2024/02/14 - 12:34:43 | 302 |    1.139292ms | 188.166.148.127 | GET      "/deleteConf"
-[GIN] 2024/02/14 - 12:34:45 | 200 |    1.163408ms | 188.166.148.127 | GET      "/profile"
-[GIN] 2024/02/14 - 12:34:51 | 200 |    1.542304ms | 188.166.148.127 | GET      "/watermark"
-[GIN] 2024/02/14 - 12:34:53 | 200 |    1.028032ms | 188.166.148.127 | GET      "/convert"
-[GIN] 2024/02/14 - 12:34:55 | 200 |     823.776µs | 188.166.148.127 | GET      "/screenshot"
-[GIN] 2024/02/14 - 12:35:45 | 200 |    1.254861ms | 188.166.148.127 | GET      "/screenshot"
-[GIN] 2024/02/14 - 12:35:48 | 200 |    1.537936ms | 188.166.148.127 | GET      "/dashboard"
-[GIN] 2024/02/14 - 14:13:51 | 404 |   17.525762ms |  89.113.157.131 | GET      "/favicon.ico"
+[GIN] 2024/02/15 - 01:28:56 | 302 |     283.902µs |   93.175.13.251 | GET      "/login"
+[GIN] 2024/02/15 - 01:28:57 | 302 |     146.634µs |   45.76.135.164 | GET      "/login"
+[GIN] 2024/02/15 - 01:29:03 | 302 |   227.37018ms |   45.76.135.164 | GET      "/callback?code=337dc87d171265f8a4&state=8ea80123-7e4c-4069-b9ed-313d0d2d24fc"
+[GIN] 2024/02/15 - 01:29:03 | 200 |    1.757652ms |   45.76.135.164 | GET      "/dashboard"
+[GIN] 2024/02/15 - 01:29:03 | 200 |    3.527687ms |   45.76.135.164 | GET      "/static/css/output.css"
+[GIN] 2024/02/15 - 01:29:03 | 200 |    1.606038ms |   45.76.135.164 | GET      "/static/images/background.png"
+[GIN] 2024/02/15 - 01:29:03 | 200 |      341.73µs |   45.76.135.164 | GET      "/static/fonts/font.ttf"
+[GIN] 2024/02/15 - 01:29:07 | 302 |    3.004667ms |   45.76.135.164 | GET      "/convert"
+[GIN] 2024/02/15 - 01:29:07 | 200 |     730.518µs |   45.76.135.164 | GET      "/static/assets/persik3.webp"
+[GIN] 2024/02/15 - 01:29:10 | 302 |    2.540739ms |   45.76.135.164 | GET      "/profile/email"
+[GIN] 2024/02/15 - 01:29:11 | 200 |    5.209717ms |   45.76.135.164 | GET      "/static/assets/persik2.webp"

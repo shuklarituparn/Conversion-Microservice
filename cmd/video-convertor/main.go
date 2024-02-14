@@ -32,6 +32,7 @@ func main() {
 
 	//Using the Jaegar tracing
 	router.Use(middlewares.TracingMiddleware())
+
 	go func() {
 		email.ConsumeEmail()
 	}()

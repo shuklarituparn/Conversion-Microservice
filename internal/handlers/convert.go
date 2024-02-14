@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"io"
 	"log"
@@ -27,10 +28,29 @@ func Convert(c *gin.Context) {
 	if !ok {
 		log.Println("Error finding userID from the sessions")
 	}
-	c.HTML(http.StatusOK, "convert.html", gin.H{
-		"userName":    userName,
-		"userpicture": userPicture,
-	})
+
+	userId, ok := session.Values["UserId"].(uint64)
+	if !ok {
+		log.Println("Error resolving the userId from the sessions")
+	}
+	db := user_database.ReturnDbInstance()
+	result, _ := user_database.UserWithID(db, userId)
+
+	if !result {
+		emailCheck, _ := user_database.EmailExits(db, userId)
+		if !emailCheck {
+			c.HTML(http.StatusFound, "email_redirect.html", gin.H{})
+		}
+	} else {
+		c.HTML(http.StatusOK, "convert.html", gin.H{
+			"userName":    userName,
+			"userpicture": userPicture,
+		})
+	}
+
+	//TODO: Now the db and everything is working, need to initialize the DB with userdata also need to add email after verify
+	//TODO: After adding email, only thing left will be the conversion logic
+
 }
 
 func ConvertUpload(c *gin.Context) {
@@ -129,8 +149,6 @@ func sanitizeFilename(filename string) string {
 }
 
 //TODO:ADD USER_ID TO FILE FOR EASIER HANDLING
-
-//TODO: FIND THE USE FOR GRPC
 
 /*
 Create the table in DB with userID from VK, that will make everyuser different since they are using VK
