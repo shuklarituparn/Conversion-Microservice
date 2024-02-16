@@ -1,6 +1,7 @@
 package user_database
 
 import (
+	"errors"
 	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
@@ -41,7 +42,7 @@ func UserWithID(db *gorm.DB, UserID int) (bool, error) {
 
 	result := db.First(&user, UserID)
 	if result.Error != nil {
-		if result.Error == gorm.ErrRecordNotFound {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return false, nil
 		}
 		return false, result.Error
@@ -54,7 +55,7 @@ func EmailExits(db *gorm.DB, UserId int) (bool, error) {
 
 	result := db.Select("id, email").Where("id=? AND email<>''", UserId).First(&user)
 	if result.Error != nil {
-		if result.Error == gorm.ErrRecordNotFound {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return false, nil
 		}
 		return false, result.Error
@@ -67,7 +68,7 @@ func IsVerified(db *gorm.DB, UserId int) (bool, error) {
 	var user models.User
 	result := db.Select("verified").Where("id = ?", UserId).First(&user)
 	if result.Error != nil {
-		if result.Error == gorm.ErrRecordNotFound {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return false, nil
 		}
 		return false, result.Error

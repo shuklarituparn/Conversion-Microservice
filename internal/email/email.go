@@ -25,7 +25,7 @@ func SendMail(Filepath string, To string) {
 	Key := os.Getenv("EMAIL_KEY")
 	m.SetHeader("From", From)
 	m.SetHeader("To", To)
-	m.SetHeader("Subject", "Imp mail")
+	m.SetHeader("Subject", "Verification Mail")
 
 	htmlContent, err := os.ReadFile(Filepath)
 	if err != nil {

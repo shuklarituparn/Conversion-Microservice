@@ -42,7 +42,7 @@ func EmailHandler(c *gin.Context) {
 	userEmail := user.UserEmail
 
 	NoEmail := "Вы еще не добаили Email("
-	if userEmail != "" {
+	if userEmail != "" && user.Verified == true {
 		c.HTML(http.StatusFound, "email.html", gin.H{
 			"userName":    userName,
 			"userpicture": userPicture,
@@ -79,6 +79,7 @@ func EmailUpdateHandler(c *gin.Context) {
 	VerificationToken := ID.ReturnID()
 	user.VerificationToken = VerificationToken
 	user.UserEmail = userEmail
+	user.Verified = false
 
 	if errorSaving := db.Save(&user).Error; errorSaving != nil {
 		c.AbortWithError(http.StatusInternalServerError, errorSaving)

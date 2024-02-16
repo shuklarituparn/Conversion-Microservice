@@ -22,6 +22,12 @@ var (
 )
 
 func Callback(c *gin.Context) {
+
+	var (
+		userId   int
+		userPic  string
+		userName string
+	)
 	if c.Query("state") != state {
 		c.AbortWithError(http.StatusBadRequest, fmt.Errorf("invalid state parameter"))
 		return
@@ -65,9 +71,9 @@ func Callback(c *gin.Context) {
 		return
 	}
 	if len(result.Response) > 0 {
-		userId := result.Response[0].UserId
-		userPic := result.Response[0].UserPhoto
-		userName := result.Response[0].UserName
+		userId = result.Response[0].UserId
+		userPic = result.Response[0].UserPhoto
+		userName = result.Response[0].UserName
 		session.Values["authenticated"] = true
 		session.Values["UserId"] = userId
 		session.Values["userPhoto"] = userPic
@@ -85,6 +91,11 @@ func Callback(c *gin.Context) {
 	}
 
 	db := user_database.ReturnDbInstance()
+	findUser, errorGettingUser := user_database.UserWithID(db, userId)
+	if errorGettingUser != nil {
+		log.Println(errorGettingUser)
+	}
+
 	user := models.User{
 		ID:                result.Response[0].UserId,
 		Username:          result.Response[0].UserName,
@@ -98,7 +109,8 @@ func Callback(c *gin.Context) {
 		Deleted:           gorm.DeletedAt{},
 	}
 
-	db.Create(&user)
-
+	if !findUser {
+		db.Create(&user) //we create the user after checking if it doesn't exist
+	}
 	c.Redirect(http.StatusFound, "/dashboard")
 }
