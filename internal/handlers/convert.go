@@ -29,28 +29,21 @@ func Convert(c *gin.Context) {
 		log.Println("Error finding userID from the sessions")
 	}
 
-	userId, ok := session.Values["UserId"].(uint64)
+	userId, ok := session.Values["UserId"].(int)
 	if !ok {
 		log.Println("Error resolving the userId from the sessions")
 	}
 	db := user_database.ReturnDbInstance()
-	result, _ := user_database.UserWithID(db, userId)
+	VerfiedCheck, _ := user_database.IsVerified(db, userId)
+	if !VerfiedCheck {
+		c.HTML(http.StatusFound, "email_redirect.html", gin.H{})
 
-	if !result {
-		emailCheck, _ := user_database.EmailExits(db, userId)
-		if !emailCheck {
-			c.HTML(http.StatusFound, "email_redirect.html", gin.H{})
-		}
 	} else {
 		c.HTML(http.StatusOK, "convert.html", gin.H{
 			"userName":    userName,
 			"userpicture": userPicture,
 		})
 	}
-
-	//TODO: Now the db and everything is working, need to initialize the DB with userdata also need to add email after verify
-	//TODO: After adding email, only thing left will be the conversion logic
-
 }
 
 func ConvertUpload(c *gin.Context) {

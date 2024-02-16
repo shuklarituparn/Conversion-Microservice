@@ -7,3 +7,10 @@ type ConversionMessage struct {
 	FileName    string `json:"file_name"`
 	FilePath    string `json:"file_path"`
 }
+
+type EmailVerificationMessage struct {
+	UserID           int    `json:"user_id"`
+	UserName         string `json:"user_name"`
+	UserEmail        string `json:"user_email"`
+	VerificationCode string `json:"verification_code"`
+}

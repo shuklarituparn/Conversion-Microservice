@@ -1,10 +1,12 @@
 package email
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/ID"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/consumer"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	gomail "gopkg.in/mail.v2"
 	"log"
 	"os"
@@ -47,7 +49,7 @@ func SendMail() {
 	}
 }
 
-func ConsumeEmail() {
+func SendEmail() {
 
 	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
 	_ = c.Subscribe("email", nil)
@@ -66,6 +68,33 @@ func ConsumeEmail() {
 		//EmailTempGenerator()
 		SendMail()
 
+		_, commitErr := c.CommitMessage(msg)
+		if commitErr != nil {
+			log.Printf("Failed to commit offset: %v", commitErr)
+		}
+	}
+
+}
+
+func GenerateEmail() {
+
+	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
+	_ = c.Subscribe("verification_mail", nil)
+
+	defer consumer.Close(c)
+	var EmailMessage models.EmailVerificationMessage
+
+	for {
+		msg, err := c.ReadMessage(-1)
+		if err != nil {
+			log.Println("Error reading message:", err)
+			continue
+		}
+
+		log.Printf("Received message on %s: %s\n", msg.TopicPartition, string(msg.Value))
+
+		err = json.Unmarshal(msg.Value, &EmailMessage)
+		VerificationTempGenerator(EmailMessage.UserName, EmailMessage.UserID, EmailMessage.VerificationCode)
 		_, commitErr := c.CommitMessage(msg)
 		if commitErr != nil {
 			log.Printf("Failed to commit offset: %v", commitErr)

@@ -36,7 +36,7 @@ func ReturnDbInstance() *gorm.DB {
 	return Database
 }
 
-func UserWithID(db *gorm.DB, UserID uint64) (bool, error) {
+func UserWithID(db *gorm.DB, UserID int) (bool, error) {
 	var user models.User
 
 	result := db.First(&user, UserID)
@@ -49,7 +49,7 @@ func UserWithID(db *gorm.DB, UserID uint64) (bool, error) {
 	return true, nil
 }
 
-func EmailExits(db *gorm.DB, UserId uint64) (bool, error) {
+func EmailExits(db *gorm.DB, UserId int) (bool, error) {
 	var user models.User
 
 	result := db.Select("id, email").Where("id=? AND email<>''", UserId).First(&user)
@@ -61,4 +61,24 @@ func EmailExits(db *gorm.DB, UserId uint64) (bool, error) {
 	}
 	return true, nil
 
+}
+
+func IsVerified(db *gorm.DB, UserId int) (bool, error) {
+	var user models.User
+	result := db.Select("verified").Where("id = ?", UserId).First(&user)
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return false, nil
+		}
+		return false, result.Error
+	}
+	return user.Verified, nil
+
+}
+
+func GetUserWithID(db *gorm.DB, UserID int) (models.User, error) {
+	var user models.User
+
+	result := db.First(&user, UserID)
+	return user, result.Error
 }

@@ -56,23 +56,36 @@ func WelcomeTempGenerator(userName string, userID int) {
 	currentWorkDir, _ := os.Getwd()
 	finalFilePath := filepath.Join(currentWorkDir, "templates")
 	filename := fmt.Sprintf("%d_w.html", userID)
+	filePath := filepath.Join(finalFilePath, filename)
+
+	// Create the file
+	file, err := os.Create(filePath)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
 	err = os.WriteFile(finalFilePath+"/"+filename, []byte(emailBody), 0644)
 	if err != nil {
 		panic(err)
 	}
 }
 
-func TempGenerator(userName string, userID int) {
+func VerificationTempGenerator(userName string, userID int, VerificationCode string) {
+
+	userWelcomeString := fmt.Sprintf("Добро пожаловать в сервис конвертации видео, мы очень рады, что вы с нами.")
+	userEmailString := fmt.Sprintf("https://knowing-gannet-actively.ngrok-free.app/verify_mail?code=%s&userId=%d", VerificationCode, userID)
 
 	h := hermes.Hermes{
 
 		Theme: &hermes.Default{},
 		Product: hermes.Product{
 
-			Name:      "Video conversion service",
-			Link:      "https://knowing-gannet-actively.ngrok-free.app/",
-			Logo:      "https://iili.io/J0hcSs4.png",
-			Copyright: "Copyright © 2024 Video Conversion Service. All rights reserved",
+			Name:        "Сервис конвертации видео",
+			Link:        "https://knowing-gannet-actively.ngrok-free.app/",
+			Logo:        "https://iili.io/J0hcSs4.png",
+			Copyright:   "© 2024 Сервис конвертации видео. Все права защищены",
+			TroubleText: "Если у вас возникли проблемы с кнопкой '{ACTION}', скопируйте и вставьте приведенный ниже URL-адрес в свой веб-браузер.",
 		},
 	}
 
@@ -80,20 +93,22 @@ func TempGenerator(userName string, userID int) {
 		Body: hermes.Body{
 			Name: userName,
 			Intros: []string{
-				"Welcome to Video Conversion Service! We're very excited to have you on board.",
+				userWelcomeString,
 			},
+			Signature: "C Уважением",
+			Greeting:  "Привет",
 			Actions: []hermes.Action{
 				{
-					Instructions: "To get started with Video Conversion Service, please click here:",
+					Instructions: "чтобы подтвердить свой адрес электронной почты, пожалуйста, нажмите здесь:",
 					Button: hermes.Button{
 						Color: "#0077FF",
-						Text:  "Confirm your account",
-						Link:  "https://knowing-gannet-actively.ngrok-free.app/",
+						Text:  "Добавить почту",
+						Link:  userEmailString,
 					},
 				},
 			},
 			Outros: []string{
-				"Need help, or have questions? Just reply to this email, we'd love to help.",
+				"Если Ты столкнулся с проблемой, ответь на это письмо, и мы поможем тебе прямо сейчас!.",
 			},
 		},
 	}
@@ -108,10 +123,17 @@ func TempGenerator(userName string, userID int) {
 		panic(err) // Tip: Handle error with something else than a panic ;)
 	}
 
-	currentWorkDir, _ := os.Getwd()
-	finalFilePath := filepath.Join(currentWorkDir, "templates")
 	filename := fmt.Sprintf("%d_w.html", userID)
-	err = os.WriteFile(finalFilePath+"/"+filename, []byte(emailBody), 0644)
+	filePath := filepath.Join("../../internal/email/templates", filename)
+
+	// Create the file
+	file, err := os.Create(filePath)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	err = os.WriteFile("../../internal/email/templates"+"/"+filename, []byte(emailBody), 0644)
 	if err != nil {
 		panic(err)
 	}

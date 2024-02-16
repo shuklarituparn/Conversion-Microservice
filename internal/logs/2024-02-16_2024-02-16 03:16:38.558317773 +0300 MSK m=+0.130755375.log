@@ -4,27 +4,29 @@
  - using env:	export GIN_MODE=release
  - using code:	gin.SetMode(gin.ReleaseMode)
 
-[GIN-debug] Loaded HTML Templates (20): 
-	- cut_success.html
-	- dashboard.html
-	- delete_conf.html
-	- email_redirect.html
-	- login.html
+[GIN-debug] Loaded HTML Templates (22): 
 	- cut_edit.html
-	- file_history.html
-	- screenshot_edit.html
-	- screenshot_success.html
-	- convert_success.html
 	- email.html
+	- file_history.html
 	- signout.html
-	- watermark.html
-	- watermark_success.html
 	- cut.html
 	- 404.html
 	- convert.html
-	- profile.html
-	- screenshot.html
+	- cut_success.html
+	- email_redirect.html
+	- watermark.html
 	- 
+	- delete_conf.html
+	- profile.html
+	- screenshot_edit.html
+	- dashboard.html
+	- email_confirm.html
+	- login.html
+	- screenshot.html
+	- screenshot_success.html
+	- verification_mail.html
+	- watermark_success.html
+	- convert_success.html
 
 [GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
 [GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
@@ -43,19 +45,11 @@
 [GIN-debug] GET    /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailHandler (5 handlers)
 [GIN-debug] POST   /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailUpdateHandler (5 handlers)
 [GIN-debug] GET    /profile/files            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.FileHistory (5 handlers)
+[GIN-debug] POST   /verify_mail              --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailConfirm (5 handlers)
 [GIN-debug] GET    /deleteConf               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.AccountDeleteConf (5 handlers)
 [GIN-debug] GET    /signout                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Signout (5 handlers)
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8085
-[GIN] 2024/02/15 - 01:28:56 | 302 |     283.902µs |   93.175.13.251 | GET      "/login"
-[GIN] 2024/02/15 - 01:28:57 | 302 |     146.634µs |   45.76.135.164 | GET      "/login"
-[GIN] 2024/02/15 - 01:29:03 | 302 |   227.37018ms |   45.76.135.164 | GET      "/callback?code=337dc87d171265f8a4&state=8ea80123-7e4c-4069-b9ed-313d0d2d24fc"
-[GIN] 2024/02/15 - 01:29:03 | 200 |    1.757652ms |   45.76.135.164 | GET      "/dashboard"
-[GIN] 2024/02/15 - 01:29:03 | 200 |    3.527687ms |   45.76.135.164 | GET      "/static/css/output.css"
-[GIN] 2024/02/15 - 01:29:03 | 200 |    1.606038ms |   45.76.135.164 | GET      "/static/images/background.png"
-[GIN] 2024/02/15 - 01:29:03 | 200 |      341.73µs |   45.76.135.164 | GET      "/static/fonts/font.ttf"
-[GIN] 2024/02/15 - 01:29:07 | 302 |    3.004667ms |   45.76.135.164 | GET      "/convert"
-[GIN] 2024/02/15 - 01:29:07 | 200 |     730.518µs |   45.76.135.164 | GET      "/static/assets/persik3.webp"
-[GIN] 2024/02/15 - 01:29:10 | 302 |    2.540739ms |   45.76.135.164 | GET      "/profile/email"
-[GIN] 2024/02/15 - 01:29:11 | 200 |    5.209717ms |   45.76.135.164 | GET      "/static/assets/persik2.webp"
+[GIN] 2024/02/16 - 03:16:49 | 302 |    1.530057ms |   93.175.13.251 | POST     "/verify_mail"
+[GIN] 2024/02/16 - 03:16:51 | 302 |    5.492363ms |   93.175.13.251 | POST     "/profile/email"

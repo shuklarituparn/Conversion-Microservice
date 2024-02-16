@@ -7,10 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	"github.com/shuklarituparn/Conversion-Microservice/configs"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
+	"gorm.io/gorm"
 	"io"
 	"log"
 	"net/http"
+	"time"
 )
 
 var (
@@ -79,6 +83,22 @@ func Callback(c *gin.Context) {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
+
+	db := user_database.ReturnDbInstance()
+	user := models.User{
+		ID:                result.Response[0].UserId,
+		Username:          result.Response[0].UserName,
+		UserPicture:       result.Response[0].UserPhoto,
+		UserEmail:         "",
+		Verified:          false,
+		VerificationToken: "",
+		Videos:            nil,
+		CreatedAt:         time.Time{},
+		UpdatedAt:         time.Time{},
+		Deleted:           gorm.DeletedAt{},
+	}
+
+	db.Create(&user)
 
 	c.Redirect(http.StatusFound, "/dashboard")
 }
