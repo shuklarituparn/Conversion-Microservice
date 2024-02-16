@@ -1,51 +1,85 @@
-package main
+package user_database
 
 import (
+	"errors"
 	"fmt"
-	_ "gorm.io/driver/postgres"
+	"github.com/joho/godotenv"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"log"
+	"os"
 )
 
-type Product struct {
-	gorm.Model
-	Code  string
-	Price uint
-}
+var Database *gorm.DB
 
-func main() {
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
+func init() {
+	errorLoadingenv := godotenv.Load("../../.env")
+	if errorLoadingenv != nil {
+		log.Fatalf("Error loading the env variables")
 	}
 
-	// Migrate the schema
-	db.AutoMigrate(&Product{})
+	password := os.Getenv("POSTGRES_PASSWORD")
+	database := os.Getenv("DB_NAME")
+	host := os.Getenv("POSTGRES_HOST")
+	username := os.Getenv("POSTGRES_USERNAME")
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=Asia/Shanghai", host, username, password, database)
+	db, _ := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err := db.AutoMigrate(&models.User{}, &models.Video{}); err != nil {
+		log.Fatalf("Error performing migration: %v", err)
+	}
 
-	// Create
-	db.Create(&Product{Code: "D42", Price: 100})
-	fmt.Println("Product created")
+	Database = db
 
-	// Read
-	var product Product
-	db.First(&product, 1) // find product with integer primary key
-	fmt.Printf("Product found by ID: %+v\n", product)
+}
 
-	db.First(&product, "code = ?", "D42") // find product with code D42
-	fmt.Printf("Product found by code: %+v\n", product)
+func ReturnDbInstance() *gorm.DB {
+	return Database
+}
 
-	// Update - update product's price to 200
-	db.Model(&product).Update("Price", 200)
-	fmt.Println("Product price updated to 200")
+func UserWithID(db *gorm.DB, UserID int) (bool, error) {
+	var user models.User
 
-	// Update - update multiple fields
-	db.Model(&product).Updates(Product{Price: 200, Code: "F42"}) // non-zero fields
-	fmt.Println("Product fields updated")
+	result := db.First(&user, UserID)
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return false, nil
+		}
+		return false, result.Error
+	}
+	return true, nil
+}
 
-	// Read updated product
-	db.First(&product, 1)
-	fmt.Printf("Updated product: %+v\n", product)
+func EmailExits(db *gorm.DB, UserId int) (bool, error) {
+	var user models.User
 
-	// Delete - delete product
-	db.Delete(&product, 1)
-	fmt.Println("Product deleted")
+	result := db.Select("id, email").Where("id=? AND email<>''", UserId).First(&user)
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return false, nil
+		}
+		return false, result.Error
+	}
+	return true, nil
+
+}
+
+func IsVerified(db *gorm.DB, UserId int) (bool, error) {
+	var user models.User
+	result := db.Select("verified").Where("id = ?", UserId).First(&user)
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return false, nil
+		}
+		return false, result.Error
+	}
+	return user.Verified, nil
+
+}
+
+func GetUserWithID(db *gorm.DB, UserID int) (models.User, error) {
+	var user models.User
+
+	result := db.First(&user, UserID)
+	return user, result.Error
 }

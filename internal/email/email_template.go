@@ -1,38 +1,38 @@
 package email
 
 import (
+	"fmt"
 	"github.com/matcornic/hermes/v2"
 	"os"
 	"path/filepath"
 )
 
-func EmailTempGenerator() {
-	// Configure hermes by setting a theme and your product info
+func WelcomeTempGenerator(userName string, userID int) {
+
 	h := hermes.Hermes{
-		// Optional Theme
+
 		Theme: &hermes.Default{},
 		Product: hermes.Product{
-			// Appears in header & footer of e-mails
-			Name: "Video conversion service",
-			Link: "https://knowing-gannet-actively.ngrok-free.app/",
-			// Optional product logo
+
+			Name:      "Сервис конвертации видео",
+			Link:      "https://knowing-gannet-actively.ngrok-free.app/",
 			Logo:      "https://iili.io/J0hcSs4.png",
-			Copyright: "Copyright © 2024 Video Conversion Service. All rights reserved",
+			Copyright: "© 2024 Сервис конвертации видео. Все права защищены",
 		},
 	}
 
 	email := hermes.Email{
 		Body: hermes.Body{
-			Name: "Rituparn Shukla",
+			Name: userName,
 			Intros: []string{
-				"Welcome to Video Conversion Service! We're very excited to have you on board.",
+				"Добро пожаловать в сервис конвертации видео, мы очень рады, что вы с нами.",
 			},
 			Actions: []hermes.Action{
 				{
-					Instructions: "To get started with Video Conversion Service, please click here:",
+					Instructions: "Чтобы начать пользоваться нашим сервисом, пожалуйста, нажмите здесь:",
 					Button: hermes.Button{
-						Color: "#22BC66", // Optional action button color
-						Text:  "Confirm your account",
+						Color: "#0077FF",
+						Text:  "Подтвердите свой адрес электронной почты",
 						Link:  "https://knowing-gannet-actively.ngrok-free.app/",
 					},
 				},
@@ -43,26 +43,100 @@ func EmailTempGenerator() {
 		},
 	}
 
-	// Generate an HTML email with the provided contents (for modern clients)
 	emailBody, err := h.GenerateHTML(email)
 	if err != nil {
 		panic(err) // Tip: Handle error with something else than a panic ;)
 	}
 
-	// Generate the plaintext version of the e-mail (for clients that do not support xHTML)
 	_, err = h.GeneratePlainText(email)
 	if err != nil {
 		panic(err) // Tip: Handle error with something else than a panic ;)
 	}
 
-	// Optionally, preview the generated HTML e-mail by writing it to a local file
 	currentWorkDir, _ := os.Getwd()
 	finalFilePath := filepath.Join(currentWorkDir, "templates")
-	err = os.WriteFile(finalFilePath+"/"+"email.html", []byte(emailBody), 0644)
+	filename := fmt.Sprintf("%d_w.html", userID)
+	filePath := filepath.Join(finalFilePath, filename)
+
+	// Create the file
+	file, err := os.Create(filePath)
 	if err != nil {
-		panic(err) // Tip: Handle error with something else than a panic ;)
+		panic(err)
+	}
+	defer file.Close()
+
+	err = os.WriteFile(finalFilePath+"/"+filename, []byte(emailBody), 0644)
+	if err != nil {
+		panic(err)
 	}
 }
 
-//TODO: SO CAN BASICALLY GENERATE DIFFERENT TEMPLATES FOR DIFFERENT USE AND THEN USE KAFKA TO SEND TO USER
-//TODO: Theme is where the general template is defined
+func VerificationTempGenerator(userName string, userID int, VerificationCode string) string {
+
+	userWelcomeString := fmt.Sprintf("Добро пожаловать в сервис конвертации видео, мы очень рады, что вы с нами.")
+	userEmailString := fmt.Sprintf("https://knowing-gannet-actively.ngrok-free.app/verify_mail?code=%s&userId=%d", VerificationCode, userID)
+
+	h := hermes.Hermes{
+
+		Theme: &hermes.Default{},
+		Product: hermes.Product{
+
+			Name:        "Сервис конвертации видео",
+			Link:        "https://knowing-gannet-actively.ngrok-free.app/",
+			Logo:        "https://iili.io/J0hcSs4.png",
+			Copyright:   "© 2024 Сервис конвертации видео. Все права защищены",
+			TroubleText: "Если у вас возникли проблемы с кнопкой '{ACTION}', скопируйте и вставьте приведенный ниже URL-адрес в свой веб-браузер.",
+		},
+	}
+
+	email := hermes.Email{
+		Body: hermes.Body{
+			Name: userName,
+			Intros: []string{
+				userWelcomeString,
+			},
+			Signature: "C Уважением",
+			Greeting:  "Привет",
+			Actions: []hermes.Action{
+				{
+					Instructions: "чтобы подтвердить свой адрес электронной почты, пожалуйста, нажмите здесь:",
+					Button: hermes.Button{
+						Color: "#0077FF",
+						Text:  "Добавить почту",
+						Link:  userEmailString,
+					},
+				},
+			},
+			Outros: []string{
+				"Если Ты столкнулся с проблемой, ответь на это письмо, и мы поможем тебе прямо сейчас!.",
+			},
+		},
+	}
+
+	emailBody, err := h.GenerateHTML(email)
+	if err != nil {
+		panic(err) // Tip: Handle error with something else than a panic ;)
+	}
+
+	_, err = h.GeneratePlainText(email)
+	if err != nil {
+		panic(err) // Tip: Handle error with something else than a panic ;)
+	}
+
+	filename := fmt.Sprintf("%d_w.html", userID)
+	filePath := filepath.Join("../../internal/email/templates", filename)
+
+	// Create the file
+	file, err := os.Create(filePath)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	completeFilename := fmt.Sprintf("../../internal/email/templates" + "/" + filename)
+	err = os.WriteFile(completeFilename, []byte(emailBody), 0644)
+	if err != nil {
+		panic(err)
+	}
+	return completeFilename
+}

@@ -7,10 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	"github.com/shuklarituparn/Conversion-Microservice/configs"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
+	"gorm.io/gorm"
 	"io"
 	"log"
 	"net/http"
+	"time"
 )
 
 var (
@@ -18,6 +22,12 @@ var (
 )
 
 func Callback(c *gin.Context) {
+
+	var (
+		userId   int
+		userPic  string
+		userName string
+	)
 	if c.Query("state") != state {
 		c.AbortWithError(http.StatusBadRequest, fmt.Errorf("invalid state parameter"))
 		return
@@ -41,10 +51,6 @@ func Callback(c *gin.Context) {
 		}
 	}(resp.Body)
 
-	//body, err := io.ReadAll(resp.Body)
-	//userdata := string(body)
-	//c.String(http.StatusFound, userdata)
-
 	result := struct {
 		Response []struct {
 			UserId    int    `json:"id"`
@@ -65,9 +71,9 @@ func Callback(c *gin.Context) {
 		return
 	}
 	if len(result.Response) > 0 {
-		userId := result.Response[0].UserId
-		userPic := result.Response[0].UserPhoto
-		userName := result.Response[0].UserName
+		userId = result.Response[0].UserId
+		userPic = result.Response[0].UserPhoto
+		userName = result.Response[0].UserName
 		session.Values["authenticated"] = true
 		session.Values["UserId"] = userId
 		session.Values["userPhoto"] = userPic
@@ -84,5 +90,27 @@ func Callback(c *gin.Context) {
 		return
 	}
 
+	db := user_database.ReturnDbInstance()
+	findUser, errorGettingUser := user_database.UserWithID(db, userId)
+	if errorGettingUser != nil {
+		log.Println(errorGettingUser)
+	}
+
+	user := models.User{
+		ID:                result.Response[0].UserId,
+		Username:          result.Response[0].UserName,
+		UserPicture:       result.Response[0].UserPhoto,
+		UserEmail:         "",
+		Verified:          false,
+		VerificationToken: "",
+		Videos:            nil,
+		CreatedAt:         time.Time{},
+		UpdatedAt:         time.Time{},
+		Deleted:           gorm.DeletedAt{},
+	}
+
+	if !findUser {
+		db.Create(&user) //we create the user after checking if it doesn't exist
+	}
 	c.Redirect(http.StatusFound, "/dashboard")
 }

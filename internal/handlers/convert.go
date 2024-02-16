@@ -2,8 +2,9 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/gin-gonic/gin"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"io"
 	"log"
@@ -27,10 +28,22 @@ func Convert(c *gin.Context) {
 	if !ok {
 		log.Println("Error finding userID from the sessions")
 	}
-	c.HTML(http.StatusOK, "convert.html", gin.H{
-		"userName":    userName,
-		"userpicture": userPicture,
-	})
+
+	userId, ok := session.Values["UserId"].(int)
+	if !ok {
+		log.Println("Error resolving the userId from the sessions")
+	}
+	db := user_database.ReturnDbInstance()
+	VerfiedCheck, _ := user_database.IsVerified(db, userId)
+	if !VerfiedCheck {
+		c.HTML(http.StatusFound, "email_redirect.html", gin.H{})
+
+	} else {
+		c.HTML(http.StatusOK, "convert.html", gin.H{
+			"userName":    userName,
+			"userpicture": userPicture,
+		})
+	}
 }
 
 func ConvertUpload(c *gin.Context) {
@@ -52,6 +65,8 @@ func ConvertUpload(c *gin.Context) {
 
 	form := c.Request.MultipartForm
 
+	var filename string
+
 	fileHeaders := form.File["file"]
 	if len(fileHeaders) == 0 {
 
@@ -59,7 +74,7 @@ func ConvertUpload(c *gin.Context) {
 		return
 	}
 
-	for _, fileHeader := range fileHeaders {
+	for _, fileHeader := range fileHeaders { //Why are we looping over it?
 
 		file, err := fileHeader.Open()
 		if err != nil {
@@ -73,8 +88,9 @@ func ConvertUpload(c *gin.Context) {
 
 			}
 		}(file)
+		session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
 
-		filename := sanitizeFilename(fileHeader.Filename)
+		filename = fmt.Sprintf("%s_%s.%s", session.Values["userName"].(string), sanitizeFilename(fileHeader.Filename), form.Value["output_format"][0])
 
 		newFilePath := filepath.Join(uploadDir, filename)
 		newFile, err := os.Create(newFilePath)
@@ -105,7 +121,12 @@ func ConvertUpload(c *gin.Context) {
 		return
 	}
 	fmt.Println("Output format:", outputFormat[0])
-	produceMessage(outputFormat[0])
+	p, err := producer.NewProducer("localhost:9092")
+	err = producer.ProduceNewMessage(p, "email", filename)
+	if err != nil {
+		return
+	}
+
 	c.HTML(http.StatusOK, "convert_success.html", gin.H{})
 }
 
@@ -120,26 +141,18 @@ func sanitizeFilename(filename string) string {
 	return sanitizedFilename
 }
 
-func produceMessage(outputFormat string) {
-	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "localhost:9092"})
-	if err != nil {
-		log.Printf("Failed to create Kafka producer: %s\n", err)
-		return
-	}
-	defer p.Close()
-
-	topic := "email"
-	message := fmt.Sprintf("Conversion completed for output format: %s", outputFormat)
-	err = p.Produce(&kafka.Message{
-		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
-		Value:          []byte(message),
-	}, nil)
-	if err != nil {
-		log.Printf("Failed to produce message to Kafka: %s\n", err)
-		return
-	}
-	p.Flush(15 * 1000) //it is printing late as I am waiting for the message delivery
-	log.Printf("Produced message: %s\n", message)
-}
-
 //TODO:ADD USER_ID TO FILE FOR EASIER HANDLING
+
+/*
+Create the table in DB with userID from VK, that will make everyuser different since they are using VK
+
+UserId
+UserName
+UserPic (the URL string for the image we get from VK)
+...
+
+
+Basically the first table will contain the field we get from the VK
+
+Second table will store the File details for the given users
+*/

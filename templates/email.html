@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email</title>
+    <link href="../static/css/output.css" rel="stylesheet">
+    <link rel="icon" href="/static/favicon/favicon.ico" type="image/x-icon">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.querySelector('.group button');
+            const dropdown = document.getElementById('dropdown');
+            const overlay = document.getElementById('overlay');
+            const userEMail= document.getElementById('email')
+
+            button.addEventListener('click', function() {
+                console.log("Button clicked");
+                dropdown.classList.toggle('opacity-0');
+                overlay.classList.toggle('hidden');
+                if (overlay.classList.contains('hidden')) {
+                    overlay.style.pointerEvents = 'none';
+                    dropdown.style.pointerEvents = 'none';
+                } else {
+                    overlay.style.pointerEvents = 'auto';
+                    dropdown.style.pointerEvents = 'auto';
+                }
+            });
+            overlay.addEventListener('click', function() {
+                console.log("Overlay clicked");
+                dropdown.classList.add('opacity-0');
+                overlay.classList.add('hidden');
+                overlay.style.pointerEvents = 'none';
+                dropdown.style.pointerEvents = 'none';
+            });
+
+
+        });
+    </script>
+</head>
+<body >
+<div class="h-screen w-screen bg-gray-900 bg-cover bg-no-repeat" style="background-image: url('../static/images/background.png');">
+    <nav class="absolute container mx-auto p-2 bg-gray-800 bg-opacity-40 rounded-3xl shadow-2xl left-0 right-0">
+        <div class="flex justify-between items-center flex-wrap">
+            <div class="flex-1 min-w-0">
+                <a href="/dashboard">
+                    <img class="p-2 size-14" src="../static/assets/VK.svg">
+                </a>
+            </div>
+            <div class="flex-1 min-w-0 text-center lg:hidden">
+                <p class="text-white text-xl text-extrabold VK-Sans">
+                    Video Conversion Service
+                </p>
+            </div>
+            <div class="flex-grow lg:flex space-x-14 justify-center hidden">
+                <a href="/convert" class=" mt-1 mb-1  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 VK-Sans text-white bg-gray-800 bg-opacity-20  border border-gray-200 rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Convert
+                </a>
+                <a href="/cut" class=" mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Cut
+                </a>
+                <a href="/watermark" class=" mt-1 mb-1 VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200   rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Watermark
+                </a>
+                <a href="/screenshot" class="mt-1 mb-1  VK-Sans text-white bg-gray-800 bg-opacity-20  bg-gradient-to-r  hover:from-blue-600 hover:to-purple-500 border border-gray-200  rounded-full text-md px-10 py-2 text-center inline-flex items-center">
+                    Screenshot
+                </a>
+            </div>
+            <div class="flex-1 min-w-0 text-right">
+                <div class="group p-2 inline-block">
+                    <button class="block h-11 w-11 z-10 rounded-full overflow-hidden border-2 border-gray-200 focus:border-white">
+                        <img class="h-full w-full object-cover" src="{{.userpicture}}">
+                    </button>
+                    <button id="overlay" class="hidden fixed z-10 inset-0 bg-gray-800 bg-opacity-20 backdrop-blur-sm"></button>
+                    <div id="dropdown" class="absolute mt-1 right-0 opacity-0 z-10 transition-opacity duration-300 bg-gray-800 bg-opacity-40 border border-gray-200 rounded-3xl shadow-2xl">
+                        <p class="block lg:hidden px-6 py-2 text-white text-center VK-Sans rounded-t-3xl shadow-2xl">Привет, <span class="font-extrabold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">{{.userName}}!</span>
+                        </p>
+                        <a href="/convert" class="block lg:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Convert</a>
+                        <a href="/cut" class="block lg:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Cut</a>
+                        <a href="/watermark" class="block lg:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Watermark</a>
+                        <a href="/screenshot" class="block lg:hidden px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 shadow-2xl">Screenshot</a>
+                        <a href="/profile" class="block px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-pink-500 hover:to-blue-600 lg:rounded-t-3xl shadow-2xl">Profile</a>
+                        <a href="/signout" class="block px-6 py-2 text-center transition-opacity duration-300 text-white VK-Sans bg-gradient-to-r hover:from-blue-600 hover:to-purple-500 rounded-b-3xl shadow-2xl">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hidden lg:flex h-full w-full justify-center items-center">
+        <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-10 py-10 sm:px-10 sm:mb-8 sm:py-10 md:px-11 md:py-11 shadow-2xl backdrop-blur-md">
+
+            <div class="absolute -left-4 -top-10 md:-left-12 md:-top-20 size-16 md:w-36 md:h-36">
+
+                <a href="/profile">
+                    <img class="size-44 md:size-32 " src="../static/assets/persik2.webp">
+                </a>
+
+            </div>
+            <div class="relative left-26 top-0 mb-8">
+                <h1 class="VK-Sans text-center mt-8 text-sm text-white text-xl  md:text-3xl mb-8">Email</h1>
+                <h2 class="VK-Sans text-center mt-8 text-sm text-white  md:text-sm mb-8">Ваш текущий Email {{.userEMail}}</h2>
+
+
+
+            </div>
+
+            <div class="flex flex-row py-8 items-center justify-center">
+
+                    <div class="flex flex-row space-x-14 items-center justify-center">
+                        <p class="text-center text-xl text-white VK-Sans">Добавь новый E-Mail</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
+                            <path d="M77 1L93 16L77 31" stroke="white"/>
+                            <path d="M93 16L0 16" stroke="white"/>
+                        </svg>
+                    </div>
+
+                    <form action="/verify_mail" method="post" class="flex flex-col items-center justify-center mt-16 px-14 space-y-6">
+
+                        <input type="email" name="email" class="  rounded-3xl bg-gray-800 bg-opacity-40 border border-gray-300 text-white text-center  px-16 py-2 " placeholder="user@vk.com"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address" required>
+
+
+                        <button type="submit" class="mt-10  py-2 px-10 text-white rounded-3xl text-center bg-gray-800 bg-opacity-40 border border-gray-200 hover:bg-blue-700">Submit</button>
+
+                    </form>
+
+
+                <div class="absolute  top-2 md:-right-20 md:top-2 size-16 md:w-36 md:h-36">
+
+                    <a href="/profile">
+
+                            <svg width="50px" height="50px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                                <g fill="none" fill-rule="evenodd" stroke="#aaaaaa" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)">
+                                    <circle cx="8.5" cy="8.5" r="8"/>
+                                    <g transform="matrix(0 1 -1 0 17 0)">
+                                        <path d="m5.5 11.5 6-6"/>
+                                        <path d="m5.5 5.5 6 6"/>
+                                    </g>
+                                </g>
+                            </svg>
+
+                    </a>
+
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="lg:hidden flex h-full w-full flex-col justify-center items-center">
+        <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-8 sm:px-10 sm:py-10 md:px-16 md:py-16 shadow-2xl backdrop-blur-md">
+
+            <div class="relative">
+                <a href="/profile">
+                    <div class="bg-cover bg-center w-36 h-36 md:w-48 md:h-48 rounded-full mx-auto mb-4" style="background-image: url({{.userpicture}});"></div>
+
+                </a>
+                <h1 class="text-center mt-4 text-sm text-white text-xl md:text-3xl mb-4">Добавь Новый Email</h1>
+                <h1 class="VK-Sans text-center mt-8 text-sm text-white  md:text-sm mb-8">Нажми на фото, чтобы вернуться назад</h1>
+                <h2 class="VK-Sans text-center mt-8 text-sm text-white  md:text-sm mb-8">Ваш текущий Email {{.userEMail}}</h2>
+
+            </div>
+
+
+
+
+            <form action="/verify_mail" method="post" class="flex flex-col items-center justify-center px-10">
+                <div class=" mt-4">
+                    <input type="email" name="email" class="  rounded-3xl bg-gray-800 bg-opacity-40 border border-gray-300 text-white text-center  px-16 py-2 " placeholder="user@vk.com"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address" required>
+                </div>
+
+                <button type="submit" class="relative mt-4  py-2 px-10 text-white rounded-3xl text-center bg-gray-800 bg-opacity-40 border border-gray-200 hover:bg-blue-700">Далше</button>
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

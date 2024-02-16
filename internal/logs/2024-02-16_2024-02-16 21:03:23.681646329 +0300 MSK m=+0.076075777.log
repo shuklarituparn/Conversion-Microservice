@@ -1,0 +1,71 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (23): 
+	- file_history.html
+	- login.html
+	- signout.html
+	- 404.html
+	- cut_success.html
+	- email_confirm.html
+	- error.html
+	- verification_mail.html
+	- convert_success.html
+	- dashboard.html
+	- email_redirect.html
+	- screenshot_edit.html
+	- profile.html
+	- screenshot.html
+	- watermark.html
+	- convert.html
+	- cut_edit.html
+	- delete_conf.html
+	- email.html
+	- 
+	- cut.html
+	- screenshot_success.html
+	- watermark_success.html
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /metrics                  --> main.main.WrapH.func5 (4 handlers)
+[GIN-debug] GET    /                         --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.WelcomeHandler (4 handlers)
+[GIN-debug] GET    /login                    --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Login (4 handlers)
+[GIN-debug] GET    /callback                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Callback (4 handlers)
+[GIN-debug] GET    /dashboard                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Dashboard (5 handlers)
+[GIN-debug] GET    /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Convert (5 handlers)
+[GIN-debug] POST   /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.ConvertUpload (5 handlers)
+[GIN-debug] GET    /cut                      --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Cut (5 handlers)
+[GIN-debug] POST   /cut_edit                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.CutEditPage (5 handlers)
+[GIN-debug] GET    /watermark                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Watermark (5 handlers)
+[GIN-debug] GET    /screenshot               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Screenshot (5 handlers)
+[GIN-debug] GET    /profile                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Profile (5 handlers)
+[GIN-debug] GET    /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailHandler (5 handlers)
+[GIN-debug] POST   /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailUpdateHandler (5 handlers)
+[GIN-debug] GET    /profile/files            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.FileHistory (5 handlers)
+[GIN-debug] POST   /verify_mail              --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailConfirm (5 handlers)
+[GIN-debug] GET    /verify_mail              --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.VerificationEmail (5 handlers)
+[GIN-debug] GET    /deleteConf               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.AccountDeleteConf (5 handlers)
+[GIN-debug] GET    /signout                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Signout (5 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8085
+[GIN] 2024/02/16 - 21:03:26 | 302 |    2.281665ms |  78.141.228.123 | GET      "/profile/email"
+[GIN] 2024/02/16 - 21:03:30 | 302 |    1.350535ms |  78.141.228.123 | POST     "/verify_mail"
+[GIN] 2024/02/16 - 21:03:32 | 302 |   11.864099ms |  78.141.228.123 | POST     "/profile/email"
+[GIN] 2024/02/16 - 21:03:35 | 302 |    1.718042ms |  78.141.228.123 | GET      "/profile/email"
+[GIN] 2024/02/16 - 21:03:54 | 400 |    3.993165ms |  78.141.228.123 | GET      "/verify_mail?code=a1f53977-be2d-4adf-9991-59fa67a9d83c&userId=625608093"
+[GIN] 2024/02/16 - 21:03:55 | 200 |     3.91583ms |  78.141.228.123 | GET      "/static/assets/diggy_judging.webp"
+[GIN] 2024/02/16 - 21:04:38 | 302 |    16.07404ms |  78.141.228.123 | GET      "/verify_mail?code=90aef24d-3ace-4b23-b226-815356c311bf&userId=625608093"
+[GIN] 2024/02/16 - 21:04:38 | 302 |    5.093252ms |  78.141.228.123 | GET      "/profile/email"
+[GIN] 2024/02/16 - 21:04:42 | 200 |   13.802995ms |  78.141.228.123 | GET      "/convert"
+[GIN] 2024/02/16 - 21:04:47 | 200 |    1.806998ms |  78.141.228.123 | GET      "/cut"
+[GIN] 2024/02/16 - 21:04:50 | 200 |    1.555297ms |  78.141.228.123 | GET      "/profile"
+[GIN] 2024/02/16 - 21:04:52 | 302 |    2.107339ms |  78.141.228.123 | GET      "/profile/email"
+[GIN] 2024/02/16 - 21:04:56 | 302 |    1.935328ms |  78.141.228.123 | POST     "/verify_mail"
+[GIN] 2024/02/16 - 21:04:59 | 302 |    1.436385ms |  78.141.228.123 | GET      "/profile/email"
+[GIN] 2024/02/16 - 21:05:02 | 302 |    1.292506ms |  78.141.228.123 | POST     "/verify_mail"
+[GIN] 2024/02/16 - 21:05:04 | 302 |    15.83252ms |  78.141.228.123 | POST     "/profile/email"

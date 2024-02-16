@@ -1,0 +1,161 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (23): 
+	- cut_success.html
+	- file_history.html
+	- screenshot.html
+	- delete_conf.html
+	- email_confirm.html
+	- login.html
+	- profile.html
+	- 404.html
+	- convert.html
+	- convert_success.html
+	- cut_edit.html
+	- screenshot_success.html
+	- 
+	- dashboard.html
+	- screenshot_edit.html
+	- signout.html
+	- verification_mail.html
+	- watermark.html
+	- watermark_success.html
+	- cut.html
+	- email.html
+	- email_redirect.html
+	- error.html
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /metrics                  --> main.main.WrapH.func5 (4 handlers)
+[GIN-debug] GET    /                         --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.WelcomeHandler (4 handlers)
+[GIN-debug] GET    /login                    --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Login (4 handlers)
+[GIN-debug] GET    /callback                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Callback (4 handlers)
+[GIN-debug] GET    /dashboard                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Dashboard (5 handlers)
+[GIN-debug] GET    /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Convert (5 handlers)
+[GIN-debug] POST   /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.ConvertUpload (5 handlers)
+[GIN-debug] GET    /cut                      --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Cut (5 handlers)
+[GIN-debug] POST   /cut_edit                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.CutEditPage (5 handlers)
+[GIN-debug] GET    /watermark                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Watermark (5 handlers)
+[GIN-debug] GET    /screenshot               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Screenshot (5 handlers)
+[GIN-debug] GET    /profile                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Profile (5 handlers)
+[GIN-debug] GET    /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailHandler (5 handlers)
+[GIN-debug] POST   /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailUpdateHandler (5 handlers)
+[GIN-debug] GET    /profile/files            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.FileHistory (5 handlers)
+[GIN-debug] POST   /verify_mail              --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailConfirm (5 handlers)
+[GIN-debug] GET    /verify_mail              --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.VerificationEmail (5 handlers)
+[GIN-debug] GET    /deleteConf               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.AccountDeleteConf (5 handlers)
+[GIN-debug] GET    /signout                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Signout (5 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8085
+[GIN] 2024/02/16 - 16:23:08 | 302 |     266.069µs |   93.175.13.251 | GET      "/"
+[GIN] 2024/02/16 - 16:23:09 | 200 |    1.408667ms |   93.175.13.251 | GET      "/dashboard"
+[GIN] 2024/02/16 - 16:23:12 | 200 |    2.258718ms |   93.175.13.251 | GET      "/convert"
+[GIN] 2024/02/16 - 16:23:23 | 200 |     2.19358ms |   93.175.13.251 | GET      "/profile"
+[GIN] 2024/02/16 - 16:23:24 | 302 |    1.339421ms |   93.175.13.251 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:24:55 | 200 |    4.431116ms | 149.154.161.245 | GET      "/"
+[GIN] 2024/02/16 - 16:25:04 | 200 |    1.104949ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/"
+[GIN] 2024/02/16 - 16:25:05 | 200 |    11.23594ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/css/output.css"
+[GIN] 2024/02/16 - 16:25:05 | 200 |   10.963508ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/images/vk.png"
+[GIN] 2024/02/16 - 16:25:05 | 200 |    8.415314ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/fonts/font.ttf"
+[GIN] 2024/02/16 - 16:25:05 | 200 |   10.381192ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/images/background.png"
+[GIN] 2024/02/16 - 16:25:07 | 302 |      88.824µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/login"
+[GIN] 2024/02/16 - 16:25:11 | 302 |  423.483579ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/callback?code=04c285ce15bec970e8&state=94f85464-dfab-4a26-a845-d91f16a19da9"
+[GIN] 2024/02/16 - 16:25:12 | 200 |    1.315218ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/dashboard"
+[GIN] 2024/02/16 - 16:25:12 | 200 |    8.159014ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/VK.svg"
+[GIN] 2024/02/16 - 16:25:12 | 200 |    7.714363ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/video-player.png"
+[GIN] 2024/02/16 - 16:25:12 | 200 |    1.423308ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/images/background.png"
+[GIN] 2024/02/16 - 16:25:31 | 302 |    1.644849ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/convert"
+[GIN] 2024/02/16 - 16:25:31 | 200 |    9.032501ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/persik3.webp"
+[GIN] 2024/02/16 - 16:25:35 | 302 |    2.704759ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:25:35 | 200 |    1.621667ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/persik2.webp"
+[GIN] 2024/02/16 - 16:25:42 | 200 |    1.473614ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/profile"
+[GIN] 2024/02/16 - 16:25:44 | 302 |    1.707526ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:25:48 | 302 |    1.158252ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | POST     "/verify_mail"
+[GIN] 2024/02/16 - 16:25:49 | 200 |   13.862503ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/persik_cute.webp"
+[GIN] 2024/02/16 - 16:25:53 | 302 |   11.651929ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | POST     "/profile/email"
+[GIN] 2024/02/16 - 16:25:53 | 200 |    1.433611ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/ok-persik.webp"
+[GIN] 2024/02/16 - 16:26:22 | 302 |     106.237µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/verify_mail?code=d7c8f1f2-57a9-4014-b207-8f7c234ca72f&userId=608925590"
+[GIN] 2024/02/16 - 16:26:23 | 302 |     169.634µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/login"
+[GIN] 2024/02/16 - 16:27:21 | 302 |      87.162µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/verify_mail?code=d7c8f1f2-57a9-4014-b207-8f7c234ca72f&userId=608925590"
+[GIN] 2024/02/16 - 16:27:21 | 302 |      92.642µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/login"
+[GIN] 2024/02/16 - 16:27:37 | 302 |     119.823µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/verify_mail?code=d7c8f1f2-57a9-4014-b207-8f7c234ca72f&userId=608925590"
+[GIN] 2024/02/16 - 16:27:37 | 302 |     115.244µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/login"
+[GIN] 2024/02/16 - 16:28:18 | 302 |      82.052µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/verify_mail?code=d7c8f1f2-57a9-4014-b207-8f7c234ca72f&userId=608925590"
+[GIN] 2024/02/16 - 16:28:18 | 302 |     174.975µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/login"
+[GIN] 2024/02/16 - 16:28:18 | 302 |      63.378µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/verify_mail?code=d7c8f1f2-57a9-4014-b207-8f7c234ca72f&userId=608925590"
+[GIN] 2024/02/16 - 16:28:18 | 302 |      90.959µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/login"
+[GIN] 2024/02/16 - 16:28:43 | 302 |     106.709µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/verify_mail?code=d7c8f1f2-57a9-4014-b207-8f7c234ca72f&userId=608925590"
+[GIN] 2024/02/16 - 16:28:44 | 302 |      87.333µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/login"
+[GIN] 2024/02/16 - 16:28:52 | 302 |  492.892643ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/callback?code=c71430c651d6fc33d0&state=94f85464-dfab-4a26-a845-d91f16a19da9"
+[GIN] 2024/02/16 - 16:28:53 | 200 |     4.82261ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/dashboard"
+[GIN] 2024/02/16 - 16:28:53 | 200 |    7.787935ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/VK.svg"
+[GIN] 2024/02/16 - 16:28:53 | 200 |    8.187748ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/css/output.css"
+[GIN] 2024/02/16 - 16:28:53 | 200 |    7.998546ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/video-player.png"
+[GIN] 2024/02/16 - 16:28:54 | 200 |     560.352µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/fonts/font.ttf"
+[GIN] 2024/02/16 - 16:28:54 | 200 |    2.767197ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/images/background.png"
+[GIN] 2024/02/16 - 16:29:02 | 302 |    1.984742ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/convert"
+[GIN] 2024/02/16 - 16:29:02 | 200 |    9.042803ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/persik3.webp"
+[GIN] 2024/02/16 - 16:29:05 | 302 |     2.16094ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:29:06 | 200 |    9.193935ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/persik2.webp"
+[GIN] 2024/02/16 - 16:29:08 | 200 |    1.592754ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/profile"
+[GIN] 2024/02/16 - 16:29:12 | 302 |    1.934239ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:29:33 | 302 |    1.230792ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | POST     "/verify_mail"
+[GIN] 2024/02/16 - 16:29:33 | 200 |    1.773161ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/persik_cute.webp"
+[GIN] 2024/02/16 - 16:29:34 | 302 |     213.567µs |   93.175.13.251 | GET      "/"
+[GIN] 2024/02/16 - 16:29:34 | 200 |    1.426696ms |   93.175.13.251 | GET      "/dashboard"
+[GIN] 2024/02/16 - 16:29:37 | 200 |     1.58482ms |   93.175.13.251 | GET      "/profile"
+[GIN] 2024/02/16 - 16:29:39 | 302 |    1.951224ms |   93.175.13.251 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:29:43 | 302 |    20.77104ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | POST     "/profile/email"
+[GIN] 2024/02/16 - 16:29:43 | 302 |    3.166657ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | POST     "/profile/email"
+[GIN] 2024/02/16 - 16:29:53 | 302 |    1.483704ms |   93.175.13.251 | POST     "/verify_mail"
+[GIN] 2024/02/16 - 16:29:53 | 200 |    9.571959ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/static/assets/ok-persik.webp"
+[GIN] 2024/02/16 - 16:29:55 | 302 |    4.122369ms |   93.175.13.251 | POST     "/profile/email"
+[GIN] 2024/02/16 - 16:30:08 | 302 |    1.957208ms |   93.175.13.251 | GET      "/verify_mail?code=d8d66ac2-dd57-4760-8651-2082ba2bc512&userId=625608093"
+[GIN] 2024/02/16 - 16:30:08 | 302 |    1.328856ms |   93.175.13.251 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:30:41 | 302 |       90.99µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/verify_mail?code=55264141-7682-404b-96a0-5aa5da054803&userId=608925590"
+[GIN] 2024/02/16 - 16:30:41 | 302 |     125.044µs | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/login"
+[GIN] 2024/02/16 - 16:31:05 | 302 |    9.469035ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/verify_mail?code=55264141-7682-404b-96a0-5aa5da054803&userId=608925590"
+[GIN] 2024/02/16 - 16:31:05 | 302 |    1.538981ms | 2a03:d000:4223:d7a:dc00:86ea:7513:6e2 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:49:01 | 200 |   13.870943ms | 178.214.249.143 | GET      "/"
+[GIN] 2024/02/16 - 16:49:01 | 200 |     581.885µs | 178.214.249.143 | GET      "/static/images/vk.png"
+[GIN] 2024/02/16 - 16:49:01 | 200 |     684.208µs | 178.214.249.143 | GET      "/static/css/output.css"
+[GIN] 2024/02/16 - 16:49:02 | 200 |      2.7149ms | 178.214.249.143 | GET      "/static/images/background.png"
+[GIN] 2024/02/16 - 16:49:02 | 200 |     777.484µs | 178.214.249.143 | GET      "/static/fonts/font.ttf"
+[GIN] 2024/02/16 - 16:49:06 | 302 |     214.414µs | 178.214.249.143 | GET      "/login"
+[GIN] 2024/02/16 - 16:49:12 | 302 |  201.912531ms | 178.214.249.143 | GET      "/callback?code=78855aa6fa0f7835ad&state=94f85464-dfab-4a26-a845-d91f16a19da9"
+[GIN] 2024/02/16 - 16:49:13 | 200 |    2.474188ms | 178.214.249.143 | GET      "/dashboard"
+[GIN] 2024/02/16 - 16:49:13 | 200 |    1.080564ms | 178.214.249.143 | GET      "/static/assets/video-player.png"
+[GIN] 2024/02/16 - 16:49:13 | 200 |    7.936771ms | 178.214.249.143 | GET      "/static/assets/VK.svg"
+[GIN] 2024/02/16 - 16:49:13 | 200 |   12.521763ms | 178.214.249.143 | GET      "/static/favicon/favicon.ico"
+[GIN] 2024/02/16 - 16:49:28 | 302 |     4.99276ms | 178.214.249.143 | GET      "/convert"
+[GIN] 2024/02/16 - 16:49:28 | 200 |    1.378114ms | 178.214.249.143 | GET      "/static/assets/persik3.webp"
+[GIN] 2024/02/16 - 16:49:31 | 302 |    1.147701ms | 178.214.249.143 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:49:31 | 200 |    1.387662ms | 178.214.249.143 | GET      "/static/assets/persik2.webp"
+[GIN] 2024/02/16 - 16:49:45 | 302 |    1.116903ms | 178.214.249.143 | POST     "/verify_mail"
+[GIN] 2024/02/16 - 16:49:46 | 200 |   17.084264ms | 178.214.249.143 | GET      "/static/assets/persik_cute.webp"
+[GIN] 2024/02/16 - 16:49:50 | 302 |   14.455436ms | 178.214.249.143 | POST     "/profile/email"
+[GIN] 2024/02/16 - 16:49:50 | 200 |     1.12085ms | 178.214.249.143 | GET      "/static/assets/ok-persik.webp"
+[GIN] 2024/02/16 - 16:50:02 | 302 |    4.824593ms | 178.214.249.143 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:50:04 | 200 |    1.428769ms | 178.214.249.143 | GET      "/profile"
+[GIN] 2024/02/16 - 16:50:06 | 302 |    1.451423ms | 178.214.249.143 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:51:21 | 302 |     130.966µs | 178.214.249.143 | GET      "/"
+[GIN] 2024/02/16 - 16:51:21 | 200 |      966.85µs | 178.214.249.143 | GET      "/dashboard"
+[GIN] 2024/02/16 - 16:51:25 | 200 |     789.457µs | 178.214.249.143 | GET      "/profile"
+[GIN] 2024/02/16 - 16:51:50 | 302 |    1.623187ms | 178.214.249.143 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:51:51 | 302 |    1.721352ms | 178.214.249.143 | GET      "/convert"
+[GIN] 2024/02/16 - 16:51:54 | 302 |    1.564677ms | 178.214.249.143 | GET      "/profile/email"
+[GIN] 2024/02/16 - 16:51:57 | 302 |    1.062591ms | 178.214.249.143 | POST     "/verify_mail"
+[GIN] 2024/02/16 - 16:51:59 | 302 |    3.126859ms | 178.214.249.143 | POST     "/profile/email"
+[GIN] 2024/02/16 - 17:13:30 | 200 |    7.515895ms |    84.21.167.85 | GET      "/"
+[GIN] 2024/02/16 - 17:13:31 | 200 |     7.59807ms |    84.21.167.85 | GET      "/static/images/vk.png"
+[GIN] 2024/02/16 - 17:13:31 | 200 |    8.377189ms |    84.21.167.85 | GET      "/static/css/output.css"
+[GIN] 2024/02/16 - 17:13:31 | 200 |    5.716253ms |    84.21.167.85 | GET      "/static/fonts/font.ttf"
+[GIN] 2024/02/16 - 17:13:31 | 200 |   11.552974ms |    84.21.167.85 | GET      "/static/images/background.png"
+[GIN] 2024/02/16 - 17:13:35 | 200 |    8.216666ms |    84.21.167.85 | GET      "/static/favicon/favicon.ico"
+[GIN] 2024/02/16 - 17:13:46 | 302 |    3.100453ms |    84.21.167.85 | GET      "/login"

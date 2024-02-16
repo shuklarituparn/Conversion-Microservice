@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
@@ -23,24 +24,30 @@ func init() {
 	if err != nil {
 		log.Fatalf("Failed to create Jaeger tracer: %v", err)
 	}
-	defer func(closer io.Closer) {
-		err := closer.Close()
-		if err != nil {
-
-		}
-	}(Closer)
 	opentracing.SetGlobalTracer(Tracer)
 }
 
 func TracingMiddleware() gin.HandlerFunc {
 	return func(context *gin.Context) {
-		spanCtx, _ := Tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(context.Request.Header))
-		span := Tracer.StartSpan(context.Request.URL.Path, ext.RPCServerOption(spanCtx))
-		defer span.Finish()
+		spanCtx, err := Tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(context.Request.Header))
+		if err != nil {
+			// Handle extraction error
+			log.Println("Error extracting span context:", err)
+		}
+
+		spanName := fmt.Sprintf("%s %s", context.Request.Method, context.Request.URL.Path)
+		span := Tracer.StartSpan(spanName, ext.RPCServerOption(spanCtx))
+
+		defer func() {
+			if r := recover(); r != nil {
+				// Recover from panic and finish the span
+				span.Finish()
+				panic(r)
+			}
+			span.Finish()
+		}()
 
 		context.Set("span", span)
-
 		context.Next()
-
 	}
 }
