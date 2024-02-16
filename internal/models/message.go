@@ -14,3 +14,8 @@ type EmailVerificationMessage struct {
 	UserEmail        string `json:"user_email"`
 	VerificationCode string `json:"verification_code"`
 }
+
+type MailSendMessage struct {
+	Filepath string `json:"filepath"`
+	TO       string `json:"TO"`
+}

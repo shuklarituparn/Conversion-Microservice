@@ -4,16 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
-	"github.com/shuklarituparn/Conversion-Microservice/internal/ID"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/consumer"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
 	gomail "gopkg.in/mail.v2"
 	"log"
 	"os"
-	"path/filepath"
 )
 
-func SendMail() {
+func SendMail(Filepath string, To string) {
 	m := gomail.NewMessage()
 
 	err := godotenv.Load("../../.env")
@@ -25,14 +24,10 @@ func SendMail() {
 	From := os.Getenv("EMAIL")
 	Key := os.Getenv("EMAIL_KEY")
 	m.SetHeader("From", From)
-	m.SetHeader("To", "shukla.r@phystech.edu")
+	m.SetHeader("To", To)
 	m.SetHeader("Subject", "Imp mail")
-	m.SetHeader("Message-ID", fmt.Sprintf("<%s@example.com>", ID.ReturnID()))
 
-	currentPath, _ := os.Getwd()
-	fileDestination := filepath.Join(currentPath, "../"+"../"+"internal"+"/"+"email"+"/"+"templates", "email.html")
-
-	htmlContent, err := os.ReadFile(fileDestination)
+	htmlContent, err := os.ReadFile(Filepath)
 	if err != nil {
 		fmt.Println("Error reading HTML content:", err)
 		return
@@ -49,34 +44,7 @@ func SendMail() {
 	}
 }
 
-func SendEmail() {
-
-	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
-	_ = c.Subscribe("email", nil)
-
-	defer consumer.Close(c)
-
-	for {
-		msg, err := c.ReadMessage(-1)
-		if err != nil {
-			log.Println("Error reading message:", err)
-			continue
-		}
-
-		log.Printf("Received message on %s: %s\n", msg.TopicPartition, string(msg.Value))
-
-		//EmailTempGenerator()
-		SendMail()
-
-		_, commitErr := c.CommitMessage(msg)
-		if commitErr != nil {
-			log.Printf("Failed to commit offset: %v", commitErr)
-		}
-	}
-
-}
-
-func GenerateEmail() {
+func GenerateVerficationEmail() {
 
 	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
 	_ = c.Subscribe("verification_mail", nil)
@@ -94,7 +62,55 @@ func GenerateEmail() {
 		log.Printf("Received message on %s: %s\n", msg.TopicPartition, string(msg.Value))
 
 		err = json.Unmarshal(msg.Value, &EmailMessage)
-		VerificationTempGenerator(EmailMessage.UserName, EmailMessage.UserID, EmailMessage.VerificationCode)
+		filepath := VerificationTempGenerator(EmailMessage.UserName, EmailMessage.UserID, EmailMessage.VerificationCode)
+
+		var sendMail models.MailSendMessage
+
+		sendMail.Filepath = filepath
+		sendMail.TO = EmailMessage.UserEmail
+
+		serializedMessage, err := json.Marshal(sendMail)
+		if err != nil {
+			log.Println("Failed to Serialize the message")
+		}
+
+		p, err := producer.NewProducer("localhost:9092")
+		err = producer.ProduceNewMessage(p, "send_mail", string(serializedMessage))
+		if err != nil {
+			return
+		}
+
+		_, commitErr := c.CommitMessage(msg)
+		if commitErr != nil {
+			log.Printf("Failed to commit offset: %v", commitErr)
+		}
+	}
+
+}
+
+func SendEmail() {
+
+	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
+	_ = c.Subscribe("send_mail", nil)
+
+	defer consumer.Close(c)
+
+	for {
+		msg, err := c.ReadMessage(-1)
+		if err != nil {
+			log.Println("Error reading message:", err)
+			continue
+		}
+
+		log.Printf("Received message on %s: %s\n", msg.TopicPartition, string(msg.Value))
+
+		var mailToSend models.MailSendMessage
+		err = json.Unmarshal(msg.Value, &mailToSend)
+		if err != nil {
+			fmt.Println(err)
+		}
+		SendMail(mailToSend.Filepath, mailToSend.TO)
+
 		_, commitErr := c.CommitMessage(msg)
 		if commitErr != nil {
 			log.Printf("Failed to commit offset: %v", commitErr)

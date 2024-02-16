@@ -10,6 +10,7 @@ import (
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func EmailHandler(c *gin.Context) {
@@ -77,6 +78,11 @@ func EmailUpdateHandler(c *gin.Context) {
 	}
 	VerificationToken := ID.ReturnID()
 	user.VerificationToken = VerificationToken
+	user.UserEmail = userEmail
+
+	if errorSaving := db.Save(&user).Error; errorSaving != nil {
+		c.AbortWithError(http.StatusInternalServerError, errorSaving)
+	}
 	var message models.EmailVerificationMessage
 
 	message.UserName = user.Username
@@ -104,6 +110,33 @@ func EmailConfirm(c *gin.Context) {
 	c.HTML(http.StatusFound, "email_confirm.html", gin.H{
 		"userEmail": userEmail,
 	})
+}
+
+func VerificationEmail(c *gin.Context) {
+	code := c.Query("code")
+	userIdStr := c.Query("userId")
+	userId, _ := strconv.Atoi(userIdStr)
+
+	if code == "" || userIdStr == "" { // OR on strings ||
+		c.HTML(http.StatusBadRequest, "error.html", gin.H{})
+		return
+	}
+	db := user_database.ReturnDbInstance()
+
+	var user models.User
+
+	user, _ = user_database.GetUserWithID(db, userId)
+
+	if user.VerificationToken == code {
+		user.Verified = true
+		if errorSaving := db.Save(&user).Error; errorSaving != nil {
+			c.AbortWithError(http.StatusInternalServerError, errorSaving)
+		}
+		c.Redirect(http.StatusFound, "/profile/email")
+
+	} else {
+		c.HTML(http.StatusBadRequest, "error.html", gin.H{})
+	}
 }
 
 //TODO: SO GET REQUEST TO VERIFIED TO ENTER THE CODE

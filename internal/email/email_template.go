@@ -71,7 +71,7 @@ func WelcomeTempGenerator(userName string, userID int) {
 	}
 }
 
-func VerificationTempGenerator(userName string, userID int, VerificationCode string) {
+func VerificationTempGenerator(userName string, userID int, VerificationCode string) string {
 
 	userWelcomeString := fmt.Sprintf("Добро пожаловать в сервис конвертации видео, мы очень рады, что вы с нами.")
 	userEmailString := fmt.Sprintf("https://knowing-gannet-actively.ngrok-free.app/verify_mail?code=%s&userId=%d", VerificationCode, userID)
@@ -133,8 +133,10 @@ func VerificationTempGenerator(userName string, userID int, VerificationCode str
 	}
 	defer file.Close()
 
-	err = os.WriteFile("../../internal/email/templates"+"/"+filename, []byte(emailBody), 0644)
+	completeFilename := fmt.Sprintf("../../internal/email/templates" + "/" + filename)
+	err = os.WriteFile(completeFilename, []byte(emailBody), 0644)
 	if err != nil {
 		panic(err)
 	}
+	return completeFilename
 }

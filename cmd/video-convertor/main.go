@@ -34,9 +34,11 @@ func main() {
 	router.Use(middlewares.TracingMiddleware())
 
 	go func() {
-		email.GenerateEmail()
+		email.GenerateVerficationEmail()
 	}()
-
+	go func() {
+		email.SendEmail()
+	}()
 	router.LoadHTMLGlob("../../templates/*")
 	router.Static("/static", "../../static")
 
@@ -63,7 +65,8 @@ func main() {
 		protected.GET("/profile/email", handlers.EmailHandler)
 		protected.POST("/profile/email", handlers.EmailUpdateHandler)
 		protected.GET("/profile/files", handlers.FileHistory)
-		protected.POST("verify_mail", handlers.EmailConfirm)
+		protected.POST("/verify_mail", handlers.EmailConfirm)
+		protected.GET("/verify_mail", handlers.VerificationEmail)
 		protected.GET("/deleteConf", handlers.AccountDeleteConf)
 		protected.GET("/signout", handlers.Signout)
 	}
