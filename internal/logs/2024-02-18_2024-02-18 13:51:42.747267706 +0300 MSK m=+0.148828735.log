@@ -4,33 +4,37 @@
  - using env:	export GIN_MODE=release
  - using code:	gin.SetMode(gin.ReleaseMode)
 
-[GIN-debug] Loaded HTML Templates (22): 
-	- screenshot.html
-	- cut_edit.html
-	- dashboard.html
-	- login.html
-	- profile.html
-	- signout.html
-	- watermark.html
-	- 
+[GIN-debug] Loaded HTML Templates (26): 
 	- delete_conf.html
-	- email.html
-	- email_confirm.html
-	- verification_mail.html
-	- watermark_success.html
+	- goodbye.html
 	- 404.html
-	- convert.html
-	- cut.html
-	- file_history.html
-	- screenshot_success.html
 	- convert_success.html
-	- cut_success.html
+	- dashboard.html
+	- email_confirm.html
+	- login.html
+	- restore.html
+	- watermark.html
+	- email.html
+	- file_history.html
+	- profile.html
+	- screenshot.html
+	- screenshot_success.html
+	- signout.html
+	- watermark_success.html
+	- cut.html
 	- email_redirect.html
+	- restored.html
+	- cut_edit.html
 	- screenshot_edit.html
+	- verification_mail.html
+	- error.html
+	- 
+	- convert.html
+	- cut_success.html
 
 [GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
 [GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
-[GIN-debug] GET    /metrics                  --> main.main.WrapH.func4 (4 handlers)
+[GIN-debug] GET    /metrics                  --> main.main.WrapH.func5 (4 handlers)
 [GIN-debug] GET    /                         --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.WelcomeHandler (4 handlers)
 [GIN-debug] GET    /login                    --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Login (4 handlers)
 [GIN-debug] GET    /callback                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Callback (4 handlers)
@@ -45,15 +49,12 @@
 [GIN-debug] GET    /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailHandler (5 handlers)
 [GIN-debug] POST   /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailUpdateHandler (5 handlers)
 [GIN-debug] GET    /profile/files            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.FileHistory (5 handlers)
+[GIN-debug] GET    /profile/delete           --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.AccountDeleteConf (5 handlers)
+[GIN-debug] POST   /profile/delete           --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.AccountDelete (5 handlers)
+[GIN-debug] GET    /profile/restore          --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Restore (5 handlers)
 [GIN-debug] POST   /verify_mail              --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailConfirm (5 handlers)
-[GIN-debug] GET    /deleteConf               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.AccountDeleteConf (5 handlers)
+[GIN-debug] GET    /verify_mail              --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.VerificationEmail (5 handlers)
 [GIN-debug] GET    /signout                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Signout (5 handlers)
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8085
-[GIN] 2024/02/16 - 03:10:41 | 302 |    3.096697ms |   93.175.13.251 | GET      "/profile/email"
-[GIN] 2024/02/16 - 03:10:59 | 302 |    2.079763ms |   93.175.13.251 | GET      "/profile/email"
-[GIN] 2024/02/16 - 03:11:03 | 302 |    1.401243ms |   93.175.13.251 | POST     "/verify_mail"
-[GIN] 2024/02/16 - 03:11:03 | 304 |     239.355µs |   93.175.13.251 | GET      "/static/assets/persik_cute.webp"
-[GIN] 2024/02/16 - 03:11:05 | 302 |    5.057313ms |   93.175.13.251 | POST     "/profile/email"
-[GIN] 2024/02/16 - 03:11:05 | 200 |    4.185595ms |   93.175.13.251 | GET      "/static/assets/ok-persik.webp"
