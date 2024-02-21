@@ -58,3 +58,8 @@
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8085
+[GIN] 2024/02/18 - 13:57:27 | 200 |     1.82843ms |  108.61.173.108 | GET      "/dashboard"
+[GIN] 2024/02/18 - 13:57:30 | 200 |    2.520946ms |  108.61.173.108 | GET      "/profile"
+[GIN] 2024/02/18 - 13:57:32 | 302 |      1.5312ms |  108.61.173.108 | GET      "/profile/delete"
+[GIN] 2024/02/18 - 13:57:32 | 200 |    5.138786ms |  108.61.173.108 | GET      "/static/assets/persik_scared.webp"
+[GIN] 2024/02/18 - 13:57:34 | 500 |    1.466678ms |  108.61.173.108 | POST     "/profile/delete?userID=625608093"

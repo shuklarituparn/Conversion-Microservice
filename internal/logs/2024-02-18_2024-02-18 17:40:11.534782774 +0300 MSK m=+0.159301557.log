@@ -58,3 +58,13 @@
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8085
+[GIN-debug] redirecting request 301: /profile --> /profile
+[GIN] 2024/02/18 - 17:41:21 | 200 |    16.72601ms |   93.175.13.251 | GET      "/profile"
+[GIN] 2024/02/18 - 17:41:22 | 302 |   26.390759ms |   93.175.13.251 | GET      "/profile/email"
+[GIN] 2024/02/18 - 17:41:30 | 302 |   12.181077ms |   93.175.13.251 | POST     "/verify_mail"
+[GIN-debug] [WARNING] Headers were already written. Wanted to override status code 500 with 302
+[GIN] 2024/02/18 - 17:41:32 | 500 |    22.89143ms |   93.175.13.251 | POST     "/profile/email"
+Error #01: record not found
+Error #02: ERROR: duplicate key value violates unique constraint "idx_users_user_picture" (SQLSTATE 23505)
+[GIN] 2024/02/18 - 17:41:35 | 302 |   21.547215ms |   93.175.13.251 | GET      "/profile/email"
+[GIN] 2024/02/18 - 17:45:26 | 200 |    15.94615ms |   93.175.13.251 | GET      "/profile"

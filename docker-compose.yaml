@@ -1,7 +1,7 @@
 version: "3"
 
 networks:
-  kafka-tutorial_default:
+  ka_defau:
     external: true
 
 services:

@@ -6,35 +6,35 @@
 
 [GIN-debug] Loaded HTML Templates (26): 
 	- file_history.html
-	- watermark_success.html
-	- delete_conf.html
-	- watermark.html
-	- email.html
 	- goodbye.html
-	- restored.html
-	- screenshot.html
-	- verification_mail.html
-	- 404.html
-	- dashboard.html
-	- email_confirm.html
-	- email_redirect.html
-	- error.html
-	- cut_edit.html
-	- cut_success.html
-	- convert_success.html
+	- login.html
+	- screenshot_edit.html
 	- 
+	- 404.html
+	- email_confirm.html
 	- convert.html
 	- restore.html
-	- screenshot_edit.html
+	- restored.html
+	- delete_conf.html
 	- profile.html
-	- screenshot_success.html
+	- verification_mail.html
+	- email_redirect.html
+	- convert_success.html
+	- cut_success.html
+	- dashboard.html
+	- email.html
+	- error.html
 	- signout.html
+	- screenshot_success.html
+	- watermark_success.html
+	- cut_edit.html
+	- screenshot.html
+	- watermark.html
 	- cut.html
-	- login.html
 
 [GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
 [GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
-[GIN-debug] GET    /metrics                  --> main.main.WrapH.func5 (4 handlers)
+[GIN-debug] GET    /metrics                  --> main.main.WrapH.func6 (4 handlers)
 [GIN-debug] GET    /                         --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.WelcomeHandler (4 handlers)
 [GIN-debug] GET    /login                    --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Login (4 handlers)
 [GIN-debug] GET    /callback                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Callback (4 handlers)
@@ -42,7 +42,8 @@
 [GIN-debug] GET    /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Convert (5 handlers)
 [GIN-debug] POST   /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.ConvertUpload (5 handlers)
 [GIN-debug] GET    /cut                      --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Cut (5 handlers)
-[GIN-debug] POST   /cut_edit                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.CutEditPage (5 handlers)
+[GIN-debug] GET    /cut_edit                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.CutEditPage (5 handlers)
+[GIN-debug] POST   /cut_edit                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.CutEditResult (5 handlers)
 [GIN-debug] GET    /watermark                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Watermark (5 handlers)
 [GIN-debug] GET    /screenshot               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Screenshot (5 handlers)
 [GIN-debug] GET    /profile                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Profile (5 handlers)
@@ -58,8 +59,8 @@
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8085
-[GIN] 2024/02/18 - 13:59:45 | 302 |    1.810668ms |  108.61.173.108 | GET      "/profile/delete?userID=625608093"
-[GIN] 2024/02/18 - 13:59:47 | 500 |    1.603056ms |  108.61.173.108 | POST     "/profile/delete?userID=625608093"
-[GIN] 2024/02/18 - 15:19:24 | 200 |   14.277172ms |  108.61.173.108 | GET      "/dashboard"
-[GIN] 2024/02/18 - 15:19:25 | 304 |     847.079µs |  108.61.173.108 | GET      "/static/css/output.css"
-[GIN] 2024/02/18 - 15:19:25 | 200 |    6.439383ms |  108.61.173.108 | GET      "/static/images/background.png"
+[GIN] 2024/02/21 - 00:38:17 | 302 |     524.254µs |   95.179.227.44 | GET      "/"
+[GIN] 2024/02/21 - 00:38:17 | 200 |    2.419546ms |   95.179.227.44 | GET      "/dashboard"
+[GIN] 2024/02/21 - 00:38:19 | 200 |      2.2491ms |   95.179.227.44 | GET      "/convert"
+[GIN] 2024/02/21 - 00:38:33 | 500 |  2.319872682s |   95.179.227.44 | POST     "/convert"
+[GIN] 2024/02/21 - 00:38:34 | 404 |    4.888487ms |   95.179.227.44 | GET      "/favicon.ico"

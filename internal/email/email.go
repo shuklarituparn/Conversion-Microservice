@@ -7,12 +7,13 @@ import (
 	"github.com/shuklarituparn/Conversion-Microservice/internal/consumer"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
 	gomail "gopkg.in/mail.v2"
 	"log"
 	"os"
 )
 
-func SendMail(Filepath string, To string) {
+func SendMail(Filepath string, To string, Subject string) {
 	m := gomail.NewMessage()
 
 	err := godotenv.Load("../../.env")
@@ -25,7 +26,7 @@ func SendMail(Filepath string, To string) {
 	Key := os.Getenv("EMAIL_KEY")
 	m.SetHeader("From", From)
 	m.SetHeader("To", To)
-	m.SetHeader("Subject", "Verification Mail")
+	m.SetHeader("Subject", Subject)
 
 	htmlContent, err := os.ReadFile(Filepath)
 	if err != nil {
@@ -44,7 +45,7 @@ func SendMail(Filepath string, To string) {
 	}
 }
 
-func GenerateVerficationEmail() {
+func GenerateVerficationEmailConsumer() {
 
 	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
 	_ = c.Subscribe("verification_mail", nil)
@@ -68,6 +69,7 @@ func GenerateVerficationEmail() {
 
 		sendMail.Filepath = filepath
 		sendMail.TO = EmailMessage.UserEmail
+		sendMail.Subject = "Проверьте вашу почту"
 
 		serializedMessage, err := json.Marshal(sendMail)
 		if err != nil {
@@ -88,7 +90,58 @@ func GenerateVerficationEmail() {
 
 }
 
-func SendEmail() {
+func GenerateRestoreEmailConsumer() {
+
+	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
+	_ = c.Subscribe("restore_mail", nil)
+
+	defer consumer.Close(c)
+	var RestoreMail models.RestoreAccountMessage
+
+	for {
+		msg, err := c.ReadMessage(-1)
+		if err != nil {
+			log.Println("Error reading message:", err)
+			continue
+		}
+
+		log.Printf("Received message on %s: %s\n", msg.TopicPartition, string(msg.Value))
+
+		err = json.Unmarshal(msg.Value, &RestoreMail)
+		filepath := RestoreIDTempGenerator(RestoreMail.UserName, RestoreMail.UserId)
+
+		var sendmail models.MailSendMessage
+		db := user_database.ReturnDbInstance()
+		var user *models.User
+
+		user, errorGettingUser := user_database.GetDeletedUserWithID(db, RestoreMail.UserId)
+		if errorGettingUser != nil {
+			log.Println("Error getting user from the database", errorGettingUser)
+		}
+		sendmail.TO = user.UserEmail
+		sendmail.Filepath = filepath
+		sendmail.Subject = "Удаление Аккаунта"
+
+		serializedMessage, err := json.Marshal(sendmail)
+		if err != nil {
+			log.Println("Failed to Serialize the message")
+		}
+
+		p, err := producer.NewProducer("localhost:9092")
+		err = producer.ProduceNewMessage(p, "send_mail", string(serializedMessage))
+		if err != nil {
+			return
+		}
+
+		_, commitErr := c.CommitMessage(msg)
+		if commitErr != nil {
+			log.Printf("Failed to commit offset: %v", commitErr)
+		}
+	}
+
+}
+
+func SendEmailConsumer() {
 
 	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
 	_ = c.Subscribe("send_mail", nil)
@@ -109,7 +162,7 @@ func SendEmail() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		SendMail(mailToSend.Filepath, mailToSend.TO)
+		SendMail(mailToSend.Filepath, mailToSend.TO, mailToSend.Subject)
 
 		_, commitErr := c.CommitMessage(msg)
 		if commitErr != nil {

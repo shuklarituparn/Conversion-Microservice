@@ -34,13 +34,17 @@ func main() {
 	router.Use(middlewares.TracingMiddleware())
 
 	go func() {
-		email.GenerateVerficationEmail()
+		email.GenerateVerficationEmailConsumer()
 	}()
 	go func() {
-		email.SendEmail()
+		email.SendEmailConsumer()
+	}()
+	go func() {
+		email.GenerateRestoreEmailConsumer()
 	}()
 	router.LoadHTMLGlob("../../templates/*")
 	router.Static("/static", "../../static")
+	router.Static("/uploads", "../../uploads")
 
 	//Adding the metrics
 	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
@@ -58,16 +62,20 @@ func main() {
 		protected.GET("/convert", handlers.Convert)
 		protected.POST("/convert", handlers.ConvertUpload)
 		protected.GET("/cut", handlers.Cut)
-		protected.POST("/cut_edit", handlers.CutEditPage)
+		protected.GET("/cut_edit", handlers.CutEditPage)
+		protected.POST("/cut_edit", handlers.CutEditResult)
 		protected.GET("/watermark", handlers.Watermark)
 		protected.GET("/screenshot", handlers.Screenshot)
 		protected.GET("/profile", handlers.Profile)
 		protected.GET("/profile/email", handlers.EmailHandler)
 		protected.POST("/profile/email", handlers.EmailUpdateHandler)
 		protected.GET("/profile/files", handlers.FileHistory)
+		protected.GET("/profile/delete", handlers.AccountDeleteConf)
+		protected.POST("/profile/delete", handlers.AccountDelete)
+		protected.GET("/profile/restore", handlers.Restore)
 		protected.POST("/verify_mail", handlers.EmailConfirm)
 		protected.GET("/verify_mail", handlers.VerificationEmail)
-		protected.GET("/deleteConf", handlers.AccountDeleteConf)
+
 		protected.GET("/signout", handlers.Signout)
 	}
 

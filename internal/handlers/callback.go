@@ -89,13 +89,6 @@ func Callback(c *gin.Context) {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
-
-	db := user_database.ReturnDbInstance()
-	findUser, errorGettingUser := user_database.UserWithID(db, userId)
-	if errorGettingUser != nil {
-		log.Println(errorGettingUser)
-	}
-
 	user := models.User{
 		ID:                result.Response[0].UserId,
 		Username:          result.Response[0].UserName,
@@ -103,14 +96,34 @@ func Callback(c *gin.Context) {
 		UserEmail:         "",
 		Verified:          false,
 		VerificationToken: "",
+		RestoreSecureKey:  "",
 		Videos:            nil,
 		CreatedAt:         time.Time{},
 		UpdatedAt:         time.Time{},
 		Deleted:           gorm.DeletedAt{},
 	}
 
-	if !findUser {
-		db.Create(&user) //we create the user after checking if it doesn't exist
+	db := user_database.ReturnDbInstance()
+
+	findIfDeleted, errorGetting := user_database.DeletedUserWithID(db, userId) //checks if the user is deleted and search
+	findUser, errorFinding := user_database.UserWithID(db, userId)
+	if errorFinding != nil {
+		log.Println("Error finding the user (without deletion", errorFinding)
 	}
-	c.Redirect(http.StatusFound, "/dashboard")
+	if errorGetting != nil {
+		log.Println("Error checking if user is deleted:", errorGetting)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to check user status"})
+		return
+	}
+	if !findUser {
+		if findIfDeleted {
+			c.Redirect(http.StatusFound, "/profile/restore")
+		} else {
+			db.Create(&user)
+			c.Redirect(http.StatusFound, "/dashboard")
+		}
+	} else {
+		c.Redirect(http.StatusFound, "/dashboard")
+	}
+
 }

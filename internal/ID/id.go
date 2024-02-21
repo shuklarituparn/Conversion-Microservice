@@ -12,3 +12,10 @@ func ReturnID() string {
 	}
 	return u.String()
 }
+func ReturnUUID() uuid.UUID {
+	u, err := uuid.NewRandom()
+	if err != nil {
+		fmt.Println(err)
+	}
+	return u
+}

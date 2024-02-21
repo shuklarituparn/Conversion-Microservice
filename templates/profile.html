@@ -87,8 +87,8 @@
     <div class="hidden lg:flex h-full w-full justify-center items-center">
         <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-10 py-10 sm:px-10 sm:mb-8 sm:py-14 md:px-20 md:py-20 shadow-2xl backdrop-blur-md">
 
-            <div class="absolute -left-6 -top-10 md:-left-12 md:-top-14 size-28 md:w-36 md:h-36">
-                <div class="bg-cover bg-center w-full h-full rounded-full" style="background-image: url({{.userpicture}});"></div>
+            <div class="absolute -left-6 -top-10 md:-left-12 md:-top-14 size-28 md:w-36 md:h-36 ">
+                <div class="bg-cover bg-center w-full h-full rounded-full drop-shadow-2xl" style="background-image: url({{.userpicture}});"></div>
             </div>
             <div class="relative left-26 top-0 mb-8">
                 <h1 class="VK-Sans text-center mt-8 text-sm text-white text-xl md:text-3xl mb-8">Добро пожаловать <span class=" font-extrabold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text VK-Sans text-transparent">{{.userName}}!</span></h1>
@@ -140,7 +140,7 @@
                     </a>
 
 
-                    <a href="/deleteConf" class=" mt-1 mb-1 VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:bg-red-500 border border-gray-200   rounded-full text-md px-10 py-2 text-center  items-center">
+                    <a href="/profile/delete" class=" mt-1 mb-1 VK-Sans text-white bg-gray-800 bg-opacity-20 bg-gradient-to-r  hover:bg-red-500 border border-gray-200   rounded-full text-md px-10 py-2 text-center  items-center">
                         Delete Account
                     </a>
 
@@ -173,7 +173,7 @@
                     File History
                 </a>
 
-                <a href="/deleteConf" class="bg-gradient-to-r hover:bg-red-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full text-md px-6 py-2 text-center">
+                <a href="/profile/delete" class="bg-gradient-to-r hover:bg-red-500 text-white bg-gray-800 bg-opacity-20 border border-gray-200 rounded-full text-md px-6 py-2 text-center">
                     Delete Account
                 </a>
 

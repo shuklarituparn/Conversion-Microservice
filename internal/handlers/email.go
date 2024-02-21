@@ -32,7 +32,7 @@ func EmailHandler(c *gin.Context) {
 		log.Println("Error resolving the userId from the sessions")
 	}
 	db := user_database.ReturnDbInstance()
-	var user models.User
+	var user *models.User
 
 	user, errorGettingUser := user_database.GetUserWithID(db, userId)
 	if errorGettingUser != nil {
@@ -70,7 +70,7 @@ func EmailUpdateHandler(c *gin.Context) {
 		log.Println("Error resolving the userId from the sessions")
 	}
 	db := user_database.ReturnDbInstance() //db instance
-	var user models.User
+	var user *models.User
 
 	user, err = user_database.GetUserWithID(db, userId)
 	if err != nil {
@@ -81,7 +81,7 @@ func EmailUpdateHandler(c *gin.Context) {
 	user.UserEmail = userEmail
 	user.Verified = false
 
-	if errorSaving := db.Save(&user).Error; errorSaving != nil {
+	if errorSaving := db.Save(user).Error; errorSaving != nil {
 		c.AbortWithError(http.StatusInternalServerError, errorSaving)
 	}
 	var message models.EmailVerificationMessage
@@ -124,13 +124,13 @@ func VerificationEmail(c *gin.Context) {
 	}
 	db := user_database.ReturnDbInstance()
 
-	var user models.User
+	var user *models.User
 
 	user, _ = user_database.GetUserWithID(db, userId)
 
 	if user.VerificationToken == code {
 		user.Verified = true
-		if errorSaving := db.Save(&user).Error; errorSaving != nil {
+		if errorSaving := db.Save(user).Error; errorSaving != nil {
 			c.AbortWithError(http.StatusInternalServerError, errorSaving)
 		}
 		c.Redirect(http.StatusFound, "/profile/email")

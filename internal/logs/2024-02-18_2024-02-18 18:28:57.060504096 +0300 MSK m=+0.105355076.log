@@ -58,3 +58,12 @@
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8085
+[GIN] 2024/02/18 - 18:29:05 | 302 |      86.494µs |   64.227.21.251 | POST     "/profile/delete?code=5e5b569a-3345-44ae-991b-eb18f418d299"
+[GIN] 2024/02/18 - 18:29:05 | 404 |    6.661818ms |   64.227.21.251 | POST     "/login"
+[GIN] 2024/02/18 - 18:32:27 | 302 |    3.482411ms |   64.227.21.251 | POST     "/profile/delete?userID=625608093"
+[GIN] 2024/02/18 - 18:32:27 | 404 |    7.431496ms |   64.227.21.251 | POST     "/login"
+[GIN] 2024/02/18 - 18:32:54 | 302 |    7.199537ms |  108.61.173.108 | GET      "/profile/delete"
+[GIN] 2024/02/18 - 18:32:54 | 200 |    6.709786ms |  108.61.173.108 | GET      "/static/images/background.png"
+[GIN-debug] [WARNING] Headers were already written. Wanted to override status code 200 with 500
+[GIN] 2024/02/18 - 18:32:58 | 200 |   25.456597ms |  108.61.173.108 | POST     "/profile/delete?userID=625608093"
+[GIN] 2024/02/18 - 18:33:00 | 200 |    6.081356ms |  108.61.173.108 | GET      "/"

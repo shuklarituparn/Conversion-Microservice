@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
@@ -10,9 +11,11 @@ import (
 	"log"
 	"mime/multipart"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func Convert(c *gin.Context) {
@@ -66,6 +69,7 @@ func ConvertUpload(c *gin.Context) {
 	form := c.Request.MultipartForm
 
 	var filename string
+	var newFilePath string
 
 	fileHeaders := form.File["file"]
 	if len(fileHeaders) == 0 {
@@ -90,9 +94,9 @@ func ConvertUpload(c *gin.Context) {
 		}(file)
 		session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
 
-		filename = fmt.Sprintf("%s_%s.%s", session.Values["userName"].(string), sanitizeFilename(fileHeader.Filename), form.Value["output_format"][0])
+		filename = fmt.Sprintf("%s_%s.mp4", session.Values["userName"].(string), sanitizeFilename(fileHeader.Filename))
 
-		newFilePath := filepath.Join(uploadDir, filename)
+		newFilePath = filepath.Join(uploadDir, filename)
 		newFile, err := os.Create(newFilePath)
 		if err != nil {
 			fmt.Println("Error creating file:", err)
@@ -127,7 +131,34 @@ func ConvertUpload(c *gin.Context) {
 		return
 	}
 
+	session, err := user_sessions.Store.Get(c.Request, "Logged_Session")
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	userId, ok := session.Values["UserId"].(int)
+	if !ok {
+		log.Println("Error resolving the userId from the sessions")
+	}
+	db := user_database.ReturnDbInstance() //getting db, now will store the video
+	filePathofVideo := fmt.Sprintf("../uploads/%s", filename)
+	encodedFilePath := url.PathEscape(filePathofVideo) //to encode the filepath
+	video := models.Video{
+		UserID:     userId,
+		Title:      filename,
+		FilePath:   encodedFilePath,
+		MongoDBOID: "",
+		CreatedAt:  time.Now(),
+	}
+
+	createVideo := db.Create(&video)
+	if createVideo.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "error creating video"})
+		return
+	}
 	c.HTML(http.StatusOK, "convert_success.html", gin.H{})
+
+	//Now we have the video saved in the db
 }
 
 func sanitizeFilename(filename string) string {
@@ -141,18 +172,10 @@ func sanitizeFilename(filename string) string {
 	return sanitizedFilename
 }
 
-//TODO:ADD USER_ID TO FILE FOR EASIER HANDLING
-
 /*
-Create the table in DB with userID from VK, that will make everyuser different since they are using VK
+Convert: User uploads the file, the file gets uploaded to the upload folder
 
-UserId
-UserName
-UserPic (the URL string for the image we get from VK)
-...
+Now to get the file somehow to the convert edit page
 
 
-Basically the first table will contain the field we get from the VK
-
-Second table will store the File details for the given users
 */

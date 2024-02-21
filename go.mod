@@ -13,7 +13,6 @@ require (
 	github.com/prometheus/client_golang v1.18.0
 	github.com/uber/jaeger-client-go v2.30.0+incompatible
 	go.mongodb.org/mongo-driver v1.13.1
-	go.uber.org/zap v1.26.0
 	golang.org/x/oauth2 v0.12.0
 	gopkg.in/mail.v2 v2.3.1
 	gorm.io/driver/postgres v1.5.4
@@ -81,7 +80,6 @@ require (
 	github.com/xdg-go/stringprep v1.0.4 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect
 	go.uber.org/atomic v1.11.0 // indirect
-	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.18.0 // indirect
 	golang.org/x/net v0.20.0 // indirect

@@ -5,36 +5,36 @@
  - using code:	gin.SetMode(gin.ReleaseMode)
 
 [GIN-debug] Loaded HTML Templates (26): 
-	- file_history.html
-	- watermark_success.html
-	- delete_conf.html
-	- watermark.html
-	- email.html
-	- goodbye.html
-	- restored.html
-	- screenshot.html
-	- verification_mail.html
-	- 404.html
-	- dashboard.html
-	- email_confirm.html
-	- email_redirect.html
-	- error.html
-	- cut_edit.html
-	- cut_success.html
-	- convert_success.html
 	- 
 	- convert.html
-	- restore.html
-	- screenshot_edit.html
-	- profile.html
-	- screenshot_success.html
-	- signout.html
+	- screenshot.html
 	- cut.html
+	- cut_success.html
+	- file_history.html
+	- goodbye.html
+	- restored.html
+	- restore.html
+	- verification_mail.html
+	- cut_edit.html
+	- dashboard.html
+	- email_redirect.html
+	- error.html
 	- login.html
+	- signout.html
+	- email_confirm.html
+	- profile.html
+	- convert_success.html
+	- delete_conf.html
+	- watermark.html
+	- 404.html
+	- email.html
+	- screenshot_edit.html
+	- screenshot_success.html
+	- watermark_success.html
 
 [GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
 [GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
-[GIN-debug] GET    /metrics                  --> main.main.WrapH.func5 (4 handlers)
+[GIN-debug] GET    /metrics                  --> main.main.WrapH.func6 (4 handlers)
 [GIN-debug] GET    /                         --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.WelcomeHandler (4 handlers)
 [GIN-debug] GET    /login                    --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Login (4 handlers)
 [GIN-debug] GET    /callback                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Callback (4 handlers)
@@ -58,8 +58,33 @@
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8085
-[GIN] 2024/02/18 - 13:59:45 | 302 |    1.810668ms |  108.61.173.108 | GET      "/profile/delete?userID=625608093"
-[GIN] 2024/02/18 - 13:59:47 | 500 |    1.603056ms |  108.61.173.108 | POST     "/profile/delete?userID=625608093"
-[GIN] 2024/02/18 - 15:19:24 | 200 |   14.277172ms |  108.61.173.108 | GET      "/dashboard"
-[GIN] 2024/02/18 - 15:19:25 | 304 |     847.079µs |  108.61.173.108 | GET      "/static/css/output.css"
-[GIN] 2024/02/18 - 15:19:25 | 200 |    6.439383ms |  108.61.173.108 | GET      "/static/images/background.png"
+[GIN] 2024/02/19 - 19:19:54 | 200 |     977.007µs |       127.0.0.1 | GET      "/"
+[GIN] 2024/02/19 - 19:19:54 | 200 |     3.73365ms |       127.0.0.1 | GET      "/static/css/output.css"
+[GIN] 2024/02/19 - 19:19:54 | 200 |     848.414µs |       127.0.0.1 | GET      "/static/images/vk.png"
+[GIN] 2024/02/19 - 19:19:54 | 200 |     677.451µs |       127.0.0.1 | GET      "/static/favicon/favicon.ico"
+[GIN] 2024/02/19 - 19:19:54 | 200 |     720.152µs |       127.0.0.1 | GET      "/static/fonts/font.ttf"
+[GIN] 2024/02/19 - 19:19:54 | 200 |    3.084743ms |       127.0.0.1 | GET      "/static/images/background.png"
+[GIN] 2024/02/19 - 19:19:56 | 302 |     118.434µs |       127.0.0.1 | GET      "/login"
+[GIN] 2024/02/19 - 19:20:22 | 200 |     764.875µs |       127.0.0.1 | GET      "/"
+[GIN] 2024/02/19 - 19:20:23 | 302 |      60.287µs |       127.0.0.1 | GET      "/login"
+[GIN] 2024/02/19 - 19:20:26 | 302 |   252.90505ms |    93.175.28.55 | GET      "/callback?code=2ad17475c2f10066d0&state=2c201d30-f774-44c1-90f8-c5f1a7f16d21"
+[GIN] 2024/02/19 - 19:20:26 | 200 |    1.373842ms |    93.175.28.55 | GET      "/dashboard"
+[GIN] 2024/02/19 - 19:20:26 | 200 |     314.294µs |    93.175.28.55 | GET      "/static/css/output.css"
+[GIN] 2024/02/19 - 19:20:26 | 200 |     1.02077ms |    93.175.28.55 | GET      "/static/assets/video-player.png"
+[GIN] 2024/02/19 - 19:20:26 | 200 |    1.364337ms |    93.175.28.55 | GET      "/static/assets/VK.svg"
+[GIN] 2024/02/19 - 19:20:30 | 200 |    1.454004ms |    93.175.28.55 | GET      "/profile"
+[GIN] 2024/02/19 - 19:20:33 | 302 |    2.057824ms |    93.175.28.55 | GET      "/profile/delete"
+[GIN-debug] [WARNING] Headers were already written. Wanted to override status code 200 with 500
+[GIN] 2024/02/19 - 19:20:36 | 200 |   12.441845ms |    93.175.28.55 | POST     "/profile/delete?userID=625608093"
+[GIN] 2024/02/19 - 19:20:36 | 304 |     179.853µs |    93.175.28.55 | GET      "/static/assets/persik_crying.webp"
+[GIN] 2024/02/19 - 19:20:39 | 200 |     858.116µs |    93.175.28.55 | GET      "/"
+[GIN] 2024/02/19 - 19:20:39 | 200 |     235.915µs |    93.175.28.55 | GET      "/static/images/vk.png"
+[GIN] 2024/02/19 - 19:21:11 | 302 |      93.312µs |    93.175.28.55 | GET      "/profile/restore"
+[GIN] 2024/02/19 - 19:21:11 | 302 |     152.453µs |    93.175.28.55 | GET      "/login"
+[GIN] 2024/02/19 - 19:21:13 | 302 |  171.448579ms |    93.175.28.55 | GET      "/callback?code=49b7e954b2ad39b061&state=2c201d30-f774-44c1-90f8-c5f1a7f16d21"
+[GIN] 2024/02/19 - 19:21:13 | 302 |    1.475771ms |    93.175.28.55 | GET      "/profile/restore"
+[GIN] 2024/02/19 - 19:21:14 | 304 |     124.125µs |    93.175.28.55 | GET      "/static/assets/lucy_confused.webp"
+[GIN] 2024/02/19 - 19:21:19 | 302 |   11.338648ms |    93.175.28.55 | POST     "/profile/delete?code=15b5756d-e143-4115-a27e-ee744cf1b9e1"
+[GIN] 2024/02/19 - 19:21:22 | 200 |    1.428334ms |    93.175.28.55 | GET      "/dashboard"
+[GIN] 2024/02/19 - 19:21:28 | 200 |    1.440892ms |    93.175.28.55 | GET      "/profile"
+[GIN] 2024/02/19 - 19:21:30 | 302 |    1.925183ms |    93.175.28.55 | GET      "/profile/email"
