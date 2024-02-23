@@ -20,12 +20,17 @@ type User struct {
 }
 
 type Video struct {
-	ID         uint   `gorm:"primaryKey; autoIncrement"`
-	UserID     int    // This remains to keep the foreign key relationship
-	User       User   `gorm:"foreignKey:UserID"` // Add this line to reference the User struct directly
-	Title      string `gorm:"not null"`
-	FilePath   string `gorm:"not null"`
-	MongoDBOID string
-	CreatedAt  time.Time
-	DeletedAt  gorm.DeletedAt `gorm:"index"`
+	ID             uint `gorm:"primaryKey; autoIncrement"`
+	UserID         int
+	User           User   `gorm:"foreignKey:UserID"`
+	Title          string `gorm:"not null"`
+	FilePath       string `gorm:"not null"`
+	MongoDBOID     string
+	Converted      bool
+	Cut            bool
+	Watermarked    bool
+	Screenshot     bool
+	ScreenshotPath string
+	CreatedAt      time.Time
+	DeletedAt      gorm.DeletedAt `gorm:"index"`
 }

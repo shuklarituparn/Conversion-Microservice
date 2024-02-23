@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"log"
 	"net/http"
@@ -20,8 +21,21 @@ func Watermark(c *gin.Context) {
 	if !ok {
 		log.Println("Error finding userID from the sessions")
 	}
-	c.HTML(http.StatusOK, "watermark.html", gin.H{
-		"userName":    userName,
-		"userpicture": userPicture,
-	})
+
+	userId, ok := session.Values["UserId"].(int)
+	if !ok {
+		log.Println("Error resolving the userId from the sessions")
+	}
+	db := user_database.ReturnDbInstance()
+	VerfiedCheck, _ := user_database.IsVerified(db, userId)
+	if !VerfiedCheck {
+		c.HTML(http.StatusFound, "email_redirect.html", gin.H{})
+
+	} else {
+		c.HTML(http.StatusOK, "watermark.html", gin.H{
+			"userName":    userName,
+			"userpicture": userPicture,
+		})
+	}
+
 }

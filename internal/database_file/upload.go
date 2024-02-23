@@ -44,6 +44,8 @@ func main() {
 
 }
 
+//Video name is required, UserName is required and Filepath is required.....
+
 //TODO: This is the code to upload, we need one to downlaod
 /*
 package main

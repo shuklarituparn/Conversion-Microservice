@@ -94,7 +94,7 @@ func ConvertUpload(c *gin.Context) {
 		}(file)
 		session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
 
-		filename = fmt.Sprintf("%s_%s.mp4", session.Values["userName"].(string), sanitizeFilename(fileHeader.Filename))
+		filename = fmt.Sprintf("%s_%s", session.Values["userName"].(string), SanitizeFilename(fileHeader.Filename))
 
 		newFilePath = filepath.Join(uploadDir, filename)
 		newFile, err := os.Create(newFilePath)
@@ -124,13 +124,6 @@ func ConvertUpload(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "No output format provided"})
 		return
 	}
-	fmt.Println("Output format:", outputFormat[0])
-	p, err := producer.NewProducer("localhost:9092")
-	err = producer.ProduceNewMessage(p, "email", filename)
-	if err != nil {
-		return
-	}
-
 	session, err := user_sessions.Store.Get(c.Request, "Logged_Session")
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
@@ -141,6 +134,17 @@ func ConvertUpload(c *gin.Context) {
 		log.Println("Error resolving the userId from the sessions")
 	}
 	db := user_database.ReturnDbInstance() //getting db, now will store the video
+
+	//var existingVideo models.Video
+
+	//result := db.Where("title=?", filename).First(&existingVideo)
+	//if result.Error == nil {
+	//	c.JSON(http.StatusBadRequest, gin.H{"error": "video already exists"})
+	//	return
+	//} else if !errors.Is(result.Error, gorm.ErrRecordNotFound) {
+	//	c.JSON(http.StatusInternalServerError, gin.H{"error": "error checking for existing video"})
+	//	return
+	//}
 	filePathofVideo := fmt.Sprintf("../uploads/%s", filename)
 	encodedFilePath := url.PathEscape(filePathofVideo) //to encode the filepath
 	video := models.Video{
@@ -149,6 +153,7 @@ func ConvertUpload(c *gin.Context) {
 		FilePath:   encodedFilePath,
 		MongoDBOID: "",
 		CreatedAt:  time.Now(),
+		Converted:  true,
 	}
 
 	createVideo := db.Create(&video)
@@ -159,18 +164,39 @@ func ConvertUpload(c *gin.Context) {
 	c.HTML(http.StatusOK, "convert_success.html", gin.H{})
 
 	//Now we have the video saved in the db
+	//Need to produce a message on the convert topic and then let the convert handler convert it
+
+	//After convert it produces a message on the upload, and uplods the video, returns obj Id and save it in the DB
+
+	fmt.Println("Output format:", outputFormat[0])
+	p, err := producer.NewProducer("localhost:9092")
+	err = producer.ProduceNewMessage(p, "email", filename)
+	if err != nil {
+		return
+	}
+
 }
 
-func sanitizeFilename(filename string) string {
-	sanitizedFilename := filepath.Base(filename)
-	sanitizedFilename = strings.Map(func(r rune) rune {
+func SanitizeFilename(filename string) string {
+	filebase := strings.TrimSuffix(filepath.Base(filename), filepath.Ext(filename))
+	fileExt := filepath.Ext(filename)
+
+	sanitizedFilename := strings.Map(func(r rune) rune {
 		if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') {
 			return r
 		}
 		return '_'
-	}, sanitizedFilename)
+	}, filebase)
+	sanitizedFilename += fileExt
 	return sanitizedFilename
 }
+
+//Now need to make the logic for the post request // SO here the file comes
+
+func CutEditResult(c *gin.Context) {
+
+	//Function to handle the user cut time and end time and the file that he uploaded
+} //This function will handle the post request to this handle
 
 /*
 Convert: User uploads the file, the file gets uploaded to the upload folder
