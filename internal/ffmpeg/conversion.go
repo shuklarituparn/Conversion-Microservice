@@ -1,4 +1,4 @@
-package main
+package ffmpeg
 
 import (
 	"encoding/json"
@@ -17,10 +17,11 @@ func Conversion(inputFile, outputformat string) string {
 
 	inputfilePath := fmt.Sprintf("../../uploads/%s", inputFile)
 	FileWithoutExt := strings.TrimSuffix(filepath.Base(inputFile), filepath.Ext(inputFile))
-	outputFileName := fmt.Sprintf("../userfiles/converted_files/%s.%s", FileWithoutExt, outputformat) //This will create a file in that location
+	outputFileName := fmt.Sprintf("../../internal/userfiles/converted_files/%s.%s", FileWithoutExt, outputformat) //This will create a file in that location
 	cmd := exec.Command("ffmpeg", "-i", inputfilePath, "-c:v", "h264_nvenc", outputFileName)
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
+	fmt.Println(os.Getwd())
 	if err != nil {
 		fmt.Println("Error converting video:", err)
 		return ""

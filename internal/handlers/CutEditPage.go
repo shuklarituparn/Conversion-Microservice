@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/ID"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
@@ -123,6 +124,8 @@ func CutEditPage(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "error checking for existing video"})
 		return
 	}
+
+	videoKey := ID.ReturnID()
 	video := models.Video{
 		UserID:     userId,
 		Title:      filename,
@@ -130,6 +133,7 @@ func CutEditPage(c *gin.Context) {
 		MongoDBOID: "",
 		CreatedAt:  time.Now(),
 		Mode:       "cut",
+		VideoKey:   videoKey,
 	}
 
 	createVideo := db.Create(&video)

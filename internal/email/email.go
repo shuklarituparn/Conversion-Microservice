@@ -171,3 +171,55 @@ func SendEmailConsumer() {
 	}
 
 }
+
+func DownloadMailConsumer() {
+
+	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
+	_ = c.Subscribe("download_mail", nil)
+
+	defer consumer.Close(c)
+
+	for {
+		msg, err := c.ReadMessage(-1)
+		if err != nil {
+			log.Println("Error reading message:", err)
+			continue
+		}
+
+		log.Printf("Received message on %s: %s\n", msg.TopicPartition, string(msg.Value))
+
+		var FileDownloadMailMsg models.FiledownloadMailMessage
+		err = json.Unmarshal(msg.Value, &FileDownloadMailMsg)
+		if err != nil {
+			fmt.Println(err)
+		}
+		pathOftemplate := FileDownloadTempGenerator(FileDownloadMailMsg.UserName, FileDownloadMailMsg.Mode, FileDownloadMailMsg.UserID, FileDownloadMailMsg.FileId)
+
+		db := user_database.ReturnDbInstance() //getting the database instance
+
+		//Need to get the userMail to send them the mail
+
+		result, ErrorGettingUser := user_database.GetUserWithID(db, FileDownloadMailMsg.UserID)
+		if ErrorGettingUser != nil {
+			log.Println("Error getting UserMail in the DownloadMailGen", ErrorGettingUser)
+		}
+
+		var sendMailMsg models.MailSendMessage
+
+		sendMailMsg.TO = result.UserEmail
+		sendMailMsg.Filepath = pathOftemplate
+		sendMailMsg.Subject = "Вот ваш файл"
+
+		serialize, _ := json.Marshal(sendMailMsg)
+
+		p, err := producer.NewProducer("localhost:9092")
+
+		producer.ProduceNewMessage(p, "send_mail", string(serialize))
+
+		_, commitErr := c.CommitMessage(msg)
+		if commitErr != nil {
+			log.Printf("Failed to commit offset: %v", commitErr)
+		}
+	}
+
+}

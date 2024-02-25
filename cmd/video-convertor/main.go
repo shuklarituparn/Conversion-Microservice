@@ -3,7 +3,9 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/database_file"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/email"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/ffmpeg"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/handlers"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/logger"
 	"github.com/shuklarituparn/Conversion-Microservice/middlewares"
@@ -33,15 +35,16 @@ func main() {
 	//Using the Jaegar tracing
 	router.Use(middlewares.TracingMiddleware())
 
-	go func() {
-		email.GenerateVerficationEmailConsumer()
-	}()
-	go func() {
-		email.SendEmailConsumer()
-	}()
-	go func() {
-		email.GenerateRestoreEmailConsumer()
-	}()
+	go email.GenerateVerficationEmailConsumer()
+	go email.SendEmailConsumer()
+	go email.GenerateRestoreEmailConsumer()
+	go email.DownloadMailConsumer()
+
+	// Video Conversion
+	go ffmpeg.VideoConversionConsumer()
+
+	// Database Operations
+	go database_file.MongoUploadConsumer()
 	router.LoadHTMLGlob("../../templates/*")
 	router.Static("/static", "../../static")
 	router.Static("/uploads", "../../uploads")
@@ -63,6 +66,7 @@ func main() {
 		protected.POST("/convert", handlers.ConvertUpload)
 		protected.GET("/cut", handlers.Cut)
 		protected.POST("/cut_edit", handlers.CutEditPage)
+		protected.POST("/cut", handlers.CutEditResult)
 		protected.GET("/watermark", handlers.Watermark)
 		protected.GET("/screenshot", handlers.Screenshot)
 		protected.GET("/profile", handlers.Profile)

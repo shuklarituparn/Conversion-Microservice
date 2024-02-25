@@ -127,9 +127,9 @@ func GetAllVideo(db *gorm.DB, userId int) ([]models.Video, error) {
 	}
 	return Video, nil
 }
-func GetVideoByID(db *gorm.DB, videoID int) (*models.Video, error) {
+func GetVideoByID(db *gorm.DB, videoID string) (*models.Video, error) {
 	var video models.Video
-	if err := db.Where("id = ?", videoID).First(&video).Error; err != nil {
+	if err := db.Where("video_key = ?", videoID).First(&video).Error; err != nil {
 		return nil, err
 	}
 	return &video, nil

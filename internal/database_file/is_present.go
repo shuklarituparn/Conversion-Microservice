@@ -1,4 +1,4 @@
-package main
+package database_file
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func main() {
+func isPresent() {
 	// Use the SetServerAPIOptions() method to set the Stable API version to 1
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	mongoUrl := os.Getenv("MONGO_URL")

@@ -160,7 +160,7 @@ func ConvertUpload(c *gin.Context) {
 		FilePath:   encodedFilePath,
 		MongoDBOID: "",
 		CreatedAt:  time.Now(),
-		Mode:       "convert",
+		Mode:       "Конвертировать",
 		VideoKey:   Videokey, //In this way all the video will be unique
 	}
 
@@ -213,16 +213,3 @@ func SanitizeFilename(filename string) string {
 }
 
 //Now need to make the logic for the post request // SO here the file comes
-
-func CutEditResult(c *gin.Context) {
-
-	//Function to handle the user cut time and end time and the file that he uploaded
-} //This function will handle the post request to this handle
-
-/*
-Convert: User uploads the file, the file gets uploaded to the upload folder
-
-Now to get the file somehow to the convert edit page
-
-
-*/

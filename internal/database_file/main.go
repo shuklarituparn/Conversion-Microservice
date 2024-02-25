@@ -1,4 +1,4 @@
-package main
+package database_file
 
 import (
 	"context"
@@ -20,7 +20,7 @@ type Recipe struct {
 	PrepTimeInMinutes int `json:"prepTimeInMinutes" bson:"prepTimeInMinutes"`
 }
 
-func main() {
+func IDK() {
 
 	// TODO:
 	// Replace the placeholder connection string below with your

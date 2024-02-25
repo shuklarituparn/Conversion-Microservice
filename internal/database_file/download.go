@@ -1,4 +1,4 @@
-package main
+package database_file
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-func main() {
+func downloadFile() {
 
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	mongoUrl := os.Getenv("MONGO_URL")

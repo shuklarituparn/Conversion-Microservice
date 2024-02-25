@@ -17,6 +17,13 @@ type AfterConvertUpload struct {
 	VideoKey string `json:"video_key"`
 }
 
+type FiledownloadMailMessage struct {
+	UserName string `json:"user_name"`
+	Mode     string `json:"mode"`
+	UserID   int    `json:"user_id"`
+	FileId   string `json:"file_id"`
+}
+
 type EmailVerificationMessage struct {
 	UserID           int    `json:"user_id"`
 	UserName         string `json:"user_name"`

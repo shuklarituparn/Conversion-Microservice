@@ -1,4 +1,4 @@
-package main
+package ffmpeg
 
 import (
 	"fmt"
@@ -25,4 +25,5 @@ func CutFile(inputfileName string, startTime string, endTime string) string {
 
 }
 
+//
 //Without hardware accelaration it is faster for some reason
