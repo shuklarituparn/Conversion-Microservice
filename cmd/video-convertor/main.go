@@ -73,6 +73,7 @@ func main() {
 		protected.POST("/profile/delete", handlers.AccountDelete)
 		protected.GET("/profile/restore", handlers.Restore)
 		protected.POST("/verify_mail", handlers.EmailConfirm)
+		protected.GET("/profile/download", handlers.Download)
 		protected.GET("/verify_mail", handlers.VerificationEmail)
 
 		protected.GET("/signout", handlers.Signout)

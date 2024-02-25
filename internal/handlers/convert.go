@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/ID"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
@@ -133,6 +135,10 @@ func ConvertUpload(c *gin.Context) {
 	if !ok {
 		log.Println("Error resolving the userId from the sessions")
 	}
+	userName, ok := session.Values["userName"].(string)
+	if !ok {
+		log.Println("Error finding userID from the sessions")
+	}
 	db := user_database.ReturnDbInstance() //getting db, now will store the video
 
 	//var existingVideo models.Video
@@ -147,13 +153,15 @@ func ConvertUpload(c *gin.Context) {
 	//}
 	filePathofVideo := fmt.Sprintf("../uploads/%s", filename)
 	encodedFilePath := url.PathEscape(filePathofVideo) //to encode the filepath
+	Videokey := ID.ReturnID()                          //In this way can pass the videoKey to the producer
 	video := models.Video{
 		UserID:     userId,
 		Title:      filename,
 		FilePath:   encodedFilePath,
 		MongoDBOID: "",
 		CreatedAt:  time.Now(),
-		Converted:  true,
+		Mode:       "convert",
+		VideoKey:   Videokey, //In this way all the video will be unique
 	}
 
 	createVideo := db.Create(&video)
@@ -166,11 +174,24 @@ func ConvertUpload(c *gin.Context) {
 	//Now we have the video saved in the db
 	//Need to produce a message on the convert topic and then let the convert handler convert it
 
-	//After convert it produces a message on the upload, and uplods the video, returns obj Id and save it in the DB
+	//After convert it produces a message on the upload, and uploads the video, returns obj Id and save it in the DB
 
 	fmt.Println("Output format:", outputFormat[0])
+
+	conversionMessage := models.ConversionMessage{
+		UserId:       userId,
+		UserName:     userName,
+		FileName:     filename,
+		FilePath:     filePathofVideo,
+		OutputFormat: outputFormat[0],
+		VideoKey:     Videokey,
+	}
+	serializedMessage, errorSerializingConvMessage := json.Marshal(conversionMessage)
+	if errorSerializingConvMessage != nil {
+		log.Println("Error Creating Conversion Message: ", errorSerializingConvMessage)
+	}
 	p, err := producer.NewProducer("localhost:9092")
-	err = producer.ProduceNewMessage(p, "email", filename)
+	err = producer.ProduceNewMessage(p, "conversion", string(serializedMessage))
 	if err != nil {
 		return
 	}

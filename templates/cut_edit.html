@@ -165,6 +165,7 @@
                 <div class="mb-4 sm:mb-8 flex flex-col sm:flex-row items-center justify-between">
                     <div class="flex flex-col items-center justify-end mb-4 sm:mb-0">
                         <form id="video_form" action="/cut" method="post" enctype="multipart/form-data" class="flex flex-col items-center justify-center w-full">
+                            <input type="hidden" name="filename" value="{{.userVideo}}">
                             <div class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-600 bg-gray-800 bg-opacity-20 border-dashed rounded-lg cursor-pointer">
                                     <video id="Video" controls class="w-full h-full aspect-video">
                                         <source src="/uploads/{{.userVideo}}" type="video/mp4">

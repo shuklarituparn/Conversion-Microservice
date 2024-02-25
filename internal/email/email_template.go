@@ -209,3 +209,72 @@ func RestoreIDTempGenerator(userName string, userID int) string {
 	}
 	return completeFilename
 }
+
+func FileDownloadGenerator(userName string, mode string, userID int, fileId string) string {
+
+	userWelcomeString := fmt.Sprintf("Мы очень рады, что вы выбрали нас! Вы хотели %s ваши файли!. Вот вам ссылка чтобы загрузить ваш файл", mode)
+	userEmailString := fmt.Sprintf("https://knowing-gannet-actively.ngrok-free.app/profile/download?userid=%d&mode=%s&fileid=%s", userID, mode, fileId)
+
+	h := hermes.Hermes{
+
+		Theme: &hermes.Default{},
+		Product: hermes.Product{
+
+			Name:        "Сервис конвертации видео",
+			Link:        "https://knowing-gannet-actively.ngrok-free.app/",
+			Logo:        "https://iili.io/J0hcSs4.png",
+			Copyright:   "© 2024 Сервис конвертации видео. Все права защищены",
+			TroubleText: "Если у вас возникли проблемы с кнопкой '{ACTION}', скопируйте и вставьте приведенный ниже URL-адрес в свой веб-браузер.",
+		},
+	}
+
+	email := hermes.Email{
+		Body: hermes.Body{
+			Name: userName,
+			Intros: []string{
+				userWelcomeString,
+			},
+			Signature: "C Уважением",
+			Greeting:  "Привет",
+			Actions: []hermes.Action{
+				{
+					Instructions: "Чтобы загрузить ваш файл, нажмите здесь:",
+					Button: hermes.Button{
+						Color: "#0077FF",
+						Text:  "Заг",
+						Link:  userEmailString,
+					},
+				},
+			},
+			Outros: []string{
+				"Если ты столкнулся с проблемой, ответь на это письмо, и мы поможем тебе прямо сейчас!",
+			},
+		},
+	}
+
+	emailBody, err := h.GenerateHTML(email)
+	if err != nil {
+		panic(err) // Tip: Handle error with something else than a panic ;)
+	}
+
+	_, err = h.GeneratePlainText(email)
+	if err != nil {
+		panic(err) // Tip: Handle error with something else than a panic ;)
+	}
+
+	filename := fmt.Sprintf("%d_%s_mail.html", userID, mode)
+	filePath := filepath.Join("../../internal/email/templates", filename)
+
+	file, err := os.Create(filePath)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	completeFilename := fmt.Sprintf("../../internal/email/templates" + "/" + filename)
+	err = os.WriteFile(completeFilename, []byte(emailBody), 0644)
+	if err != nil {
+		panic(err)
+	}
+	return completeFilename
+} //A single template generator for all type of file. Using the mode and the file name and userID

@@ -80,7 +80,7 @@ func CutEditPage(c *gin.Context) {
 		}(file)
 		session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
 
-		filename = fmt.Sprintf("%s_cut_%s.mp4", session.Values["userName"].(string), sanitizeFilename(fileHeader.Filename))
+		filename = fmt.Sprintf("%s_cut_%s.mp4", session.Values["userName"].(string), SanitizeFilename(fileHeader.Filename))
 
 		newFilePath = filepath.Join(uploadDir, filename)
 		newFile, err := os.Create(newFilePath)
@@ -129,7 +129,7 @@ func CutEditPage(c *gin.Context) {
 		FilePath:   encodedFilePath,
 		MongoDBOID: "",
 		CreatedAt:  time.Now(),
-		Cut:        true,
+		Mode:       "cut",
 	}
 
 	createVideo := db.Create(&video)
