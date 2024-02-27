@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -20,6 +21,14 @@ func Download(c *gin.Context) {
 	useridQ := c.Query("userid") //can match from the cookie if it is same, if not not allow
 	fileId := c.Query("fileid")  //the fileId to pull the file from the MongoDB database
 	mode := c.Query("mode")
+	session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+	userName, ok := session.Values["userName"].(string)
+	if !ok {
+		log.Println("Error finding userID from the sessions")
+	}
 
 	errLoadingEnv := godotenv.Load("../../.env")
 	if errLoadingEnv != nil {
@@ -44,26 +53,52 @@ func Download(c *gin.Context) {
 		return
 	}
 	if mode == "Скриншоты" {
-		db := client.Database("mydb")
-		collection := db.Collection(useridQ)
+		err := godotenv.Load("/home/rituparn/Documents/Dev/languages/Conversion-Microservice/.env")
+		if err != nil {
+			log.Println("Error opening the env file in Screenshot upload")
+		}
+
+		mongoUrl := os.Getenv("MONGO_URL")
+		opts := options.Client().ApplyURI(mongoUrl)
+		client, err := mongo.Connect(context.TODO(), opts)
+		if err != nil {
+			log.Println("Error connecting to mongo for screenshot")
+		}
+		defer func(client *mongo.Client, ctx context.Context) {
+			err := client.Disconnect(ctx)
+			if err != nil {
+
+			}
+		}(client, context.TODO())
+
+		db := client.Database("myDB")
+		collection := db.Collection(userName) //This is correct
+
 		objId, _ := primitive.ObjectIDFromHex(fileId)
 
-		var fileDoc bson.M //bson.M means its not ordered
+		filter := bson.M{"_id": objId}
 
-		if err := collection.FindOne(context.TODO(), bson.M{"_id": objId}).Decode(&fileDoc); err != nil {
+		var UserFile struct {
+			ImageData primitive.Binary `bson:"imageData"`
+			FileName  string           `bson:"fileName"`
+		} //so if I did it as a type struct I will have to fill it, but var can take the value
+
+		if err := collection.FindOne(context.TODO(), filter).Decode(&UserFile); err != nil {
 			log.Println("Error fetching file from MongoDB:", err)
 			return
 		}
-		imageData, ok := fileDoc["imageData"].(primitive.Binary) //getting the image data and conv it to binary
-		if !ok {
-			log.Println("Error finding the file in the Database")
+		fileName := UserFile.FileName
+		completeFilePath := fmt.Sprintf("../../internal/userfiles/downloaded_files/%s", UserFile.FileName)
+		if fileName == "" {
+			log.Fatal("Filename not found or is empty")
 		}
-		fileName := "hello.jpg"
-		if err := os.WriteFile(fileName, imageData.Data, 0644); err != nil {
-			log.Println("Error writing file to disk:", err)
-			return
-		}
+
+		err = os.WriteFile(completeFilePath, UserFile.ImageData.Data, os.ModePerm)
 		log.Println("File downloaded and saved to:", fileName)
+		c.Header("Content-Description", "File Transfer")
+		c.Header("Content-Transfer-Encoding", "Binary")
+		c.Header("Content-Disposition", "attachment; filename="+UserFile.FileName)
+		log.Println("File downloaded and saved to:", completeFilePath)
 
 	} else {
 

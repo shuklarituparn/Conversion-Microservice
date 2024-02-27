@@ -111,22 +111,18 @@ func MongoImageUpload(filePath string, UserId int, UserName string, FileName str
 		}
 	}(client, context.TODO())
 
-	// Get MongoDB database and collection
 	db := client.Database("myDB")
-	userId := fmt.Sprintf("%s", UserId)
-	collection := db.Collection(userId)
+	collection := db.Collection(UserName) //This is correct
 
-	// Open the image file
 	imageFile, err := os.Open(filePath)
 	if err != nil {
-		log.Println("Error opening screenshot for upload")
+		log.Println("Error opening screenshot for upload", err)
 	}
-	defer imageFile.Close()
+	defer imageFile.Close() //This is correct
 
-	// Read the image data into memory
 	imageData, err := io.ReadAll(imageFile)
 	if err != nil {
-		log.Println("Error reading screenshot for upload")
+		log.Println("Error reading screenshot for upload", err)
 
 	}
 
@@ -147,14 +143,14 @@ func MongoImageUpload(filePath string, UserId int, UserName string, FileName str
 
 	localDB := user_database.ReturnDbInstance() //storing the objID in the localDB
 
-	video, err := user_database.GetLatestVideo(localDB, UserId) //getting the video with the key
+	video, err := user_database.GetVideoByID(localDB, VideoKey) //getting the video with the key
 
 	//If the user uploaded the video, for screenshot then the latest will be the screesnhot pne
 	if err != nil {
 		log.Println("Error pulling the Video from the DB by key", err)
 	}
 
-	video.MongoDBOID = string(insertedID)
+	video.MongoDBOID = insertedID
 
 	var FileDownloadMailMsg models.FiledownloadMailMessage
 
@@ -162,7 +158,7 @@ func MongoImageUpload(filePath string, UserId int, UserName string, FileName str
 	FileDownloadMailMsg.Mode = video.Mode
 	FileDownloadMailMsg.UserName = UserName
 	FileDownloadMailMsg.UserID = UserId
-	localDB.Save(result)
+	localDB.Save(video)
 	log.Printf("FileDownloadMailMsg: %+v\n", FileDownloadMailMsg)
 	serialize, err := json.Marshal(FileDownloadMailMsg)
 	if err != nil {

@@ -54,8 +54,6 @@ func ScreenshotConsumer() {
 		}
 		outputFilePath := Screenshot(scrnShotMsg.FileName, scrnShotMsg.Time) //we get the file path here
 
-		// Need to produce a message on the topic to upload
-		//Prodcue the message for the mongo consumer with Video Key
 		var messageToUpload models.AfterScreenshotUpload
 		FileName := filepath.Base(outputFilePath)
 		messageToUpload.VideoKey = scrnShotMsg.VideoKey
@@ -63,6 +61,7 @@ func ScreenshotConsumer() {
 		messageToUpload.UserId = scrnShotMsg.UserId
 		messageToUpload.FileName = FileName
 		messageToUpload.UserName = scrnShotMsg.UserName
+		messageToUpload.VideoKey = scrnShotMsg.VideoKey
 		serializedMessage, errorSerializing := json.Marshal(messageToUpload)
 		if errorSerializing != nil {
 			log.Println("Error serializing message", errorSerializing)

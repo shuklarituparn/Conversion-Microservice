@@ -1,0 +1,71 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (27): 
+	- cut_edit.html
+	- restored.html
+	- screenshot_success.html
+	- 
+	- email_confirm.html
+	- restore.html
+	- screenshot_edit.html
+	- convert.html
+	- convert_success.html
+	- download.html
+	- file_history.html
+	- signout.html
+	- email_redirect.html
+	- error.html
+	- login.html
+	- watermark.html
+	- cut_success.html
+	- dashboard.html
+	- delete_conf.html
+	- watermark_success.html
+	- cut.html
+	- screenshot.html
+	- verification_mail.html
+	- goodbye.html
+	- profile.html
+	- 404.html
+	- email.html
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /uploads/*filepath        --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /uploads/*filepath        --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /metrics                  --> main.main.WrapH.func3 (4 handlers)
+[GIN-debug] GET    /                         --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.WelcomeHandler (4 handlers)
+[GIN-debug] GET    /login                    --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Login (4 handlers)
+[GIN-debug] GET    /callback                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Callback (4 handlers)
+[GIN-debug] GET    /dashboard                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Dashboard (5 handlers)
+[GIN-debug] GET    /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Convert (5 handlers)
+[GIN-debug] POST   /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.ConvertUpload (5 handlers)
+[GIN-debug] GET    /cut                      --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Cut (5 handlers)
+[GIN-debug] POST   /cut_edit                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.CutEditPage (5 handlers)
+[GIN-debug] POST   /cut                      --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.CutEditResult (5 handlers)
+[GIN-debug] GET    /watermark                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Watermark (5 handlers)
+[GIN-debug] POST   /watermark                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.WatermarkResult (5 handlers)
+[GIN-debug] GET    /screenshot               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Screenshot (5 handlers)
+[GIN-debug] POST   /screenshot_edit          --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Screenshot_edit (5 handlers)
+[GIN-debug] POST   /screenshot               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.ScreenShotResult (5 handlers)
+[GIN-debug] GET    /profile                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Profile (5 handlers)
+[GIN-debug] GET    /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailHandler (5 handlers)
+[GIN-debug] POST   /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailUpdateHandler (5 handlers)
+[GIN-debug] GET    /profile/files            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.FileHistory (5 handlers)
+[GIN-debug] GET    /profile/delete           --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.AccountDeleteConf (5 handlers)
+[GIN-debug] POST   /profile/delete           --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.AccountDelete (5 handlers)
+[GIN-debug] GET    /profile/restore          --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Restore (5 handlers)
+[GIN-debug] POST   /verify_mail              --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailConfirm (5 handlers)
+[GIN-debug] GET    /profile/download         --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Download (5 handlers)
+[GIN-debug] GET    /verify_mail              --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.VerificationEmail (5 handlers)
+[GIN-debug] GET    /signout                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Signout (5 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8085
+[GIN] 2024/02/27 - 16:44:43 | 200 |   6.06397767s | 195.181.165.183 | POST     "/screenshot_edit"
+[GIN] 2024/02/27 - 16:47:02 | 302 |   15.901047ms | 195.181.165.183 | POST     "/screenshot"
+[GIN] 2024/02/27 - 16:47:04 | 200 |   15.956325ms | 195.181.165.183 | GET      "/screenshot"

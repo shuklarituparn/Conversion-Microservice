@@ -53,13 +53,21 @@ func ScreenShotResult(c *gin.Context) {
 		log.Println("Error getting Video in the cut Page")
 	}
 	p, err := producer.NewProducer("localhost:9092")
-
+	session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+	userName, ok := session.Values["userName"].(string)
+	if !ok {
+		log.Println("Error finding userID from the sessions")
+	}
 	var ScreenshotMessage models.ScreenshotMessage
 	ScreenshotMessage.UserId = result.UserID
 	ScreenshotMessage.FileName = fileName
 	ScreenshotMessage.FilePath = result.FilePath
 	ScreenshotMessage.Time = screenshotTime
-	ScreenshotMessage.UserName = result.User.Username
+	ScreenshotMessage.UserName = userName
+	ScreenshotMessage.VideoKey = videoKey
 	serialize, err := json.Marshal(ScreenshotMessage)
 	err = producer.ProduceNewMessage(p, "screenshot_video", string(serialize)) //C
 	if err != nil {

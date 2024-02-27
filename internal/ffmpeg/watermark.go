@@ -18,11 +18,11 @@ func Watermark(inputVideo string, WatermarkImage string) string {
 	FileWithoutExt := strings.TrimSuffix(filepath.Base(inputVideo), filepath.Ext(inputVideo))
 	outputFileName := fmt.Sprintf("../../internal/userfiles/watermarked_files/%s.mp4", FileWithoutExt) //This will create a file in that location
 
-	// Command to add watermark using FFMPEG
 	cmd := exec.Command("ffmpeg",
+		"-y",
 		"-i", correctFilePath,
 		"-i", WatermarkImage,
-		"-filter_complex", "overlay=0:10",
+		"-filter_complex", "[0:v][1:v]overlay",
 		"-codec:a", "copy",
 		outputFileName,
 	)
