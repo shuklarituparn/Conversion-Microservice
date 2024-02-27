@@ -73,8 +73,8 @@ The Conversion Microservice is a robust solution designed to handle diverse medi
 
 ## Usage and Installation
 
-- [Usage](docs/usage.md)
-- [Installation](docs/usage.md)
+- [Usage](docs/usage_eng.md)
+- [Installation](docs/setup_eng.md)
 
 ## Contributing
 
