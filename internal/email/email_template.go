@@ -213,7 +213,7 @@ func RestoreIDTempGenerator(userName string, userID int) string {
 func FileDownloadTempGenerator(userName string, mode string, userID int, fileId string) string {
 
 	userWelcomeString := fmt.Sprintf("Мы очень рады, что вы выбрали нас! Вы хотели %s ваши файли!. Вот вам ссылка чтобы загрузить ваш файл", mode)
-	userEmailString := fmt.Sprintf("https://knowing-gannet-actively.ngrok-free.app/profile/download?userid=%d&fileid=%s", userID, fileId)
+	userEmailString := fmt.Sprintf("https://knowing-gannet-actively.ngrok-free.app/profile/download?userid=%d&fileid=%s&mode=%s", userID, fileId, mode)
 
 	h := hermes.Hermes{
 

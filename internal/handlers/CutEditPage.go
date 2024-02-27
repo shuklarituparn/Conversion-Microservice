@@ -1,15 +1,12 @@
 package handlers
 
 import (
-	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/ID"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
-	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
-	"gorm.io/gorm"
 	"io"
 	"log"
 	"mime/multipart"
@@ -61,7 +58,7 @@ func CutEditPage(c *gin.Context) {
 	fileHeaders := form.File["file"]
 	if len(fileHeaders) == 0 {
 
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "No file uploaded"})
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "No file uploaded to cut"})
 		return
 	}
 
@@ -81,7 +78,7 @@ func CutEditPage(c *gin.Context) {
 		}(file)
 		session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
 
-		filename = fmt.Sprintf("%s_cut_%s.mp4", session.Values["userName"].(string), SanitizeFilename(fileHeader.Filename))
+		filename = fmt.Sprintf("%s_%s", session.Values["userName"].(string), SanitizeFilename(fileHeader.Filename))
 
 		newFilePath = filepath.Join(uploadDir, filename)
 		newFile, err := os.Create(newFilePath)
@@ -105,26 +102,9 @@ func CutEditPage(c *gin.Context) {
 		}
 	}
 
-	p, err := producer.NewProducer("localhost:9092")
-	err = producer.ProduceNewMessage(p, "cut_file", filename)
-	if err != nil {
-		return
-	}
-
 	db := user_database.ReturnDbInstance() //getting db, now will store the video
 	filePathofVideo := fmt.Sprintf("../uploads/%s", filename)
 	encodedFilePath := url.PathEscape(filePathofVideo) //to encode the filepath
-	var existingVideo models.Video
-
-	result := db.Where("title=?", filename).First(&existingVideo)
-	if result.Error == nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "video already exists"})
-		return
-	} else if !errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "error checking for existing video"})
-		return
-	}
-
 	videoKey := ID.ReturnID()
 	video := models.Video{
 		UserID:     userId,
@@ -132,7 +112,7 @@ func CutEditPage(c *gin.Context) {
 		FilePath:   encodedFilePath,
 		MongoDBOID: "",
 		CreatedAt:  time.Now(),
-		Mode:       "cut",
+		Mode:       "Вырезать",
 		VideoKey:   videoKey,
 	}
 
@@ -147,6 +127,7 @@ func CutEditPage(c *gin.Context) {
 		"userVideo":   filename,
 		"userpicture": userPicture,
 		"userName":    userName,
+		"videoKey":    videoKey,
 	})
 
 	//Now we have the video saved in the db

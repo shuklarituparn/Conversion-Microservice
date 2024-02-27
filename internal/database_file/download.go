@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-func downloadFile() {
+func downloadFile(objId string) {
 
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	mongoUrl := os.Getenv("MONGO_URL")
@@ -30,7 +30,7 @@ func downloadFile() {
 	if err != nil {
 		panic(err)
 	}
-	id, err := primitive.ObjectIDFromHex("62f7bd54a6e4452da13b3e88")
+	id, err := primitive.ObjectIDFromHex(objId)
 	if err != nil {
 		panic(err)
 	}

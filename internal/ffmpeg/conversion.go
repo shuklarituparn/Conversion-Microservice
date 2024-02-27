@@ -18,7 +18,7 @@ func Conversion(inputFile, outputformat string) string {
 	inputfilePath := fmt.Sprintf("../../uploads/%s", inputFile)
 	FileWithoutExt := strings.TrimSuffix(filepath.Base(inputFile), filepath.Ext(inputFile))
 	outputFileName := fmt.Sprintf("../../internal/userfiles/converted_files/%s.%s", FileWithoutExt, outputformat) //This will create a file in that location
-	cmd := exec.Command("ffmpeg", "-i", inputfilePath, "-c:v", "h264_nvenc", outputFileName)
+	cmd := exec.Command("ffmpeg", "-y", "-i", inputfilePath, "-c:v", "h264_nvenc", outputFileName)
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	fmt.Println(os.Getwd())
@@ -57,11 +57,13 @@ func VideoConversionConsumer() {
 		// Need to produce a message on the topic to upload
 		//Prodcue the message for the mongo consumer with Video Key
 		var messageToUpload models.AfterConvertUpload
+		FileWithoutExt := strings.TrimSuffix(filepath.Base(conversionMessage.FileName), filepath.Ext(conversionMessage.FileName))
+		fileNameCorrect := fmt.Sprintf("%s.%s", FileWithoutExt, conversionMessage.OutputFormat)
 
 		messageToUpload.VideoKey = conversionMessage.VideoKey
 		messageToUpload.FilePath = outputFilePath
 		messageToUpload.UserId = conversionMessage.UserId
-		messageToUpload.FileName = conversionMessage.FileName
+		messageToUpload.FileName = fileNameCorrect
 		messageToUpload.UserName = conversionMessage.UserName
 		serializedMessage, errorSerializing := json.Marshal(messageToUpload)
 		if errorSerializing != nil {

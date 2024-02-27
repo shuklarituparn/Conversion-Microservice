@@ -166,6 +166,7 @@
                     <div class="flex flex-col items-center justify-end mb-4 sm:mb-0">
                         <form id="video_form" action="/cut" method="post" enctype="multipart/form-data" class="flex flex-col items-center justify-center w-full">
                             <input type="hidden" name="filename" value="{{.userVideo}}">
+                            <input type="hidden" name="videoKey" value="{{.videoKey}}">
                             <div class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-600 bg-gray-800 bg-opacity-20 border-dashed rounded-lg cursor-pointer">
                                     <video id="Video" controls class="w-full h-full aspect-video">
                                         <source src="/uploads/{{.userVideo}}" type="video/mp4">
@@ -177,13 +178,13 @@
                             <div id="error-message" class="hidden text-red-500 text-sm">Пожалуйста, выберите формат файла MP4</div>
 
                             <div class="flex flex-row mt-4 space-x-14">
-                                <input type="text" id="start_time" class="rounded-3xl bg-gray-800 bg-opacity-30 border border-gray-200 text-white text-center p-2" placeholder="Начало">
-                                <input type="text" id="end_time" class="rounded-3xl bg-gray-800 bg-opacity-30 border border-gray-200 text-white text-center p-2" placeholder="Конец">
+                                <input type="text" id="start_time" name="start_time" class="rounded-3xl bg-gray-800 bg-opacity-30 border border-gray-200 text-white text-center p-2" placeholder="Начало">
+                                <input type="text" id="end_time" name="end_time" class="rounded-3xl bg-gray-800 bg-opacity-30 border border-gray-200 text-white text-center p-2" placeholder="Конец">
 
 
                             </div>
 
-                            <p id="time_error" class="mt-2 text-red-500 hidden">Введите время в правильном формате!</p>
+                            <p id="time_error" class="mt-2 text-red-500 hidden">Введите время в правильном формате (мм:сс)!</p>
 
                             <button type="submit" class="mt-8 border border-gray-300 bg-gray-800 bg-opacity-20 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                                 Вырезать

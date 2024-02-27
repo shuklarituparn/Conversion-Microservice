@@ -134,3 +134,11 @@ func GetVideoByID(db *gorm.DB, videoID string) (*models.Video, error) {
 	}
 	return &video, nil
 }
+
+func GetVideoByFileID(db *gorm.DB, videoID string) (*models.Video, error) {
+	var video models.Video
+	if err := db.Where("video_key = ?", videoID).First(&video).Error; err != nil {
+		return nil, err
+	}
+	return &video, nil
+}

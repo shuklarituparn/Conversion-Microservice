@@ -1,0 +1,116 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (27): 
+	- email_redirect.html
+	- error.html
+	- cut.html
+	- dashboard.html
+	- email_confirm.html
+	- profile.html
+	- restored.html
+	- signout.html
+	- verification_mail.html
+	- watermark.html
+	- 
+	- screenshot.html
+	- delete_conf.html
+	- email.html
+	- restore.html
+	- screenshot_edit.html
+	- convert_success.html
+	- cut_success.html
+	- login.html
+	- file_history.html
+	- 404.html
+	- convert.html
+	- watermark_success.html
+	- goodbye.html
+	- screenshot_success.html
+	- cut_edit.html
+	- download.html
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /uploads/*filepath        --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] HEAD   /uploads/*filepath        --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (4 handlers)
+[GIN-debug] GET    /metrics                  --> main.main.WrapH.func3 (4 handlers)
+[GIN-debug] GET    /                         --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.WelcomeHandler (4 handlers)
+[GIN-debug] GET    /login                    --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Login (4 handlers)
+[GIN-debug] GET    /callback                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Callback (4 handlers)
+[GIN-debug] GET    /dashboard                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Dashboard (5 handlers)
+[GIN-debug] GET    /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Convert (5 handlers)
+[GIN-debug] POST   /convert                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.ConvertUpload (5 handlers)
+[GIN-debug] GET    /cut                      --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Cut (5 handlers)
+[GIN-debug] POST   /cut_edit                 --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.CutEditPage (5 handlers)
+[GIN-debug] POST   /cut                      --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.CutEditResult (5 handlers)
+[GIN-debug] GET    /watermark                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Watermark (5 handlers)
+[GIN-debug] POST   /watermark                --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.WatermarkResult (5 handlers)
+[GIN-debug] GET    /screenshot               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Screenshot (5 handlers)
+[GIN-debug] POST   /screenshot_edit          --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Screenshot_edit (5 handlers)
+[GIN-debug] POST   /screenshot               --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.ScreenShotResult (5 handlers)
+[GIN-debug] GET    /profile                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Profile (5 handlers)
+[GIN-debug] GET    /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailHandler (5 handlers)
+[GIN-debug] POST   /profile/email            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailUpdateHandler (5 handlers)
+[GIN-debug] GET    /profile/files            --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.FileHistory (5 handlers)
+[GIN-debug] GET    /profile/delete           --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.AccountDeleteConf (5 handlers)
+[GIN-debug] POST   /profile/delete           --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.AccountDelete (5 handlers)
+[GIN-debug] GET    /profile/restore          --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Restore (5 handlers)
+[GIN-debug] POST   /verify_mail              --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.EmailConfirm (5 handlers)
+[GIN-debug] GET    /profile/download         --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Download (5 handlers)
+[GIN-debug] GET    /verify_mail              --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.VerificationEmail (5 handlers)
+[GIN-debug] GET    /signout                  --> github.com/shuklarituparn/Conversion-Microservice/internal/handlers.Signout (5 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8085
+[GIN] 2024/02/27 - 00:00:22 | 200 |    3.092157ms | 209.250.229.144 | GET      "/watermark"
+[GIN] 2024/02/27 - 00:00:56 | 200 | 19.956065852s | 209.250.229.144 | POST     "/watermark"
+[GIN] 2024/02/27 - 00:00:59 | 200 |   14.341713ms | 209.250.229.144 | GET      "/watermark"
+[GIN] 2024/02/27 - 00:01:31 | 200 |   5.26203465s | 209.250.229.144 | GET      "/profile/download?userid=625608093&fileid=65dcfc0aecb6c1c338f9033e&mode=%d0%92%d0%be%d0%b4%d1%8f%d0%bd%d0%be%d0%b9%20%d0%b7%d0%bd%d0%b0%d0%ba"
+[GIN] 2024/02/27 - 00:01:59 | 200 |   14.619395ms | 209.250.229.144 | GET      "/screenshot"
+[GIN] 2024/02/27 - 00:02:18 | 200 | 14.128829095s | 209.250.229.144 | POST     "/screenshot_edit"
+[GIN] 2024/02/27 - 00:02:19 | 206 |    2.788473ms | 209.250.229.144 | GET      "/uploads/Ритупарн_IMG_1876.MP4"
+[GIN] 2024/02/27 - 00:02:20 | 206 |    3.747886ms | 209.250.229.144 | GET      "/uploads/Ритупарн_IMG_1876.MP4"
+[GIN] 2024/02/27 - 00:02:21 | 206 |    2.295996ms | 209.250.229.144 | GET      "/uploads/Ритупарн_IMG_1876.MP4"
+[GIN] 2024/02/27 - 00:02:25 | 302 |   22.440387ms | 209.250.229.144 | POST     "/screenshot"
+[GIN] 2024/02/27 - 00:02:28 | 200 |    2.251949ms | 209.250.229.144 | GET      "/screenshot"
+[GIN] 2024/02/27 - 00:02:51 | 200 |  2.247382865s | 209.250.229.144 | GET      "/profile/download?userid=625608093&fileid=65dcfc61ecb6c1c338f90346&mode=%d0%a1%d0%ba%d1%80%d0%b8%d0%bd%d1%88%d0%be%d1%82%d1%8b"
+[GIN] 2024/02/27 - 00:12:44 | 200 |    8.675754ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/"
+[GIN] 2024/02/27 - 00:12:44 | 200 |    8.452418ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/static/css/output.css"
+[GIN] 2024/02/27 - 00:12:44 | 200 |    7.872877ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/static/images/vk.png"
+[GIN] 2024/02/27 - 00:12:45 | 200 |    1.273508ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/static/fonts/font.ttf"
+[GIN] 2024/02/27 - 00:12:45 | 200 |   10.893316ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/static/images/background.png"
+[GIN] 2024/02/27 - 00:12:46 | 302 |     147.027µs | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/login"
+[GIN] 2024/02/27 - 00:12:50 | 302 |  456.014034ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/callback?code=a41a8ed1b11f1755ab&state=63e4ab5a-5b92-4117-aaff-d6074913a5d8"
+[GIN] 2024/02/27 - 00:12:50 | 200 |    1.281754ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/dashboard"
+[GIN] 2024/02/27 - 00:12:50 | 200 |    8.065712ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/static/assets/VK.svg"
+[GIN] 2024/02/27 - 00:12:51 | 200 |    1.687536ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/static/images/background.png"
+[GIN] 2024/02/27 - 00:12:51 | 200 |     515.467µs | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/static/assets/video-player.png"
+[GIN] 2024/02/27 - 00:12:53 | 200 |    2.119669ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/convert"
+[GIN] 2024/02/27 - 00:12:53 | 200 |    1.531872ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/static/images/background.png"
+[GIN] 2024/02/27 - 00:16:03 | 200 |     1.86445ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/convert"
+[GIN] 2024/02/27 - 00:16:23 | 200 |  4.954028795s | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | POST     "/convert"
+[GIN] 2024/02/27 - 00:16:23 | 200 |    1.821787ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/static/assets/ok-persik.webp"
+[GIN] 2024/02/27 - 00:16:28 | 200 |    1.907755ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/convert"
+[GIN] 2024/02/27 - 00:17:20 | 200 | 14.704445772s | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/profile/download?userid=608925590&fileid=65dcffa9ecb6c1c338f90349&mode=%d0%9a%d0%be%d0%bd%d0%b2%d0%b5%d1%80%d1%82%d0%b8%d1%80%d0%be%d0%b2%d0%b0%d1%82%d1%8c"
+[GIN] 2024/02/27 - 00:18:23 | 200 |    2.317003ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/cut"
+[GIN] 2024/02/27 - 00:18:26 | 200 |    2.030765ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/watermark"
+[GIN] 2024/02/27 - 00:19:44 | 200 | 11.449023025s | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | POST     "/watermark"
+[GIN] 2024/02/27 - 00:19:47 | 200 |   15.649404ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/watermark"
+[GIN] 2024/02/27 - 00:20:07 | 302 |      102.59µs | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/profile/download?userid=608925590&fileid=65dd0072ecb6c1c338f90361&mode=%d0%92%d0%be%d0%b4%d1%8f%d0%bd%d0%be%d0%b9%20%d0%b7%d0%bd%d0%b0%d0%ba"
+[GIN] 2024/02/27 - 00:20:07 | 302 |      79.956µs | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/login"
+[GIN] 2024/02/27 - 00:20:13 | 302 |     106.157µs | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/profile/download?userid=608925590&fileid=65dd0072ecb6c1c338f90361&mode=%d0%92%d0%be%d0%b4%d1%8f%d0%bd%d0%be%d0%b9%20%d0%b7%d0%bd%d0%b0%d0%ba"
+[GIN] 2024/02/27 - 00:20:13 | 302 |      69.566µs | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/login"
+[GIN] 2024/02/27 - 00:20:27 | 200 |  3.521725242s | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/profile/download?userid=608925590&fileid=65dd0072ecb6c1c338f90361&mode=%d0%92%d0%be%d0%b4%d1%8f%d0%bd%d0%be%d0%b9%20%d0%b7%d0%bd%d0%b0%d0%ba"
+[GIN] 2024/02/27 - 00:21:30 | 200 |    1.786548ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/cut"
+[GIN] 2024/02/27 - 00:21:44 | 302 |  5.694221088s | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | POST     "/cut_edit"
+[GIN] 2024/02/27 - 00:21:44 | 206 |     243.927µs | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/uploads/Тим__7309031517168065133.mp4"
+[GIN] 2024/02/27 - 00:21:44 | 206 |    2.736563ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/uploads/Тим__7309031517168065133.mp4"
+[GIN] 2024/02/27 - 00:21:44 | 206 |     319.934µs | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/uploads/Тим__7309031517168065133.mp4"
+[GIN] 2024/02/27 - 00:21:49 | 206 |    2.864822ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/uploads/Тим__7309031517168065133.mp4"
+[GIN] 2024/02/27 - 00:22:12 | 302 |    8.683353ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | POST     "/cut"
+[GIN] 2024/02/27 - 00:22:14 | 200 |     2.09541ms | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/cut"
+[GIN] 2024/02/27 - 00:22:31 | 200 |  4.582332862s | 2a03:d000:4100:13f1:fd46:8dfe:3a25:914c | GET      "/profile/download?userid=608925590&fileid=65dd0104ecb6c1c338f90369&mode=%d0%92%d1%8b%d1%80%d0%b5%d0%b7%d0%b0%d1%82%d1%8c"

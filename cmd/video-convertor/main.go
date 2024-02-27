@@ -42,9 +42,14 @@ func main() {
 
 	// Video Conversion
 	go ffmpeg.VideoConversionConsumer()
+	go ffmpeg.VideoCutConsumer()
+	go ffmpeg.ScreenshotConsumer()
+	go ffmpeg.WatermarkConsumer()
 
 	// Database Operations
 	go database_file.MongoUploadConsumer()
+	go database_file.MongoUploadScreenshotConsumer()
+
 	router.LoadHTMLGlob("../../templates/*")
 	router.Static("/static", "../../static")
 	router.Static("/uploads", "../../uploads")
@@ -68,7 +73,10 @@ func main() {
 		protected.POST("/cut_edit", handlers.CutEditPage)
 		protected.POST("/cut", handlers.CutEditResult)
 		protected.GET("/watermark", handlers.Watermark)
+		protected.POST("/watermark", handlers.WatermarkResult)
 		protected.GET("/screenshot", handlers.Screenshot)
+		protected.POST("/screenshot_edit", handlers.Screenshot_edit)
+		protected.POST("/screenshot", handlers.ScreenShotResult)
 		protected.GET("/profile", handlers.Profile)
 		protected.GET("/profile/email", handlers.EmailHandler)
 		protected.POST("/profile/email", handlers.EmailUpdateHandler)
