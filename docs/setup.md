@@ -58,6 +58,9 @@
 
 > Вам нужно настроить это в настройках вашего приложения после включения `openAPI`
 
+![Screenshot from 2024-02-27 22-29-28](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/bc0e5187-e533-4b11-babe-fed4775d10f4)
+
+
 
 `SESSION_SECRET='<Секрет для создания/хранения куки>'`
 
@@ -133,6 +136,9 @@ MONGO_URL='<MongoDB URL>'
 `REDIRECT_URL='<OAuth Redirect URL in the format "https://example.com/callback">'`
 
 > You need to set it up in the settings of your application, after turning on `openAPI`
+
+![Screenshot from 2024-02-27 22-29-28](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/ffa984be-92e5-4dec-9245-b6cf62dea457)
+
 
 
 `SESSION_SECRET='<Secret for Creating/Storing Cookies>'`
