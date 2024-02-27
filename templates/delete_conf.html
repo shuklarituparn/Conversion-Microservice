@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="flex h-screen w-screen items-center justify-center  bg-gray-900 bg-cover bg-no-repeat" style="background-image: url('../static/images/background.png');">
-    <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-4  sm:px-10 sm:mb-8 sm:py-10 md:px-24 md:py-24 shadow-2xl backdrop-blur-md">
+    <div class="rounded-3xl bg-gray-800 bg-opacity-40 px-4 py-4  sm:px-8 sm:mb-8 sm:py-8 md:px-24 md:py-24 shadow-2xl backdrop-blur-md">
         <div class="text-white VK-Sans">
             <div class="mb-4 sm:mb-8 flex flex-col items-center">
                 <img src="../static/assets/persik_scared.webp" class="w-24 sm:w-32 md:w-40" alt="" />
@@ -24,20 +24,23 @@
 
             </div>
             <div class="flex flex-row space-x-14 ">
-                <a href="/profile" class="mt-4 sm:mt-8 VK-Sans text-white bg-gray-800 text-center bg-opacity-40 hover:bg-blue-700 border border-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 font-sans rounded-full text-sm sm:text-md px-5 sm:px-10 py-2 text-center inline-flex items-center">
+                <a href="/profile" class="mt-4 sm:mt-8 VK-Sans text-white bg-gray-800 text-center bg-opacity-40 hover:bg-blue-700 border border-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 font-sans rounded-full text-sm sm:text-md px-10 sm:px-10 py-2 text-center inline-flex items-center">
                     <svg class="mr-2 lg:mr-4 h-6 w-8 sm:h-8 sm:w-10 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 94 32" fill="none">
                         <path d="M17 1L1 16L17 31" stroke="white"/>
                         <path d="M94 16L1 16" stroke="white"/>
                     </svg>
                     Не хочу удалить
                 </a>
-                <a href="/profile/delete" class="mt-4 sm:mt-8 VK-Sans text-white bg-gray-800 text-center bg-opacity-40 hover:bg-red-500 border border-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 font-sans rounded-full text-sm sm:text-md px-5 sm:px-10 py-2 text-center inline-flex items-center">
-                    Да, хочу удалить
-                    <svg class="lg:ml-4 h-6 w-8 sm:h-8 sm:w-10 ml-2"  xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
-                        <path d="M77 1L93 16L77 31" stroke="white"/>
-                        <path d="M93 16L0 16" stroke="white"/> ></svg>
+                <form id="generateCodeForm" action="/profile/delete?userID={{.userID}}" method="POST">
+                    <button type="submit" class="mt-4 sm:mt-8 VK-Sans text-white bg-gray-800 text-center bg-opacity-40 hover:bg-red-500 border border-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 font-sans rounded-full text-sm sm:text-md px-10 sm:px-10 py-2 text-center inline-flex items-center">
+                        Да, хочу удалить
+                        <svg class="ml-2 lg:mr-4 h-6 w-8 sm:h-8 sm:w-10"  xmlns="http://www.w3.org/2000/svg" width="94" height="32" viewBox="0 0 94 32" fill="none">
+                            <path d="M77 1L93 16L77 31" stroke="white"/>
+                            <path d="M93 16L0 16" stroke="white"/> >
+                        </svg>
+                    </button>
+                </form>
 
-                </a>
             </div>
         </div>
     </div>

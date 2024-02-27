@@ -1,8 +1,11 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/ID"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
@@ -10,9 +13,11 @@ import (
 	"log"
 	"mime/multipart"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func Convert(c *gin.Context) {
@@ -66,6 +71,7 @@ func ConvertUpload(c *gin.Context) {
 	form := c.Request.MultipartForm
 
 	var filename string
+	var newFilePath string
 
 	fileHeaders := form.File["file"]
 	if len(fileHeaders) == 0 {
@@ -90,9 +96,9 @@ func ConvertUpload(c *gin.Context) {
 		}(file)
 		session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
 
-		filename = fmt.Sprintf("%s_%s.%s", session.Values["userName"].(string), sanitizeFilename(fileHeader.Filename), form.Value["output_format"][0])
+		filename = fmt.Sprintf("%s_%s", session.Values["userName"].(string), SanitizeFilename(fileHeader.Filename))
 
-		newFilePath := filepath.Join(uploadDir, filename)
+		newFilePath = filepath.Join(uploadDir, filename)
 		newFile, err := os.Create(newFilePath)
 		if err != nil {
 			fmt.Println("Error creating file:", err)
@@ -120,39 +126,90 @@ func ConvertUpload(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "No output format provided"})
 		return
 	}
+	session, err := user_sessions.Store.Get(c.Request, "Logged_Session")
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+
+	userId, ok := session.Values["UserId"].(int)
+	if !ok {
+		log.Println("Error resolving the userId from the sessions")
+	}
+	userName, ok := session.Values["userName"].(string)
+	if !ok {
+		log.Println("Error finding userID from the sessions")
+	}
+	db := user_database.ReturnDbInstance() //getting db, now will store the video
+
+	//var existingVideo models.Video
+
+	//result := db.Where("title=?", filename).First(&existingVideo)
+	//if result.Error == nil {
+	//	c.JSON(http.StatusBadRequest, gin.H{"error": "video already exists"})
+	//	return
+	//} else if !errors.Is(result.Error, gorm.ErrRecordNotFound) {
+	//	c.JSON(http.StatusInternalServerError, gin.H{"error": "error checking for existing video"})
+	//	return
+	//}
+	filePathofVideo := fmt.Sprintf("../uploads/%s", filename)
+	encodedFilePath := url.PathEscape(filePathofVideo) //to encode the filepath
+	Videokey := ID.ReturnID()                          //In this way can pass the videoKey to the producer
+	video := models.Video{
+		UserID:     userId,
+		Title:      filename,
+		FilePath:   encodedFilePath,
+		MongoDBOID: "",
+		CreatedAt:  time.Now(),
+		Mode:       "Конвертировать",
+		VideoKey:   Videokey, //In this way all the video will be unique
+	}
+
+	createVideo := db.Create(&video)
+	if createVideo.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "error creating video"})
+		return
+	}
+	c.HTML(http.StatusOK, "convert_success.html", gin.H{})
+
+	//Now we have the video saved in the db
+	//Need to produce a message on the convert topic and then let the convert handler convert it
+
+	//After convert it produces a message on the upload, and uploads the video, returns obj Id and save it in the DB
+
 	fmt.Println("Output format:", outputFormat[0])
+
+	conversionMessage := models.ConversionMessage{
+		UserId:       userId,
+		UserName:     userName,
+		FileName:     filename,
+		FilePath:     filePathofVideo,
+		OutputFormat: outputFormat[0],
+		VideoKey:     Videokey,
+	}
+	serializedMessage, errorSerializingConvMessage := json.Marshal(conversionMessage)
+	if errorSerializingConvMessage != nil {
+		log.Println("Error Creating Conversion Message: ", errorSerializingConvMessage)
+	}
 	p, err := producer.NewProducer("localhost:9092")
-	err = producer.ProduceNewMessage(p, "email", filename)
+	err = producer.ProduceNewMessage(p, "conversion", string(serializedMessage))
 	if err != nil {
 		return
 	}
 
-	c.HTML(http.StatusOK, "convert_success.html", gin.H{})
 }
 
-func sanitizeFilename(filename string) string {
-	sanitizedFilename := filepath.Base(filename)
-	sanitizedFilename = strings.Map(func(r rune) rune {
+func SanitizeFilename(filename string) string {
+	filebase := strings.TrimSuffix(filepath.Base(filename), filepath.Ext(filename))
+	fileExt := filepath.Ext(filename)
+
+	sanitizedFilename := strings.Map(func(r rune) rune {
 		if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') {
 			return r
 		}
 		return '_'
-	}, sanitizedFilename)
+	}, filebase)
+	sanitizedFilename += fileExt
 	return sanitizedFilename
 }
 
-//TODO:ADD USER_ID TO FILE FOR EASIER HANDLING
-
-/*
-Create the table in DB with userID from VK, that will make everyuser different since they are using VK
-
-UserId
-UserName
-UserPic (the URL string for the image we get from VK)
-...
-
-
-Basically the first table will contain the field we get from the VK
-
-Second table will store the File details for the given users
-*/
+//Now need to make the logic for the post request // SO here the file comes
