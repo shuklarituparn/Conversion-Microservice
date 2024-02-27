@@ -78,9 +78,6 @@
 
 # Setup 🔧
 
-![944960 512 (1)](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/e31ed3cb-cfa1-454a-b664-5a2e63c579e3)
-
-
 ## First steps 🚀
 
 * Clone the project by running the following command:
