@@ -27,6 +27,7 @@
 - **Электронная почта**: Hermes для генерации шаблонов, Gomail для отправки
 - **Обработка медиа**: FFMPEG
 - **Мониторинг**: Prometheus для метрик, Grafana для визуализации
+- **Аутентификация пользователей**: Использование OAuth для входа пользователей
 
 ## Использование и установка
 
@@ -68,6 +69,7 @@ The Conversion Microservice is a robust solution designed to handle diverse medi
 - **Email**: Hermes for template generation, Gomail for sending
 - **Media Processing**: FFMPEG
 - **Monitoring**: Prometheus for metrics, Grafana for visualization
+- **User Authentication**: Using OAuth to log in users
 
 ## Usage and Installation
 
