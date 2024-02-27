@@ -14,7 +14,7 @@
 ## Особенности
 
 - **Обрезка видео**: Точная обрезка на основе заданных временных рамок.
-- **Конвертация формата**: Беспрепятственная конвертация видео в различные форматы, в настоящее время поддерживается MP4.
+- **Конвертация формата**: Беспрепятственная конвертация видео в различные форматы, в настоящее время поддерживается от MP4 -> MOV, MKV, MP3.
 - **Создание скриншотов**: Легкое создание скриншотов из видео.
 - **Добавление водяных знаков**: Добавление настраиваемых водяных знаков к видео для брендинга или идентификации.
 
@@ -56,7 +56,7 @@ The Conversion Microservice is a robust solution designed to handle diverse medi
 ## Features
 
 - **Video Cutting**: Precision cutting based on defined start and end times.
-- **Format Conversion**: Seamlessly convert videos to different formats, with MP4 currently supported.
+- **Format Conversion**: Seamlessly convert videos to different formats, with MP4 to MP3, MKV, MOV currently supported.
 - **Screenshot Capture**: Effortlessly capture screenshots from videos.
 - **Watermark Addition**: Add customizable watermarks to videos for branding or identification purposes.
 
