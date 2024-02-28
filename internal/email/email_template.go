@@ -2,12 +2,23 @@ package email
 
 import (
 	"fmt"
-	"github.com/matcornic/hermes/v2"
+	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/joho/godotenv"
+	"github.com/matcornic/hermes/v2"
 )
 
+
 func WelcomeTempGenerator(userName string, userID int) {
+
+	errLoadingEnv := godotenv.Load("../../../.env")
+	if errLoadingEnv != nil {
+		log.Print("Error opening env file to get the Email", errLoadingEnv)
+	}
+
+	link := os.Getenv("EMAIL_URL")
 
 	h := hermes.Hermes{
 
@@ -15,7 +26,7 @@ func WelcomeTempGenerator(userName string, userID int) {
 		Product: hermes.Product{
 
 			Name:      "Сервис конвертации видео",
-			Link:      "https://knowing-gannet-actively.ngrok-free.app/",
+			Link:      link,
 			Logo:      "https://iili.io/J0hcSs4.png",
 			Copyright: "© 2024 Сервис конвертации видео. Все права защищены",
 		},
@@ -33,7 +44,7 @@ func WelcomeTempGenerator(userName string, userID int) {
 					Button: hermes.Button{
 						Color: "#0077FF",
 						Text:  "Подтвердите свой адрес электронной почты",
-						Link:  "https://knowing-gannet-actively.ngrok-free.app/",
+						Link:  link,
 					},
 				},
 			},
@@ -73,8 +84,13 @@ func WelcomeTempGenerator(userName string, userID int) {
 
 func VerificationTempGenerator(userName string, userID int, VerificationCode string) string {
 
-	userWelcomeString := fmt.Sprintf("Добро пожаловать в сервис конвертации видео, мы очень рады, что вы с нами.")
-	userEmailString := fmt.Sprintf("https://knowing-gannet-actively.ngrok-free.app/verify_mail?code=%s&userId=%d", VerificationCode, userID)
+	errLoadingEnv := godotenv.Load("../../.env")
+	if errLoadingEnv != nil {
+		log.Print("Error opening env file to get the Email", errLoadingEnv)
+	}
+
+	link := os.Getenv("EMAIL_URL")
+	userEmailString := fmt.Sprintf(link+"verify_mail?code=%s&userId=%d", VerificationCode, userID)
 
 	h := hermes.Hermes{
 
@@ -82,7 +98,7 @@ func VerificationTempGenerator(userName string, userID int, VerificationCode str
 		Product: hermes.Product{
 
 			Name:        "Сервис конвертации видео",
-			Link:        "https://knowing-gannet-actively.ngrok-free.app/",
+			Link:        link,
 			Logo:        "https://iili.io/J0hcSs4.png",
 			Copyright:   "© 2024 Сервис конвертации видео. Все права защищены",
 			TroubleText: "Если у вас возникли проблемы с кнопкой '{ACTION}', скопируйте и вставьте приведенный ниже URL-адрес в свой веб-браузер.",
@@ -93,7 +109,7 @@ func VerificationTempGenerator(userName string, userID int, VerificationCode str
 		Body: hermes.Body{
 			Name: userName,
 			Intros: []string{
-				userWelcomeString,
+				"Добро пожаловать в сервис конвертации видео, мы очень рады, что вы с нами.",
 			},
 			Signature: "C Уважением",
 			Greeting:  "Привет",
@@ -143,8 +159,14 @@ func VerificationTempGenerator(userName string, userID int, VerificationCode str
 
 func RestoreIDTempGenerator(userName string, userID int) string {
 
-	userWelcomeString := fmt.Sprintf("Мы очень рады, что вы выбрали нас! Мы надеемся, что встретимся снова!.")
-	userEmailString := fmt.Sprintf("https://knowing-gannet-actively.ngrok-free.app/profile/restore")
+	errLoadingEnv := godotenv.Load("../../.env")
+	if errLoadingEnv != nil {
+		log.Print("Error opening env file to get the Email", errLoadingEnv)
+	}
+
+	link := os.Getenv("EMAIL_URL")
+
+	userEmailString := fmt.Sprintf(link + "profile/restore")
 
 	h := hermes.Hermes{
 
@@ -152,7 +174,7 @@ func RestoreIDTempGenerator(userName string, userID int) string {
 		Product: hermes.Product{
 
 			Name:        "Сервис конвертации видео",
-			Link:        "https://knowing-gannet-actively.ngrok-free.app/",
+			Link:        link,
 			Logo:        "https://iili.io/J0hcSs4.png",
 			Copyright:   "© 2024 Сервис конвертации видео. Все права защищены",
 			TroubleText: "Если у вас возникли проблемы с кнопкой '{ACTION}', скопируйте и вставьте приведенный ниже URL-адрес в свой веб-браузер.",
@@ -163,7 +185,7 @@ func RestoreIDTempGenerator(userName string, userID int) string {
 		Body: hermes.Body{
 			Name: userName,
 			Intros: []string{
-				userWelcomeString,
+				"Мы очень рады, что вы выбрали нас! Мы надеемся, что встретимся снова!",
 			},
 			Signature: "C Уважением",
 			Greeting:  "До свидания",
@@ -212,8 +234,15 @@ func RestoreIDTempGenerator(userName string, userID int) string {
 
 func FileDownloadTempGenerator(userName string, mode string, userID int, fileId string) string {
 
+	errLoadingEnv := godotenv.Load("../../.env")
+	if errLoadingEnv != nil {
+		log.Print("Error opening env file to get the Email", errLoadingEnv)
+	}
+
+	link := os.Getenv("EMAIL_URL")
+
 	userWelcomeString := fmt.Sprintf("Мы очень рады, что вы выбрали нас! Вы хотели %s ваши файли!. Вот вам ссылка чтобы загрузить ваш файл", mode)
-	userEmailString := fmt.Sprintf("https://knowing-gannet-actively.ngrok-free.app/profile/download?userid=%d&fileid=%s&mode=%s", userID, fileId, mode)
+	userEmailString := fmt.Sprintf(link+"profile/download?userid=%d&fileid=%s&mode=%s", userID, fileId, mode)
 
 	h := hermes.Hermes{
 
@@ -221,7 +250,7 @@ func FileDownloadTempGenerator(userName string, mode string, userID int, fileId 
 		Product: hermes.Product{
 
 			Name:        "Сервис конвертации видео",
-			Link:        "https://knowing-gannet-actively.ngrok-free.app/",
+			Link:        link,
 			Logo:        "https://iili.io/J0hcSs4.png",
 			Copyright:   "© 2024 Сервис конвертации видео. Все права защищены",
 			TroubleText: "Если у вас возникли проблемы с кнопкой '{ACTION}', скопируйте и вставьте приведенный ниже URL-адрес в свой веб-браузер.",
