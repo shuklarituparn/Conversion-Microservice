@@ -36,7 +36,7 @@
 
 - [Использование](docs/usage.md)
 - [Установка](docs/setup.md)
-- [Что ещ](docs/what's_coming.md)
+- [Что еще](docs/what's_coming.md)
 
 
 ## Вклад
