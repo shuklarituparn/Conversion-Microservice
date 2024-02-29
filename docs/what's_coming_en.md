@@ -7,6 +7,7 @@
 
 - Better logging, currently using GIN and log from go library
 - Metrics using Prometheus/Grafana
+- Add tests
 
 
 
