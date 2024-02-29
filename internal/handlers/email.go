@@ -140,8 +140,4 @@ func VerificationEmail(c *gin.Context) {
 	}
 }
 
-//TODO: SO GET REQUEST TO VERIFIED TO ENTER THE CODE
 
-//TODO: THEN POST TO THE EMAIL IF IT MATCHES AND SHOW CONF?
-
-//TODO: IN fact can just send the user a mail with the code in URL and click to verify
