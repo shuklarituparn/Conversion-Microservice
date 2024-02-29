@@ -36,6 +36,7 @@
 
 - [Использование](docs/usage.md)
 - [Установка](docs/setup.md)
+- [Что ещ](docs/what's_coming.md)
 
 
 ## Вклад
@@ -80,7 +81,7 @@ The site is available to try at : http://videoconversion.heyaadi.ru/
 
 - [Usage](docs/usage_eng.md)
 - [Installation](docs/setup_eng.md)
-- [What's next][docs/what's_coming_en.md]
+- [What's next](docs/what's_coming_en.md)
 
 ## Contributing
 
