@@ -98,6 +98,7 @@ func Download(c *gin.Context) {
 		c.Header("Content-Description", "File Transfer")
 		c.Header("Content-Transfer-Encoding", "Binary")
 		c.Header("Content-Disposition", "attachment; filename="+UserFile.FileName)
+		c.File(completeFilePath)  //this was missing ,causing no file to save on userside on download
 		log.Println("File downloaded and saved to:", completeFilePath)
 
 	} else {
