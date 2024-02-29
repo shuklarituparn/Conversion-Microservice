@@ -53,7 +53,7 @@ func Download(c *gin.Context) {
 		return
 	}
 	if mode == "Скриншоты" {
-		err := godotenv.Load("/home/rituparn/Documents/Dev/languages/Conversion-Microservice/.env")
+		err := godotenv.Load("../../.env")
 		if err != nil {
 			log.Println("Error opening the env file in Screenshot upload")
 		}
@@ -81,7 +81,7 @@ func Download(c *gin.Context) {
 		var UserFile struct {
 			ImageData primitive.Binary `bson:"imageData"`
 			FileName  string           `bson:"fileName"`
-		} //so if I did it as a type struct I will have to fill it, but var can take the value
+		} 
 
 		if err := collection.FindOne(context.TODO(), filter).Decode(&UserFile); err != nil {
 			log.Println("Error fetching file from MongoDB:", err)
@@ -102,43 +102,39 @@ func Download(c *gin.Context) {
 
 	} else {
 
-		// Access GridFS
 		db := client.Database("myDB")
 		bucket, err := gridfs.NewBucket(db)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		// Convert string to ObjectID
+		
 		objID, err := primitive.ObjectIDFromHex(fileId)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		// Get Metadata
+		
 		var result bson.M
 		err = db.Collection("fs.files").FindOne(context.TODO(), bson.M{"_id": objID}).Decode(&result)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		// Example: Use metadata to determine the file name or extension
-		// This assumes 'FileName' is a key in your metadata
 		fileName, ok := result["metadata"].(bson.M)["FileName"].(string)
 		filenameWithPath := fmt.Sprintf("../../internal/userfiles/downloaded_files/%s", fileName)
 		if !ok {
 			log.Fatal("FileName in metadata not found or not a string")
 		}
 
-		// Download the file
+		
 		var buf bytes.Buffer
 		_, err = bucket.DownloadToStream(objID, &buf)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		// Save the file
-		// You might want to use the fileName from the metadata to determine the correct file extension
+		
 		err = os.WriteFile(filenameWithPath, buf.Bytes(), 0644)
 		if err != nil {
 			log.Fatal(err)
