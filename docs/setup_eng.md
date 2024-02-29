@@ -33,6 +33,8 @@
 
 * You can interact with the service at `localhost:8085` or at the `callback URL` described in `.env`.
 
+* If you dont' have NVIDIA graphics, then remove the parameter  `h264_nvenc` from the code at `internal/ffmpeg/conversion.go`
+
 ---
 
 
