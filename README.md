@@ -14,40 +14,50 @@
 
 Сервис доступен по сайту: http://videoconversion.heyaadi.ru/
 
+---
+
 ## Особенности
 
 - **Обрезка видео**: Точная обрезка на основе заданных временных рамок.
 - **Конвертация формата**: Беспрепятственная конвертация видео в различные форматы, в настоящее время поддерживается от MP4 -> MOV, MKV, MP3.
 - **Создание скриншотов**: Легкое создание скриншотов из видео.
 - **Добавление водяных знаков**: Добавление настраиваемых водяных знаков к видео для брендинга или идентификации.
-
+---
 ## Технологический стек
 
 - **Фронтенд**: HTML + Tailwind CSS
 - **Бэкенд**: Go (GIN для маршрутизации)
-- **Базы данных**: GORM с PostgreSQL (локальная), MongoDB (облачная)
+- **Базы данных**: GORM с PostgreSQL (локальная), MongoDB Atlas (облачная)
 - **Сообщения**: Kafka
-- **Электронная почта**: Hermes для генерации шаблонов, Gomail для отправки
+- **Электронная почта**: Hermes для генерации шаблонов, Resend для отправки
 - **Обработка медиа**: FFMPEG
 - **Мониторинг**: Prometheus для метрик, Grafana для визуализации
+- **Трассировка**: Sentry
 - **Аутентификация пользователей**: Использование OAuth для входа пользователей
+---
+## Трассировки и измерение метрики
 
+
+
+
+
+---
 ## Использование и установка
 
 - [Использование](docs/usage.md)
 - [Установка](docs/setup.md)
 - [Что еще](docs/what's_coming.md)
-
-
+---
 ## Вклад
 
 Ваши вклады приветствуются!
 
+---
 ## Лицензия
 
 Этот проект лицензирован в соответствии с [лицензией MIT](LICENSE).
 
-
+---
 
 
 # 🎬 Conversion Microservice
@@ -59,6 +69,8 @@ The Conversion Microservice is a robust solution designed to handle diverse medi
 
 The site is available to try at : http://videoconversion.heyaadi.ru/
 
+---
+
 ## Features
 
 - **Video Cutting**: Precision cutting based on defined start and end times.
@@ -66,16 +78,25 @@ The site is available to try at : http://videoconversion.heyaadi.ru/
 - **Screenshot Capture**: Effortlessly capture screenshots from videos.
 - **Watermark Addition**: Add customizable watermarks to videos for branding or identification purposes.
 
+---
+## Tracing and measuring metrics
+
+
+---
+
 ## Tech Stack
 
 - **Frontend**: HTML + Tailwind CSS
 - **Backend**: Go (GIN for routing)
-- **Databases**: GORM with PostgreSQL (local), MongoDB (cloud)
+- **Databases**: GORM with PostgreSQL (local), MongoDB Atlas (cloud)
 - **Messaging**: Kafka
-- **Email**: Hermes for template generation, Gomail for sending
+- **Email**: Hermes for template generation, Resend for sending
 - **Media Processing**: FFMPEG
 - **Monitoring**: Prometheus for metrics, Grafana for visualization
+- **Tracing**: Sentry
 - **User Authentication**: Using OAuth to log in users
+
+---
 
 ## Usage and Installation
 
@@ -83,10 +104,16 @@ The site is available to try at : http://videoconversion.heyaadi.ru/
 - [Installation](docs/setup_eng.md)
 - [What's next](docs/what's_coming_en.md)
 
+---
+
 ## Contributing
 
 Contributions are welcome!
 
+---
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+---
