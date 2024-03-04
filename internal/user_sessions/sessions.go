@@ -2,7 +2,6 @@ package user_sessions
 
 import (
 	"github.com/gorilla/sessions"
-	"github.com/joho/godotenv"
 	"log"
 	"net/http"
 	"os"
@@ -13,10 +12,6 @@ var (
 )
 
 func init() {
-	err := godotenv.Load("../../.env")
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
 	sessionSecret := os.Getenv("SESSION_SECRET")
 	if sessionSecret == "" {
 		log.Fatal("SESSION_SECRET environment variable not set")

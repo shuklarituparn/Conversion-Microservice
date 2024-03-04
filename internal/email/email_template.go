@@ -2,21 +2,13 @@ package email
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 
-	"github.com/joho/godotenv"
 	"github.com/matcornic/hermes/v2"
 )
 
-
 func WelcomeTempGenerator(userName string, userID int) {
-
-	errLoadingEnv := godotenv.Load("../../../.env")
-	if errLoadingEnv != nil {
-		log.Print("Error opening env file to get the Email", errLoadingEnv)
-	}
 
 	link := os.Getenv("EMAIL_URL")
 
@@ -83,11 +75,6 @@ func WelcomeTempGenerator(userName string, userID int) {
 }
 
 func VerificationTempGenerator(userName string, userID int, VerificationCode string) string {
-
-	errLoadingEnv := godotenv.Load("../../.env")
-	if errLoadingEnv != nil {
-		log.Print("Error opening env file to get the Email", errLoadingEnv)
-	}
 
 	link := os.Getenv("EMAIL_URL")
 	userEmailString := fmt.Sprintf(link+"verify_mail?code=%s&userId=%d", VerificationCode, userID)
@@ -159,11 +146,6 @@ func VerificationTempGenerator(userName string, userID int, VerificationCode str
 
 func RestoreIDTempGenerator(userName string, userID int) string {
 
-	errLoadingEnv := godotenv.Load("../../.env")
-	if errLoadingEnv != nil {
-		log.Print("Error opening env file to get the Email", errLoadingEnv)
-	}
-
 	link := os.Getenv("EMAIL_URL")
 
 	userEmailString := fmt.Sprintf(link + "profile/restore")
@@ -233,11 +215,6 @@ func RestoreIDTempGenerator(userName string, userID int) string {
 }
 
 func FileDownloadTempGenerator(userName string, mode string, userID int, fileId string) string {
-
-	errLoadingEnv := godotenv.Load("../../.env")
-	if errLoadingEnv != nil {
-		log.Print("Error opening env file to get the Email", errLoadingEnv)
-	}
 
 	link := os.Getenv("EMAIL_URL")
 

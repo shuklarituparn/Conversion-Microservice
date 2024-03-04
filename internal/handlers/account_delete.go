@@ -74,7 +74,7 @@ func AccountDelete(c *gin.Context) {
 				log.Println("Error saving session:", err)
 				return
 			}
-			p, errorProducing := producer.NewProducer("localhost:9092")
+			p, errorProducing := producer.NewProducer("broker:9092")
 			if errorProducing != nil {
 				log.Println("Erorr creating  a producer for the restore mail producer")
 			}

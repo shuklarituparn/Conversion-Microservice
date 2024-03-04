@@ -5,7 +5,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -29,11 +28,6 @@ func Download(c *gin.Context) {
 	if !ok {
 		log.Println("Error finding userID from the sessions")
 	}
-
-	errLoadingEnv := godotenv.Load("../../.env")
-	if errLoadingEnv != nil {
-		log.Print("Error opening env file to get the MONGO settings", errLoadingEnv)
-	}
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	mongoUrl := os.Getenv("MONGO_URL")
 	opts := options.Client().ApplyURI(mongoUrl).SetServerAPIOptions(serverAPI)
@@ -53,10 +47,6 @@ func Download(c *gin.Context) {
 		return
 	}
 	if mode == "Скриншоты" {
-		err := godotenv.Load("../../.env")
-		if err != nil {
-			log.Println("Error opening the env file in Screenshot upload")
-		}
 
 		mongoUrl := os.Getenv("MONGO_URL")
 		opts := options.Client().ApplyURI(mongoUrl)
@@ -81,7 +71,7 @@ func Download(c *gin.Context) {
 		var UserFile struct {
 			ImageData primitive.Binary `bson:"imageData"`
 			FileName  string           `bson:"fileName"`
-		} 
+		}
 
 		if err := collection.FindOne(context.TODO(), filter).Decode(&UserFile); err != nil {
 			log.Println("Error fetching file from MongoDB:", err)
@@ -98,7 +88,7 @@ func Download(c *gin.Context) {
 		c.Header("Content-Description", "File Transfer")
 		c.Header("Content-Transfer-Encoding", "Binary")
 		c.Header("Content-Disposition", "attachment; filename="+UserFile.FileName)
-		c.File(completeFilePath)  //this was missing ,causing no file to save on userside on download
+		c.File(completeFilePath) //this was missing ,causing no file to save on userside on download
 		log.Println("File downloaded and saved to:", completeFilePath)
 
 	} else {
@@ -109,13 +99,11 @@ func Download(c *gin.Context) {
 			log.Fatal(err)
 		}
 
-		
 		objID, err := primitive.ObjectIDFromHex(fileId)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		
 		var result bson.M
 		err = db.Collection("fs.files").FindOne(context.TODO(), bson.M{"_id": objID}).Decode(&result)
 		if err != nil {
@@ -128,14 +116,12 @@ func Download(c *gin.Context) {
 			log.Fatal("FileName in metadata not found or not a string")
 		}
 
-		
 		var buf bytes.Buffer
 		_, err = bucket.DownloadToStream(objID, &buf)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		
 		err = os.WriteFile(filenameWithPath, buf.Bytes(), 0644)
 		if err != nil {
 			log.Fatal(err)

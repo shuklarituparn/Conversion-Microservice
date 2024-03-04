@@ -6,7 +6,8 @@
 ## To add
 
 - Better logging, currently using GIN and log from go library
-- Metrics using Prometheus/Grafana
+- Metrics using Prometheus/Grafana ✅ (done)
+- Add sentry ✅ (done)
 - Add tests
 
 

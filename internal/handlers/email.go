@@ -96,7 +96,7 @@ func EmailUpdateHandler(c *gin.Context) {
 		log.Println("Failed to Serialize the message")
 	}
 
-	p, err := producer.NewProducer("localhost:9092")
+	p, err := producer.NewProducer("broker:9092")
 	err = producer.ProduceNewMessage(p, "verification_mail", string(serializedMessage))
 	if err != nil {
 		return
@@ -139,5 +139,3 @@ func VerificationEmail(c *gin.Context) {
 		c.HTML(http.StatusBadRequest, "error.html", gin.H{})
 	}
 }
-
-

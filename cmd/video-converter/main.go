@@ -14,6 +14,7 @@ import (
 	"github.com/shuklarituparn/Conversion-Microservice/internal/ffmpeg"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/handlers"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/logger"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/prometheus" // Import the prometheus package
 	"github.com/shuklarituparn/Conversion-Microservice/middlewares"
 )
 
@@ -58,6 +59,9 @@ func main() {
 	go database_file.MongoUploadConsumer()
 	go database_file.MongoUploadScreenshotConsumer()
 
+	//Initializing the metrics
+	prometheus.Init()
+
 	router.LoadHTMLGlob("../../templates/*")
 	router.Static("/static", "../../static")
 	router.Static("/uploads", "../../uploads")
@@ -88,7 +92,6 @@ func main() {
 		protected.GET("/profile", handlers.Profile)
 		protected.GET("/profile/email", handlers.EmailHandler)
 		protected.POST("/profile/email", handlers.EmailUpdateHandler)
-		protected.GET("/profile/files", handlers.FileHistory)
 		protected.GET("/profile/delete", handlers.AccountDeleteConf)
 		protected.POST("/profile/delete", handlers.AccountDelete)
 		protected.GET("/profile/restore", handlers.Restore)

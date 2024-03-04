@@ -1,14 +1,24 @@
-# Use a base image with the desired GLIBC version
-FROM alpine:latest
 
-# Install necessary dependencies
-RUN apk update && apk add --no-cache libc6-compat
+FROM golang:1.22-alpine
 
-# Copy your program files into the container
-COPY . /app
+WORKDIR /app
 
-# Set the working directory
-WORKDIR /app/cmd/video-convertor
 
-# Run your program when the container starts
+RUN apk update && apk add --no-cache gcc libc-dev build-base
+
+
+COPY . .
+
+
+RUN go mod download
+
+WORKDIR /app/cmd/video-converter
+
+
+RUN CGO_ENABLED=1 GOOS=linux go build -tags musl -o main
+
+
+EXPOSE 8085
+
+
 CMD ["./main"]

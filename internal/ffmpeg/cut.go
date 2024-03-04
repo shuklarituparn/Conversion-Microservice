@@ -32,7 +32,7 @@ func CutFile(inputfileName string, startTime string, endTime string) string {
 
 func VideoCutConsumer() {
 
-	c, _ := consumer.NewConsumer("localhost:9092", "conversion_service")
+	c, _ := consumer.NewConsumer("broker:9092", "conversion_service")
 	_ = c.Subscribe("cut_video", nil)
 
 	defer consumer.Close(c)
@@ -68,7 +68,7 @@ func VideoCutConsumer() {
 			log.Println("Error serializing message", errorSerializing)
 
 		}
-		p, err := producer.NewProducer("localhost:9092")
+		p, err := producer.NewProducer("broker:9092")
 		producer.ProduceNewMessage(p, "upload", string(serializedMessage)) //Producing the converted mesaage
 		//Now need the upload consumer
 		_, commitErr := c.CommitMessage(msg)
