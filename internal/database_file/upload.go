@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/joho/godotenv"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/consumer"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
@@ -20,10 +19,6 @@ import (
 )
 
 func MongoUpload(filePath string, UserId int, UserName string, FileName string, VideoKey string) {
-	errLoadingEnv := godotenv.Load("../../.env")
-	if errLoadingEnv != nil {
-		log.Print("Error opening env file to get the MONGO settings", errLoadingEnv)
-	}
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	mongoUrl := os.Getenv("MONGO_URL")
 	opts := options.Client().ApplyURI(mongoUrl).SetServerAPIOptions(serverAPI)
@@ -55,7 +50,7 @@ func MongoUpload(filePath string, UserId int, UserName string, FileName string, 
 	}
 	fmt.Printf("New file uploaded with ID %s", objectID)
 
-	p, err := producer.NewProducer("localhost:9092")
+	p, err := producer.NewProducer("broker:9092")
 	if err != nil {
 		log.Println("Error creating a producer after upload message", err)
 	}
@@ -84,19 +79,9 @@ func MongoUpload(filePath string, UserId int, UserName string, FileName string, 
 	localDB.Save(result)
 	producer.ProduceNewMessage(p, "download_mail", string(serialize))
 
-	//NEED to add a download mail consumer
-
-	//FileDownload done and the mail producing done
-	//At this point we have the successful upload then we need to insert the video in the DB and send user an Email
-
 }
 
 func MongoImageUpload(filePath string, UserId int, UserName string, FileName string, VideoKey string) {
-
-	err := godotenv.Load("../../.env")
-	if err != nil {
-		log.Println("Error opening the env file in Screenshot upload")
-	}
 
 	mongoUrl := os.Getenv("MONGO_URL")
 	opts := options.Client().ApplyURI(mongoUrl)
@@ -165,7 +150,7 @@ func MongoImageUpload(filePath string, UserId int, UserName string, FileName str
 		log.Println("Error marshaling FileDownloadMailMsg:", err)
 	}
 
-	p, err := producer.NewProducer("localhost:9092")
+	p, err := producer.NewProducer("broker:9092")
 	err = producer.ProduceNewMessage(p, "download_mail", string(serialize))
 	if err != nil {
 		return
@@ -175,7 +160,7 @@ func MongoImageUpload(filePath string, UserId int, UserName string, FileName str
 
 func MongoUploadConsumer() {
 	//This consumer will listen for the upload topic after the conversion is done successfully
-	c, _ := consumer.NewConsumer("localhost:9092", "upload_service")
+	c, _ := consumer.NewConsumer("broker:9092", "upload_service")
 	_ = c.Subscribe("upload", nil)
 
 	defer consumer.Close(c)
@@ -210,7 +195,7 @@ func MongoUploadConsumer() {
 
 func MongoUploadScreenshotConsumer() {
 	//This consumer will listen for the upload topic after the conversion is done successfully
-	c, _ := consumer.NewConsumer("localhost:9092", "upload_service")
+	c, _ := consumer.NewConsumer("broker:9092", "upload_service")
 	_ = c.Subscribe("upload_screenshot", nil)
 
 	defer consumer.Close(c)

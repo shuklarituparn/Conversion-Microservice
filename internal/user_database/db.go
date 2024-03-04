@@ -3,7 +3,6 @@ package user_database
 import (
 	"errors"
 	"fmt"
-	"github.com/joho/godotenv"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -14,11 +13,6 @@ import (
 var Database *gorm.DB
 
 func init() {
-	errorLoadingenv := godotenv.Load("../../.env")
-	if errorLoadingenv != nil {
-		log.Fatalf("Error loading the env variablesz: %v", errorLoadingenv)
-	}
-
 	password := os.Getenv("POSTGRES_PASSWORD")
 	database := os.Getenv("DB_NAME")
 	host := os.Getenv("POSTGRES_HOST")

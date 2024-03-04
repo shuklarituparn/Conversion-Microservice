@@ -7,6 +7,7 @@ import (
 	"github.com/shuklarituparn/Conversion-Microservice/internal/ID"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/prometheus"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"io"
@@ -20,6 +21,7 @@ import (
 )
 
 func Watermark(c *gin.Context) {
+	prometheus.WatermarkApiPingCounter.Inc()
 	session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
@@ -211,7 +213,7 @@ func WatermarkResult(c *gin.Context) {
 		VideoKey:      Videokey,
 	}
 	serialize, err := json.Marshal(watermarkMsg)
-	p, err := producer.NewProducer("localhost:9092")
+	p, err := producer.NewProducer("broker:9092")
 	err = producer.ProduceNewMessage(p, "watermark_video", string(serialize))
 	if err != nil {
 		return

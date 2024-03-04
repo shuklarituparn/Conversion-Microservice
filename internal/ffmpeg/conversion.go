@@ -14,7 +14,6 @@ import (
 )
 
 func Conversion(inputFile, outputformat string) string {
-
 	inputfilePath := fmt.Sprintf("../../uploads/%s", inputFile)
 	FileWithoutExt := strings.TrimSuffix(filepath.Base(inputFile), filepath.Ext(inputFile))
 	outputFileName := fmt.Sprintf("../../internal/userfiles/converted_files/%s.%s", FileWithoutExt, outputformat) //This will create a file in that location
@@ -33,7 +32,7 @@ func Conversion(inputFile, outputformat string) string {
 
 func VideoConversionConsumer() {
 
-	c, _ := consumer.NewConsumer("localhost:9092", "conversion_service")
+	c, _ := consumer.NewConsumer("broker:9092", "conversion_service")
 	_ = c.Subscribe("conversion", nil)
 
 	defer consumer.Close(c)
@@ -70,7 +69,7 @@ func VideoConversionConsumer() {
 			log.Println("Error serializing message", errorSerializing)
 
 		}
-		p, err := producer.NewProducer("localhost:9092")
+		p, err := producer.NewProducer("broker:9092")
 		producer.ProduceNewMessage(p, "upload", string(serializedMessage)) //Producing the converted mesaage
 		//Now need the upload consumer
 		_, commitErr := c.CommitMessage(msg)

@@ -1,9 +1,12 @@
 package main
 
 import (
+	"fmt"
+	sentrygin "github.com/getsentry/sentry-go/gin"
 	"io"
 	"os"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/database_file"
@@ -11,15 +14,14 @@ import (
 	"github.com/shuklarituparn/Conversion-Microservice/internal/ffmpeg"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/handlers"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/logger"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/prometheus" // Import the prometheus package
 	"github.com/shuklarituparn/Conversion-Microservice/middlewares"
 )
 
 func main() {
 
-	// disabling the logs on the console
 	gin.DisableConsoleColor()
 
-	// Creating the logger for our gin router
 	logs := logger.InitLog()
 	defer func(logs *os.File) {
 		err := logs.Close()
@@ -28,13 +30,19 @@ func main() {
 		}
 	}(logs)
 
+	if err := sentry.Init(sentry.ClientOptions{
+		Dsn:              os.Getenv("SENTRY_DSN"),
+		EnableTracing:    true,
+		TracesSampleRate: 1.0,
+	}); err != nil {
+		fmt.Printf("Sentry initialization failed: %v", err)
+	}
+
 	gin.DefaultWriter = io.MultiWriter(logs)
 
-	//creating the gin router
 	router := gin.Default()
 
-	//Using the Jaegar tracing
-	router.Use(middlewares.TracingMiddleware())
+	router.Use(sentrygin.New(sentrygin.Options{}))
 
 	go email.GenerateVerficationEmailConsumer()
 	go email.SendEmailConsumer()
@@ -50,6 +58,9 @@ func main() {
 	// Database Operations
 	go database_file.MongoUploadConsumer()
 	go database_file.MongoUploadScreenshotConsumer()
+
+	//Initializing the metrics
+	prometheus.Init()
 
 	router.LoadHTMLGlob("../../templates/*")
 	router.Static("/static", "../../static")
@@ -81,7 +92,6 @@ func main() {
 		protected.GET("/profile", handlers.Profile)
 		protected.GET("/profile/email", handlers.EmailHandler)
 		protected.POST("/profile/email", handlers.EmailUpdateHandler)
-		protected.GET("/profile/files", handlers.FileHistory)
 		protected.GET("/profile/delete", handlers.AccountDeleteConf)
 		protected.POST("/profile/delete", handlers.AccountDelete)
 		protected.GET("/profile/restore", handlers.Restore)

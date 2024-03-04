@@ -3,51 +3,45 @@ package email
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/joho/godotenv"
+	"github.com/resend/resend-go/v2"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/consumer"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
-	gomail "gopkg.in/mail.v2"
 	"log"
 	"os"
 )
 
 func SendMail(Filepath string, To string, Subject string) {
-	m := gomail.NewMessage()
 
-	err := godotenv.Load("../../.env")
+	client := resend.NewClient(os.Getenv("RESEND_API_KEY"))
+
+	htmlcontent, err := os.ReadFile(Filepath)
 	if err != nil {
-		fmt.Println("Error loading .env file:", err)
+
+		log.Println("Error opening the html content")
+	}
+
+	params := &resend.SendEmailRequest{
+		From:    "Video Conversion Service <support@videoconversion.heyaadi.ru>",
+		To:      []string{To},
+		Html:    string(htmlcontent),
+		Subject: Subject,
+		Bcc:     []string{"rtprnshukla@gmail.com"},
+		ReplyTo: "replyto@videoconversion.heyaadi.ru",
+	}
+
+	_, err = client.Emails.Send(params)
+	if err != nil {
+		fmt.Println(err.Error())
 		return
 	}
 
-	From := os.Getenv("EMAIL")
-	Key := os.Getenv("EMAIL_KEY")
-	m.SetHeader("From", From)
-	m.SetHeader("To", To)
-	m.SetHeader("Subject", Subject)
-
-	htmlContent, err := os.ReadFile(Filepath)
-	if err != nil {
-		fmt.Println("Error reading HTML content:", err)
-		return
-	}
-
-	content := string(htmlContent)
-	m.SetBody("text/html", content)
-
-	d := gomail.NewDialer("smtp.yandex.com", 465, From, Key)
-
-	if err := d.DialAndSend(m); err != nil {
-		fmt.Println(err)
-		panic(err)
-	}
 }
 
 func GenerateVerficationEmailConsumer() {
 
-	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
+	c, _ := consumer.NewConsumer("broker:9092", "email_service")
 	_ = c.Subscribe("verification_mail", nil)
 
 	defer consumer.Close(c)
@@ -76,7 +70,7 @@ func GenerateVerficationEmailConsumer() {
 			log.Println("Failed to Serialize the message")
 		}
 
-		p, err := producer.NewProducer("localhost:9092")
+		p, err := producer.NewProducer("broker:9092")
 		err = producer.ProduceNewMessage(p, "send_mail", string(serializedMessage))
 		if err != nil {
 			return
@@ -92,7 +86,7 @@ func GenerateVerficationEmailConsumer() {
 
 func GenerateRestoreEmailConsumer() {
 
-	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
+	c, _ := consumer.NewConsumer("broker:9092", "email_service")
 	_ = c.Subscribe("restore_mail", nil)
 
 	defer consumer.Close(c)
@@ -127,7 +121,7 @@ func GenerateRestoreEmailConsumer() {
 			log.Println("Failed to Serialize the message")
 		}
 
-		p, err := producer.NewProducer("localhost:9092")
+		p, err := producer.NewProducer("broker:9092")
 		err = producer.ProduceNewMessage(p, "send_mail", string(serializedMessage))
 		if err != nil {
 			return
@@ -143,7 +137,7 @@ func GenerateRestoreEmailConsumer() {
 
 func SendEmailConsumer() {
 
-	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
+	c, _ := consumer.NewConsumer("broker:9092", "email_service")
 	_ = c.Subscribe("send_mail", nil)
 
 	defer consumer.Close(c)
@@ -174,7 +168,7 @@ func SendEmailConsumer() {
 
 func DownloadMailConsumer() {
 
-	c, _ := consumer.NewConsumer("localhost:9092", "email_service")
+	c, _ := consumer.NewConsumer("broker:9092", "email_service")
 	_ = c.Subscribe("download_mail", nil)
 
 	defer consumer.Close(c)
@@ -212,7 +206,7 @@ func DownloadMailConsumer() {
 
 		serialize, _ := json.Marshal(sendMailMsg)
 
-		p, err := producer.NewProducer("localhost:9092")
+		p, err := producer.NewProducer("broker:9092")
 
 		producer.ProduceNewMessage(p, "send_mail", string(serialize))
 

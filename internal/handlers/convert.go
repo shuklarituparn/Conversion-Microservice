@@ -7,6 +7,7 @@ import (
 	"github.com/shuklarituparn/Conversion-Microservice/internal/ID"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/models"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/producer"
+	"github.com/shuklarituparn/Conversion-Microservice/internal/prometheus"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_database"
 	"github.com/shuklarituparn/Conversion-Microservice/internal/user_sessions"
 	"io"
@@ -21,6 +22,7 @@ import (
 )
 
 func Convert(c *gin.Context) {
+	prometheus.ConvertApiPingCounter.Inc()
 	session, err := user_sessions.Store.Get(c.Request, "Logged_Session") //getting the session from the session store
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
@@ -190,7 +192,7 @@ func ConvertUpload(c *gin.Context) {
 	if errorSerializingConvMessage != nil {
 		log.Println("Error Creating Conversion Message: ", errorSerializingConvMessage)
 	}
-	p, err := producer.NewProducer("localhost:9092")
+	p, err := producer.NewProducer("broker:9092")
 	err = producer.ProduceNewMessage(p, "conversion", string(serializedMessage))
 	if err != nil {
 		return

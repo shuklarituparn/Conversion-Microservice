@@ -2,39 +2,46 @@
 
 ![944960 512 (1)](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/b0db7aef-2982-416c-96bc-7f877a6e9ce7)
 
-## First steps 🚀
+## First steps (DOCKER-COMPOSE) 🚀
 
 
 * Clone the project by running the following command:
 
     `git clone git@github.com:shuklarituparn/Conversion-Microservice.git`
     
+
 * Now run the following command to ensure you're in the root directory of the project:
 
     `cd Conversion-Microservice`
-    
-* Make sure you have PostgreSQL installed and running.
 
-* While in the root directory of the project, run the following command to bring Kafka up:
 
-   `docker compose up`
+* Fill the file `.env.example` and rename it to `.env`
+
+
+* Fill the following in the `docker-compose` file
+
+*    > `POSTGRES_USER: <Your postgres username>`
+
+*    > `POSTGRES_PASSWORD: <Password of your postgres>`
+
+*    >  `POSTGRES_DB: <Name of your database>`
+
+*  Use the docker compose `rituparnshukla/ffmpegservice-withoutgraphics:latest`, if you don't have `nvidia graphics` on
+your computer
+
    
-   > Make sure you have Docker installed before running the above command.
+* While located in the root folder of the project run `docker-compose up`
 
-* Now fill the `.env.example` file and rename it to `.env`.
-
-* Run `go mod tidy` to install all dependencies.
+> Check that you have docker up and running
 
 
-* Navigate to the `cmd` directory and then to the `video-converter` directory.
- 
-* You can run either of the commands below to run the service:
-    `go run main.go` or `./main`.
+* Now you can access the service at `localhost:8085`
 
-* You can interact with the service at `localhost:8085` or at the `callback URL` described in `.env`.
 
-* If you dont' have NVIDIA graphics, then remove the parameter  `h264_nvenc` from the code at `internal/ffmpeg/conversion.go`
+* You can access the metrics at `localhost:8085/metrics`
 
+
+* You can access grafana at  `localhost:3030`
 ---
 
 
@@ -78,3 +85,11 @@ MONGO_URL='<MongoDB URL>'
 
 `DB_NAME='<Your Database Name>'`
 
+
+`EMAIL_URL='<REDIRECT_EMAIL>'`
+
+`SENTRY_DSN='<SENTRY>'`
+
+`RESEND_API_KEY='<API Key from resend.com to send emails>'`
+
+> You can get api key from resend.com after verifying your domain
