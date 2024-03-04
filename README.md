@@ -37,7 +37,13 @@
 ---
 ## Трассировки и измерение метрики
 
+![Screenshot from 2024-03-04 14-22-35](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/6e559405-68a1-4879-be50-29f52d751427)
 
+![Screenshot from 2024-03-04 14-22-47](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/cd9c4711-e371-4c01-a60a-707ad7445b10)
+
+![Screenshot from 2024-03-04 14-08-52](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/15d178fe-729c-49e5-b0f9-ca732c6b7a3a)
+
+> При запросе сервера prometheus в grafana добавьте `https://prometheus:9090`
 
 
 
@@ -81,6 +87,13 @@ The site is available to try at : http://videoconversion.heyaadi.ru/
 ---
 ## Tracing and measuring metrics
 
+![Screenshot from 2024-03-04 14-22-35](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/6e559405-68a1-4879-be50-29f52d751427)
+
+![Screenshot from 2024-03-04 14-22-47](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/cd9c4711-e371-4c01-a60a-707ad7445b10)
+
+![Screenshot from 2024-03-04 14-08-52](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/15d178fe-729c-49e5-b0f9-ca732c6b7a3a)
+
+> When asked for prometheus server in grafana add `https://prometheus:9090`
 
 ---
 
