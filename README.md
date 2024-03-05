@@ -57,6 +57,19 @@
 
 ---
 
+## EMAIL
+
+Отправка электронной почты и отслеживание кликов пользователей для получения обратной связи 
+
+
+![Screenshot from 2024-03-06 00-10-53](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/0b7a6bb4-a82f-4b06-98d3-65a409142ea4)
+
+
+![Screenshot from 2024-03-06 00-10-59](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/b991679e-75e1-4111-8277-292e4bf81725)
+
+
+---
+
 ## Вклад
 
 Ваши вклады приветствуются!
@@ -107,6 +120,20 @@ The site is available to try at : http://videoconversion.heyaadi.ru/
 ![Screenshot from 2024-03-04 14-08-52](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/15d178fe-729c-49e5-b0f9-ca732c6b7a3a)
 
 > When asked for prometheus server in grafana add `https://prometheus:9090`
+
+---
+
+## Email
+
+Sending Email to users using resend and tracking user clicks for feedback.
+
+
+![Screenshot from 2024-03-06 00-10-53](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/0b7a6bb4-a82f-4b06-98d3-65a409142ea4)
+
+
+![Screenshot from 2024-03-06 00-10-59](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/b991679e-75e1-4111-8277-292e4bf81725)
+
+
 
 ---
 
