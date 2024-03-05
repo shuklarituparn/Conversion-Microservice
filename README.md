@@ -8,6 +8,16 @@
 
 Логотип ВК является собственностью «ООО "ВК"»
 
+---
+## Использование и установка
+
+- [Использование](docs/usage.md)
+- [Установка](docs/setup.md)
+- [Что еще](docs/what's_coming.md)
+
+---
+
+
 ## Обзор
 
 Микросервис конвертации - это надежное решение, разработанное для обработки различных медиа-операций. От точной обрезки видео по определенным временным рамкам до конвертации в различные форматы, создания скриншотов и добавления водяных знаков - этот микросервис предлагает полный набор функций.
@@ -34,6 +44,7 @@
 - **Мониторинг**: Prometheus для метрик, Grafana для визуализации
 - **Трассировка**: Sentry
 - **Аутентификация пользователей**: Использование OAuth для входа пользователей
+- **Deployment**: Docker, Docker-compose
 ---
 ## Трассировки и измерение метрики
 
@@ -45,15 +56,21 @@
 
 > При запросе сервера prometheus в grafana добавьте `https://prometheus:9090`
 
+---
+
+## EMAIL
+
+Отправка электронной почты и отслеживание кликов пользователей для получения обратной связи 
+
+
+![Screenshot from 2024-03-06 00-10-53](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/0b7a6bb4-a82f-4b06-98d3-65a409142ea4)
+
+
+![Screenshot from 2024-03-06 00-10-59](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/b991679e-75e1-4111-8277-292e4bf81725)
 
 
 ---
-## Использование и установка
 
-- [Использование](docs/usage.md)
-- [Установка](docs/setup.md)
-- [Что еще](docs/what's_coming.md)
----
 ## Вклад
 
 Ваши вклады приветствуются!
@@ -77,6 +94,16 @@ The site is available to try at : http://videoconversion.heyaadi.ru/
 
 ---
 
+
+
+## Usage and Installation
+
+- [Usage](docs/usage_eng.md)
+- [Installation](docs/setup_eng.md)
+- [What's next](docs/what's_coming_en.md)
+
+---
+
 ## Features
 
 - **Video Cutting**: Precision cutting based on defined start and end times.
@@ -97,6 +124,20 @@ The site is available to try at : http://videoconversion.heyaadi.ru/
 
 ---
 
+## Email
+
+Sending Email to users using resend and tracking user clicks for feedback.
+
+
+![Screenshot from 2024-03-06 00-10-53](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/0b7a6bb4-a82f-4b06-98d3-65a409142ea4)
+
+
+![Screenshot from 2024-03-06 00-10-59](https://github.com/shuklarituparn/Conversion-Microservice/assets/66947051/b991679e-75e1-4111-8277-292e4bf81725)
+
+
+
+---
+
 ## Tech Stack
 
 - **Frontend**: HTML + Tailwind CSS
@@ -108,15 +149,8 @@ The site is available to try at : http://videoconversion.heyaadi.ru/
 - **Monitoring**: Prometheus for metrics, Grafana for visualization
 - **Tracing**: Sentry
 - **User Authentication**: Using OAuth to log in users
-
----
-
-## Usage and Installation
-
-- [Usage](docs/usage_eng.md)
-- [Installation](docs/setup_eng.md)
-- [What's next](docs/what's_coming_en.md)
-
+- **Deployment**: Docker, Docker-compose
+  
 ---
 
 ## Contributing

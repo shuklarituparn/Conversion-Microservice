@@ -28,7 +28,6 @@
 
 *    >  `POSTGRES_DB: <Название ваши базы данных>`
      
-*  Используйте образ docker `rituparnshukla/ffmpegservice-withoutgraphics:latest`, если у вас на компьютере нет графики nvidia
 
 
 * Находясь в в корневой директории проекта, выполните следующую команду, чтобы запустить: `docker compose up`

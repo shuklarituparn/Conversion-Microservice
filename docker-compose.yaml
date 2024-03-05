@@ -58,8 +58,11 @@ services:
       - broker
       - database
     env_file: .env
+    volumes:
+      - ffmpeg_data:/data
     restart: on-failure
 
 
 volumes:
   postgres_data:
+  ffmpeg_data:

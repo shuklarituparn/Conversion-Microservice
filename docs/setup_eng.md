@@ -26,8 +26,6 @@
 
 *    >  `POSTGRES_DB: <Name of your database>`
 
-*  Use the docker compose `rituparnshukla/ffmpegservice-withoutgraphics:latest`, if you don't have `nvidia graphics` on
-your computer
 
    
 * While located in the root folder of the project run `docker-compose up`
