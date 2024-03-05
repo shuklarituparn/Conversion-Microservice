@@ -1,6 +1,9 @@
 
 FROM golang:1.22-alpine
 
+RUN apk update && \
+    apk add --no-cache gcc libc-dev build-base ffmpeg
+
 WORKDIR /app
 
 

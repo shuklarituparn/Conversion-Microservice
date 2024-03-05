@@ -15,6 +15,8 @@ import (
 func SendMail(Filepath string, To string, Subject string) {
 
 	client := resend.NewClient(os.Getenv("RESEND_API_KEY"))
+	emailToUse := fmt.Sprintf("Video Conversion Service <%s>", os.Getenv("EMAIL"))
+	replyMail := os.Getenv("REPLY_MAIL")
 
 	htmlcontent, err := os.ReadFile(Filepath)
 	if err != nil {
@@ -23,12 +25,11 @@ func SendMail(Filepath string, To string, Subject string) {
 	}
 
 	params := &resend.SendEmailRequest{
-		From:    "Video Conversion Service <support@videoconversion.heyaadi.ru>",
+		From:    emailToUse,
 		To:      []string{To},
 		Html:    string(htmlcontent),
 		Subject: Subject,
-		Bcc:     []string{"rtprnshukla@gmail.com"},
-		ReplyTo: "replyto@videoconversion.heyaadi.ru",
+		ReplyTo: replyMail,
 	}
 
 	_, err = client.Emails.Send(params)

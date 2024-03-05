@@ -17,7 +17,7 @@ func Conversion(inputFile, outputformat string) string {
 	inputfilePath := fmt.Sprintf("../../uploads/%s", inputFile)
 	FileWithoutExt := strings.TrimSuffix(filepath.Base(inputFile), filepath.Ext(inputFile))
 	outputFileName := fmt.Sprintf("../../internal/userfiles/converted_files/%s.%s", FileWithoutExt, outputformat) //This will create a file in that location
-	cmd := exec.Command("ffmpeg", "-y", "-i", inputfilePath, "-c:v", "h264_nvenc", outputFileName)
+	cmd := exec.Command("ffmpeg", "-y", "-i", inputfilePath, outputFileName)
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	fmt.Println(os.Getwd())
@@ -27,7 +27,7 @@ func Conversion(inputFile, outputformat string) string {
 	}
 
 	fmt.Println("Video converted successfully!")
-	return outputFileName //to get it to produce a message to kafka that it is converted
+	return outputFileName
 }
 
 func VideoConversionConsumer() {
@@ -52,9 +52,6 @@ func VideoConversionConsumer() {
 			fmt.Println(err)
 		}
 		outputFilePath := Conversion(conversionMessage.FileName, conversionMessage.OutputFormat) //we get the file path here
-
-		// Need to produce a message on the topic to upload
-		//Prodcue the message for the mongo consumer with Video Key
 		var messageToUpload models.AfterConvertUpload
 		FileWithoutExt := strings.TrimSuffix(filepath.Base(conversionMessage.FileName), filepath.Ext(conversionMessage.FileName))
 		fileNameCorrect := fmt.Sprintf("%s.%s", FileWithoutExt, conversionMessage.OutputFormat)
@@ -71,7 +68,6 @@ func VideoConversionConsumer() {
 		}
 		p, err := producer.NewProducer("broker:9092")
 		producer.ProduceNewMessage(p, "upload", string(serializedMessage)) //Producing the converted mesaage
-		//Now need the upload consumer
 		_, commitErr := c.CommitMessage(msg)
 		if commitErr != nil {
 			log.Printf("Failed to commit offset: %v", commitErr)
