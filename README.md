@@ -8,6 +8,16 @@
 
 Логотип ВК является собственностью «ООО "ВК"»
 
+---
+## Использование и установка
+
+- [Использование](docs/usage.md)
+- [Установка](docs/setup.md)
+- [Что еще](docs/what's_coming.md)
+
+---
+
+
 ## Обзор
 
 Микросервис конвертации - это надежное решение, разработанное для обработки различных медиа-операций. От точной обрезки видео по определенным временным рамкам до конвертации в различные форматы, создания скриншотов и добавления водяных знаков - этот микросервис предлагает полный набор функций.
@@ -45,15 +55,8 @@
 
 > При запросе сервера prometheus в grafana добавьте `https://prometheus:9090`
 
-
-
 ---
-## Использование и установка
 
-- [Использование](docs/usage.md)
-- [Установка](docs/setup.md)
-- [Что еще](docs/what's_coming.md)
----
 ## Вклад
 
 Ваши вклады приветствуются!
@@ -74,6 +77,16 @@
 The Conversion Microservice is a robust solution designed to handle diverse media operations. From cutting videos based on specific time frames to converting them into various formats, taking screenshots, and even adding watermarks, this microservice offers a comprehensive suite of functionalities.
 
 The site is available to try at : http://videoconversion.heyaadi.ru/
+
+---
+
+
+
+## Usage and Installation
+
+- [Usage](docs/usage_eng.md)
+- [Installation](docs/setup_eng.md)
+- [What's next](docs/what's_coming_en.md)
 
 ---
 
@@ -108,15 +121,7 @@ The site is available to try at : http://videoconversion.heyaadi.ru/
 - **Monitoring**: Prometheus for metrics, Grafana for visualization
 - **Tracing**: Sentry
 - **User Authentication**: Using OAuth to log in users
-
----
-
-## Usage and Installation
-
-- [Usage](docs/usage_eng.md)
-- [Installation](docs/setup_eng.md)
-- [What's next](docs/what's_coming_en.md)
-
+- 
 ---
 
 ## Contributing
