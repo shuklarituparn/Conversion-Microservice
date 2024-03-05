@@ -44,6 +44,7 @@
 - **Мониторинг**: Prometheus для метрик, Grafana для визуализации
 - **Трассировка**: Sentry
 - **Аутентификация пользователей**: Использование OAuth для входа пользователей
+- **Deployment**: Docker, Docker-compose
 ---
 ## Трассировки и измерение метрики
 
@@ -148,7 +149,8 @@ Sending Email to users using resend and tracking user clicks for feedback.
 - **Monitoring**: Prometheus for metrics, Grafana for visualization
 - **Tracing**: Sentry
 - **User Authentication**: Using OAuth to log in users
-- 
+- **Deployment**: Docker, Docker-compose
+  
 ---
 
 ## Contributing
